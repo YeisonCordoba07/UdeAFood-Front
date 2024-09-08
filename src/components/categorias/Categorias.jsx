@@ -24,10 +24,11 @@ const Categorias = () => {
 
 
     return (
-        <div className="px-8 py-3 flex items-center">
+
+        <div className="py-3 flex items-center border-neutral-400 border-b justify-center w-fit">
             <BotonAnterior onClick={scrollLeft} />
 
-            <div className="flex overflow-x-auto whitespace-nowrap gap-x-2 w-[1200px] categorias-container" ref={carouselRef}>
+            <div className="flex px-3 overflow-x-auto whitespace-nowrap gap-x-2 w-[1200px] categorias-container items-center" ref={carouselRef}>
                 <ElementoCategoria textoCategoria={"Pizza"} />
                 <ElementoCategoria textoCategoria={"Asiatica"} />
                 <ElementoCategoria textoCategoria={"Poke"} />
@@ -52,6 +53,7 @@ const Categorias = () => {
 
             <BotonSiguiente onClick={scrollRight} />
         </div>
+
     );
 }
 
