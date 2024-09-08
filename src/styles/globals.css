@@ -8,3 +8,8 @@
 }
 
 
+/*Quita la barra de desplazamiento de las categorias*/
+.categorias-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Edge */
+}
+
