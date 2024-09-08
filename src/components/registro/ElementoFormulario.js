@@ -1,4 +1,4 @@
-const ElementoFormulario = ({identificador, textoLabel, placeholderLabel}) =>{
+const ElementoFormulario = ({identificador, textoLabel, placeholderLabel, esRequerido = false, defaultValue, onChange}) =>{
 
     return(
     <label 
@@ -12,6 +12,9 @@ const ElementoFormulario = ({identificador, textoLabel, placeholderLabel}) =>{
             id={identificador} 
             name={identificador} 
             placeholder={placeholderLabel} 
+            defaultValue={defaultValue}
+            onChange={onChange}
+            required={esRequerido}
             className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
         />
 
