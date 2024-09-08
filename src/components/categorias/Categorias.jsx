@@ -1,6 +1,6 @@
-import { BotonAnterior } from "./BotonAnterior";
-import { BotonSiguiente } from "./BotonSiguiente";
+import { BotonFlechaCategoria } from "./BotonFlechaCategoria";
 import { ElementoCategoria } from "./ElementoCategoria";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
 import { useRef } from "react";
 
@@ -9,6 +9,7 @@ import { useRef } from "react";
 const Categorias = () => {
 
     const carouselRef = useRef(null);
+
 
     const scrollLeft = () => {
         if (carouselRef.current) {
@@ -26,9 +27,10 @@ const Categorias = () => {
     return (
 
         <div className="py-3 flex items-center border-neutral-400 border-b justify-center w-fit">
-            <BotonAnterior onClick={scrollLeft} />
+            <BotonFlechaCategoria onClick={scrollLeft} icono={<MdArrowBackIosNew/>} />
 
             <div className="flex px-3 overflow-x-auto whitespace-nowrap gap-x-2 w-[1200px] categorias-container items-center" ref={carouselRef}>
+
                 <ElementoCategoria textoCategoria={"Pizza"} />
                 <ElementoCategoria textoCategoria={"Asiatica"} />
                 <ElementoCategoria textoCategoria={"Poke"} />
@@ -49,9 +51,11 @@ const Categorias = () => {
                 <ElementoCategoria textoCategoria={"China"} />
                 <ElementoCategoria textoCategoria={"Alcohol"} />
                 <ElementoCategoria textoCategoria={"Ensaladas"} />
+
             </div>
 
-            <BotonSiguiente onClick={scrollRight} />
+            <BotonFlechaCategoria onClick={scrollRight} icono={<MdArrowForwardIos/>}/>
+            
         </div>
 
     );
