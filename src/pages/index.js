@@ -1,9 +1,14 @@
 import { Categorias } from "@/components/categorias/Categorias";
+import { Header } from "@/components/Header/Header";
+
 
 export default function Home() {
-    return (
-        <div >
-            <Categorias />
-        </div>
+    return (  
+      
+            <div >
+                <Header/>
+                <Categorias />
+            </div>
+        
     )
 }
