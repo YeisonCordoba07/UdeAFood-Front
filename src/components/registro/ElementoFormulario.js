@@ -1,4 +1,4 @@
-const ElementoFormulario = ({identificador, textoLabel, placeholderLabel, esRequerido = false, defaultValue, onChange}) =>{
+const ElementoFormulario = ({identificador, textoLabel, placeholderLabel, esRequerido = false, defaultValue, onChange, type="text"}) =>{
 
     return(
     <label 
@@ -8,7 +8,7 @@ const ElementoFormulario = ({identificador, textoLabel, placeholderLabel, esRequ
 
         <span className="text-xl font-semibold">{textoLabel}</span>
         <input
-            type="text"
+            type={type}
             id={identificador} 
             name={identificador} 
             placeholder={placeholderLabel} 
