@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header/Header";
-
+import { SeccionTiendas } from "@/components/BarraCategorias/barraCategorias";
 const { Producto } = require("@/components/producto/Producto");
 
 
@@ -9,7 +9,7 @@ const PerfilTienda = () => {
 
         <div>
             <Header />
-            
+            <SeccionTiendas/>
             <section className="flex gap-4 p-5 flex-wrap">
 
                 <Producto />
