@@ -17,9 +17,34 @@ const FormularioRegistro = () => {
             />
 
             <ElementoFormulario
+                identificador={"descripcion"}
+                textoLabel={"Descripción"}
+                placeholderLabel={"Vendemos comida rapida"}
+            />
+
+            <ElementoFormulario
+                identificador={"ubicacion"}
+                textoLabel={"Ubicación"}
+                placeholderLabel={"Frente al bloque 19"}
+            />
+
+            <ElementoFormulario
+                identificador={"foto"}
+                textoLabel={"Foto"}
+                placeholderLabel={"foto"}
+            />
+
+            <ElementoFormulario
                 identificador={"correo"}
                 textoLabel={"Correo *"}
                 placeholderLabel={"example@gmail.com"}
+                esRequerido={true}
+            />
+
+            <ElementoFormulario
+                identificador={"usuario"}
+                textoLabel={"Nombre de usuario *"}
+                placeholderLabel={"arboreo_udea"}
                 esRequerido={true}
             />
 
@@ -31,28 +56,20 @@ const FormularioRegistro = () => {
             />
 
             <ElementoFormulario
-                identificador={"descripcion"}
-                textoLabel={"Descripción"}
-                placeholderLabel={"Vendemos comida rapida"}
+                identificador={"domicilio"}
+                textoLabel={"Domicilio *"}
+                placeholderLabel={"S o N"}
+                esRequerido={true}
             />
 
-            <ElementoFormulario
-                identificador={"foto"}
-                textoLabel={"Foto"}
-                placeholderLabel={"foto"}
-            />
 
-            <ElementoFormulario
-                identificador={"ubicacion"}
-                textoLabel={"Ubicación"}
-                placeholderLabel={"Frente al bloque 19"}
-            />
 
-            <ElementoFormulario
+            {/*<ElementoFormulario
                 identificador={"formas-de-pago"}
                 textoLabel={"Formas de pago"}
                 placeholderLabel={"Visa, Mastercard, Efectivo"}
-            />
+            />*/}
+
 
             <ElementoFormulario
                 identificador={"contacto"}
@@ -60,9 +77,11 @@ const FormularioRegistro = () => {
                 placeholderLabel={"+57 123 456 7890"}
             />
 
+
             <button 
             type = "submit"
-            className="bg-green-400 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-500 hover:scale-105 duration-300">Registrarse</button>
+            className="bg-green-500 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Registrarse</button>
+
         </form>
     );
 }
