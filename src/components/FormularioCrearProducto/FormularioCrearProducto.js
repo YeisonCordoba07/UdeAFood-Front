@@ -1,11 +1,37 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
-
+import { useState } from "react";
 const FormularioCrearProducto = () => {
 
 
     const crearTienda = (e) => {
         e.preventDefault();
+        fetch("http://localhost:8080/Producto/crearProducto",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoProducto), 
+        })
+        .then((res) => {
+            // Verificamos si el contenido es JSON
+            const contentType = res.headers.get("Content-Type");
+            if (contentType && contentType.includes("application/json")) {
+                return res.json(); // Si es JSON, lo procesamos
+            } else {
+                return res.text(); // Si es texto, lo procesamos como texto
+            }
+        })
+        .then((response) => {
+            console.log("Respuesta del servidor:", response);
+        })
+        .catch((error) => console.error("Error al crear Producto:", error));
     }
+    const [nuevoProducto, setNuevoProducto] = useState({
+        nombre: "",
+        descripcion: "",
+        precio: "",
+        disponibilidad: "",
+    });
 
 
     return (
@@ -20,6 +46,8 @@ const FormularioCrearProducto = () => {
                     textoLabel={"Nombre del producto *"}
                     placeholderLabel={"Arboreo"}
                     esRequerido={true}
+                    defaultValue={nuevoProducto.nombre}
+                    onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombre: e.target.value })}
                 />
 
                 <ElementoFormulario
@@ -27,6 +55,8 @@ const FormularioCrearProducto = () => {
                     textoLabel={"Descripción *"}
                     placeholderLabel={"Vendemos todo tipo de comida"}
                     esRequerido={true}
+                    defaultValue={nuevoProducto.descripcion}
+                    onChange={(e) => setNuevoProducto({ ...nuevoProducto, descripcion: e.target.value })}
                 />
 
                 <ElementoFormulario
@@ -35,6 +65,16 @@ const FormularioCrearProducto = () => {
                     placeholderLabel={"5000"}
                     esRequerido={true}
                     type="number"
+                    defaultValue={nuevoProducto.precio}
+                    onChange={(e) => setNuevoProducto({ ...nuevoProducto, precio: e.target.value })}
+                />
+                <ElementoFormulario
+                    identificador={"disponibilidad"}
+                    textoLabel={"disponibilidad"}
+                    esRequerido={true}
+                    placeholderLabel={"si o no"}
+                    defaultValue={nuevoProducto.disponibilidad}
+                    onChange={(e) => setNuevoProducto({ ...nuevoProducto, disponibilidad: e.target.value })}
                 />
 
                 <ElementoFormulario
