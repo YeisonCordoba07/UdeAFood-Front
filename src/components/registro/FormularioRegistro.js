@@ -122,7 +122,7 @@ const FormularioRegistro = () => {
 
         <ElementoFormulario
             identificador={"contacto"}
-            textoLabel={"Información de contacto"}
+            textoLabel={"Teléfono de contacto"}
             placeholderLabel={"+57 123 456 7890"}
             defaultValue={nuevaTienda.contacto}
             onChange={(e) => setNuevaTienda({ ...nuevaTienda, contacto: e.target.value })}
@@ -131,7 +131,7 @@ const FormularioRegistro = () => {
 
         <button
             type="submit"
-            className="bg-green-500 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Registrarse</button>
+            className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">Registrarse</button>
 
     </form>
     );

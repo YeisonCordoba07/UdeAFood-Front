@@ -37,7 +37,7 @@ const FormularioCrearProducto = () => {
     return (
         <div className="flex flex-col items-center gap-10">
 
-            <h1 className="text-4xl font-black text-green-900">Crear Producto</h1>
+            <h1 className="text-4xl font-black text-green-900 uppercase">Producto</h1>
 
             <form className="flex gap-3 flex-col w-[650px]" onSubmit={crearTienda}>
 
@@ -70,7 +70,7 @@ const FormularioCrearProducto = () => {
                 />
                 <ElementoFormulario
                     identificador={"disponibilidad"}
-                    textoLabel={"disponibilidad"}
+                    textoLabel={"Disponibilidad"}
                     esRequerido={true}
                     placeholderLabel={"si o no"}
                     defaultValue={nuevoProducto.disponibilidad}
@@ -118,7 +118,7 @@ const FormularioCrearProducto = () => {
 
                 <button
                     type="submit"
-                    className="bg-green-500 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Crear Producto
+                    className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Crear Producto
                 </button>
 
             </form>
