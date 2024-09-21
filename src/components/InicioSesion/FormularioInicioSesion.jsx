@@ -19,7 +19,7 @@ const FormularioInicioSesion = () => {
             />
             <button 
             type = "submit"
-            className="bg-green-400 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-500 hover:scale-105 duration-300">
+            className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">
                 Iniciar Sesión</button>
     </form>
   )
