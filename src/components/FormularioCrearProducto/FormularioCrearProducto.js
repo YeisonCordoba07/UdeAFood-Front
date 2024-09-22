@@ -1,5 +1,6 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
 import {useEffect, useState} from "react";
+import {useFetch} from "@/hook/useFetch";
 const FormularioCrearProducto = () => {
 
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -9,7 +10,9 @@ const FormularioCrearProducto = () => {
         disponibilidad: "",
     });
 
-    const [categorias, setCategorias] = useState([]);
+
+
+    const {data, loading, error} = useFetch("http://localhost:8080/Categoria");
 
 
 
@@ -37,25 +40,6 @@ const FormularioCrearProducto = () => {
         .catch((error) => console.error("Error al crear Producto:", error));
     }
 
-
-
-
-    useEffect(() => {
-        fetch("http://localhost:8080/Categoria",{
-            method: "GET",
-            headers: {"Content-Type": "application/json",}
-        })
-            .then((res) =>{
-                return res.json();
-            })
-            .then((response) =>{
-                console.log(response)
-                setCategorias(response);
-            })
-            .catch((error) =>{
-                console.error("Error al traer categorias:", error);
-            })
-    }, []);
 
 
 
@@ -117,7 +101,7 @@ const FormularioCrearProducto = () => {
                     <select name="Categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
 
                         <option value="default" selected>Seleccionar</option>
-                        {categorias.map(categoria =>{
+                        {data.map(categoria =>{
                             return (
                                 <option
                                     value={categoria.idCategoria}
