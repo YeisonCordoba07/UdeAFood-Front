@@ -1,6 +1,16 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 const FormularioCrearProducto = () => {
+
+    const [nuevoProducto, setNuevoProducto] = useState({
+        nombre: "",
+        descripcion: "",
+        precio: "",
+        disponibilidad: "",
+    });
+
+    const [categorias, setCategorias] = useState([]);
+
 
 
     const crearTienda = (e) => {
@@ -26,12 +36,27 @@ const FormularioCrearProducto = () => {
         })
         .catch((error) => console.error("Error al crear Producto:", error));
     }
-    const [nuevoProducto, setNuevoProducto] = useState({
-        nombre: "",
-        descripcion: "",
-        precio: "",
-        disponibilidad: "",
-    });
+
+
+
+
+    useEffect(() => {
+        fetch("http://localhost:8080/Categoria",{
+            method: "GET",
+            headers: {"Content-Type": "application/json",}
+        })
+            .then((res) =>{
+                return res.json();
+            })
+            .then((response) =>{
+                console.log(response)
+                setCategorias(response);
+            })
+            .catch((error) =>{
+                console.error("Error al traer categorias:", error);
+            })
+    }, []);
+
 
 
     return (
@@ -90,10 +115,18 @@ const FormularioCrearProducto = () => {
                     <span className="text-xl font-semibold">Categoria</span>
 
                     <select name="Categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
+
                         <option value="default" selected>Seleccionar</option>
-                        <option value="value1">Value 1</option>
-                        <option value="value2">Value 2</option>
-                        <option value="value3">Value 3</option>
+                        {categorias.map(categoria =>{
+                            return (
+                                <option
+                                    value={categoria.idCategoria}
+                                    key={categoria.idCategoria}>
+                                    {categoria.nombreCategoria}
+                                </option>
+                            );
+                        })}
+
                     </select>
 
                 </label>
