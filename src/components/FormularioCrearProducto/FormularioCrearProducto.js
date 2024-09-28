@@ -39,7 +39,12 @@ const FormularioCrearProducto = () => {
         })
         .catch((error) => console.error("Error al crear Producto:", error));
     }
-
+    const [nuevoProducto, setNuevoProducto] = useState({
+        nombre: "",
+        descripcion: "",
+        precio: "",
+        disponibilidad: "",
+    });
 
 
 
