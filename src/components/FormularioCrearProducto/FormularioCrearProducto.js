@@ -8,11 +8,14 @@ const FormularioCrearProducto = () => {
         descripcion: "",
         precio: "",
         disponibilidad: "",
+        categoria:"",
+        Seccion:""
     });
 
 
 
-    const {data, loading, error} = useFetch("http://localhost:8080/Categoria");
+    const {data:categoria, loading:loadingCategoria, error:errorCategoria} = useFetch("http://localhost:8080/Categoria");
+    const {data:Seccion, loading:loadingSeccion, error:errorSeccion} = useFetch("http://localhost:8080/Seccion/434");
 
 
 
@@ -40,7 +43,7 @@ const FormularioCrearProducto = () => {
         .catch((error) => console.error("Error al crear Producto:", error));
     }
 
-
+    
 
 
     return (
@@ -101,7 +104,7 @@ const FormularioCrearProducto = () => {
                     <select name="Categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
 
                         <option value="default" selected>Seleccionar</option>
-                        {data.map(categoria =>{
+                        {categoria.map(categoria =>{
                             return (
                                 <option
                                     value={categoria.idCategoria}
@@ -109,6 +112,7 @@ const FormularioCrearProducto = () => {
                                     {categoria.nombreCategoria}
                                 </option>
                             );
+                            
                         })}
 
                     </select>
@@ -122,12 +126,20 @@ const FormularioCrearProducto = () => {
 
                     <span className="text-xl font-semibold">Sección</span>
 
-                    <select name="Categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
+                    <select name="Seccion" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
                         <option value="default" selected>Seleccionar</option>
-                        <option value="value1">Value 1</option>
-                        <option value="value2">Value 2</option>
-                        <option value="value3">Value 3</option>
+                        {Seccion.map(Seccion =>{
+                            return (
+                                <option
+                                    value={Seccion.id}
+                                    key={Seccion.id}>
+                                    {Seccion.nombre}
+                                </option>
+                            );
+                        })}
+                        
                     </select>
+                    
 
                 </label>
 
