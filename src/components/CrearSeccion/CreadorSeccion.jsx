@@ -1,14 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ElementoFormulario } from '../registro/ElementoFormulario';
 
 const CreadorSeccion = () => {
+
+    const [nuevaSeccion, setNuevaSeccion] = useState({
+        nombre: "",
+        idTienda:434
+    })
+
+    const crearSeccion = (e) => {
+        e.preventDefault();
+        fetch("http://localhost:8080/Seccion/crearSeccion",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaSeccion), 
+        })
+        .then((res) => {
+            // Verificamos si el contenido es JSON
+            const contentType = res.headers.get("Content-Type");
+            if (contentType && contentType.includes("application/json")) {
+                return res.json(); // Si es JSON, lo procesamos
+            } else {
+                return res.text(); // Si es texto, lo procesamos como texto
+            }
+        })
+        .then((response) => {
+            console.log("Respuesta del servidor:", response);
+        })
+        .catch((error) => console.error("Error al crear Seccion:", error));
+    }
+
     return (
-        <form className="flex gap-3 flex-col w-[650px] py-11">
+        <form className="flex gap-3 flex-col w-[650px] py-11" onSubmit={crearSeccion}>
             <ElementoFormulario
-                identificador={"Seccion"}
+                identificador={"nombre"}
                 textoLabel={"Nombre de la Seccion *"}
                 placeholderLabel={"pizza, hamburguesa, Empanadas, Su..."}
                 esRequerido={true}
+                defaultValue={nuevaSeccion.nombre}
+                    onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, nombre: e.target.value })}
+            />
+              <ElementoFormulario
+                identificador={"idTienda"}
+                textoLabel={"Id de Tienda *"}
+                placeholderLabel={"1,2"}
+                esRequerido={true}
+                defaultValue={nuevaSeccion.idTienda}
+                    onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, idTienda: 434 })}
             />
 
             <button
