@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // Importa el icono de lupa desde react-icons
+import {useFetch} from "@/hook/useFetch";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
+import {BotonFlechaCategoria} from "@/components/categorias/BotonFlechaCategoria";
 
 const categories = [
     'Pizza', 'Asiática', 'Poke', 'Empanadas', 'Sushi', 'Sanduches', 'Típica', 'Vegana',
@@ -8,7 +11,10 @@ const categories = [
 ];
 
 const SeccionTiendas = () => {
-    const [activeCategory, setActiveCategory] = useState('Pizza');
+
+    const {data} = useFetch("http://localhost:8080/Seccion/1");
+
+    const [activeCategory, setActiveCategory] = useState();
     const categoryScrollRef = useRef(null);
 
     const scrollLeft = () => {
@@ -19,22 +25,24 @@ const SeccionTiendas = () => {
         categoryScrollRef.current.scrollBy({ left: 150, behavior: 'smooth' });
     };
 
+
+
     return (
         <div className="bg-gray-100">
             <div className="p-4 mb-4 flex items-center justify-between">
                 <div className="flex items-center w-full max-w-[65%]">
-                    <h2 className="text-lg font-bold mr-4">Categorías</h2>
+                    <h2 className="text-lg font-bold mr-4">Secciones</h2>
 
-                    {/* Barra de categorías */}
+                    {/* Barra de categorias */}
                     <div className="flex space-x-4 overflow-x-hidden" ref={categoryScrollRef}>
-                        {categories.map((category) => (
+                        {data.map((seccion) => (
                             <button
-                                key={category}
-                                className={`px-4 py-2 text-black ${activeCategory === category ? 'text-green-500 font-bold' : ''}`}
-                                onClick={() => setActiveCategory(category)}
+                                key={seccion.nombre}
+                                className={`px-4 py-2 text-black ${activeCategory === seccion.nombre ? 'text-green-500 font-bold' : ''}`}
+                                onClick={() => setActiveCategory(seccion.nombre)}
                             >
-                                {category}
-                                {activeCategory === category && (
+                                {seccion.nombre}
+                                {activeCategory === seccion.nombre && (
                                     <div className="w-full h-1 bg-green-500 mt-1"></div>
                                 )}
                             </button>
@@ -43,18 +51,10 @@ const SeccionTiendas = () => {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <button
-                        onClick={scrollLeft}
-                        className="bg-gray-300 p-3 rounded-full hover:bg-green-500 transition-colors duration-300"
-                    >
-                        &lt;
-                    </button>
-                    <button
-                        onClick={scrollRight}
-                        className="bg-gray-300 p-3 rounded-full hover:bg-green-500 transition-colors duration-300"
-                    >
-                        &gt;
-                    </button>
+
+                    <BotonFlechaCategoria onClick={scrollLeft} icono={<MdArrowBackIosNew/>} />
+
+                    <BotonFlechaCategoria onClick={scrollRight} icono={<MdArrowForwardIos/>}/>
 
                     <div className="relative ml-4">
                         <input
