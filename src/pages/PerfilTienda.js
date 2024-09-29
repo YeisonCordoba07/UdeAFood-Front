@@ -88,6 +88,13 @@ const PerfilTienda = () => {
                 }
 
 
+              
+                 <Producto
+                    imagen="/informal.jpg"
+                    nombre="Patel de carne hojaldrada horno"
+                    precio="4200" />
+
+
             </section>
 
         </div>
