@@ -38,7 +38,7 @@ const imagenes = [
 const PerfilTienda = () => {
 
 
-    const {data, loading, error} = useFetch("http://localhost:8080/Seccion/5");
+    const {data, loading, error} = useFetch("http://localhost:8080/Seccion/1");
 
 
     // Función para obtener una imagen aleatoria
@@ -50,48 +50,44 @@ const PerfilTienda = () => {
 
     return (
 
-        <div>
+        <div className="relative">
             <Header />
 
-            <SeccionTiendas/>
+            <SeccionTiendas secciones={data}/>
 
             <PerfilT/>
             
 
-            <section className="flex gap-4 p-5 flex-wrap">
+            <section className="flex flex-col p-5">
 
                 {
                     data.map((secciones) => {
-                        return secciones.productos.map((elementoProducto) => {
-                            return (
-                                <Producto
-                                    key={elementoProducto.id}
-                                    imagen={obtenerImagenAleatoria()}
-                                    nombre={elementoProducto.nombre}
-                                    precio={elementoProducto.precio}
-                                />
-                            );
-                        });
+                        return (
+                            <section
+                                id={secciones.nombre}
+                                key={secciones.nombre}
+                                className="flex flex-col gap-2 pt-5 pb-7 border-b border-gray-200">
+
+                                <h2 className={"text-2xl font-bold"}>{secciones.nombre}</h2>
+                                <div className="flex gap-4 mt-2 flex-wrap">
+                                {secciones.productos.map((elementoProducto) => {
+                                    return (
+                                        <Producto
+                                            key={elementoProducto.id}
+                                            imagen={obtenerImagenAleatoria()}
+                                            nombre={elementoProducto.nombre}
+                                            precio={elementoProducto.precio}
+                                        />
+                                    );
+                                })}
+                                </div>
+                            </section>
+                        );
                     })
 
                 }
 
-                <Producto />
 
-                <Producto
-                    imagen="/udeafood.jpg"
-                    nombre="Hamburguesa de Pollo"
-                    precio="5800" />
-
-                <Producto
-                    imagen="/informal.jpg"
-                    nombre="Patel de carne hojaldrada horno"
-                    precio="4200" />
-
-                <Producto
-                    imagen="/formal.jpg"
-                    nombre="Patel de carne"
-                    precio="4200" />
             </section>
 
         </div>

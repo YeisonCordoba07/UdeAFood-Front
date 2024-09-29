@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa'; // Importa el icono de lupa desde rea
 import {useFetch} from "@/hook/useFetch";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import {BotonFlechaCategoria} from "@/components/categorias/BotonFlechaCategoria";
+import Link from "next/link";
 
 const seccionesProvicinales = [
     'Pizza', 'Asiática', 'Poke', 'Empanadas', 'Sushi', 'Sanduches', 'Típica', 'Vegana',
@@ -12,9 +13,9 @@ const seccionesProvicinales = [
 
 
 
-const SeccionTiendas = () => {
+const SeccionTiendas = ({secciones}) => {
 
-    const {data} = useFetch("http://localhost:8080/Seccion/1");
+    //const {data} = useFetch("http://localhost:8080/Seccion/1");
 
     const [seccionActiva, setSeccionActiva] = useState();
     const seccionScrollRef = useRef(null);
@@ -32,15 +33,15 @@ const SeccionTiendas = () => {
 
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 sticky top-0 z-50">
             <div className="p-4 mb-4 flex items-center justify-between">
                 <div className="flex items-center w-full max-w-[65%]">
                     <h2 className="text-lg font-bold mr-4">Secciones</h2>
 
 
                     <div className="flex space-x-4 overflow-x-hidden" ref={seccionScrollRef}>
-                        {data.map((seccion) => (
-                            <button
+                        {secciones.map((seccion) => (
+                            <Link href={`#${seccion.nombre}`}
                                 key={seccion.nombre}
                                 className={`px-4 py-2 text-black ${seccionActiva === seccion.nombre ? 'text-green-500 font-bold' : ''}`}
                                 onClick={() => setSeccionActiva(seccion.nombre)}>
@@ -48,7 +49,7 @@ const SeccionTiendas = () => {
                                     {seccion.nombre}
                                     {seccionActiva === seccion.nombre && (<div className="w-full h-1 bg-green-500 mt-1"></div>)}
 
-                            </button>
+                            </Link>
                         ))}
                     </div>
                 </div>
