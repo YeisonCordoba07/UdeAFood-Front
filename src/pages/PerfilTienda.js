@@ -29,7 +29,8 @@ const PerfilTienda = () => {
                     nombre="Hamburguesa de Pollo"
                     precio="5800" />
 
-                <Producto
+              
+                 <Producto
                     imagen="/informal.jpg"
                     nombre="Patel de carne hojaldrada horno"
                     precio="4200" />
