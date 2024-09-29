@@ -4,25 +4,29 @@ import {useFetch} from "@/hook/useFetch";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import {BotonFlechaCategoria} from "@/components/categorias/BotonFlechaCategoria";
 
-const categories = [
+const seccionesProvicinales = [
     'Pizza', 'Asiática', 'Poke', 'Empanadas', 'Sushi', 'Sanduches', 'Típica', 'Vegana',
     'Pollo', 'Jugos', 'Desayuno', 'Hamburguesas', 'Perros', 'Mexicana', 'Café',
     'Panadería', 'Japonesa', 'China', 'Alcohol', 'Ensaladas'
 ];
 
+
+
 const SeccionTiendas = () => {
 
     const {data} = useFetch("http://localhost:8080/Seccion/1");
 
-    const [activeCategory, setActiveCategory] = useState();
-    const categoryScrollRef = useRef(null);
+    const [seccionActiva, setSeccionActiva] = useState();
+    const seccionScrollRef = useRef(null);
+
+
 
     const scrollLeft = () => {
-        categoryScrollRef.current.scrollBy({ left: -150, behavior: 'smooth' });
+        seccionScrollRef.current.scrollBy({ left: -150, behavior: 'smooth' });
     };
 
     const scrollRight = () => {
-        categoryScrollRef.current.scrollBy({ left: 150, behavior: 'smooth' });
+        seccionScrollRef.current.scrollBy({ left: 150, behavior: 'smooth' });
     };
 
 
@@ -33,18 +37,17 @@ const SeccionTiendas = () => {
                 <div className="flex items-center w-full max-w-[65%]">
                     <h2 className="text-lg font-bold mr-4">Secciones</h2>
 
-                    {/* Barra de categorias */}
-                    <div className="flex space-x-4 overflow-x-hidden" ref={categoryScrollRef}>
+
+                    <div className="flex space-x-4 overflow-x-hidden" ref={seccionScrollRef}>
                         {data.map((seccion) => (
                             <button
                                 key={seccion.nombre}
-                                className={`px-4 py-2 text-black ${activeCategory === seccion.nombre ? 'text-green-500 font-bold' : ''}`}
-                                onClick={() => setActiveCategory(seccion.nombre)}
-                            >
-                                {seccion.nombre}
-                                {activeCategory === seccion.nombre && (
-                                    <div className="w-full h-1 bg-green-500 mt-1"></div>
-                                )}
+                                className={`px-4 py-2 text-black ${seccionActiva === seccion.nombre ? 'text-green-500 font-bold' : ''}`}
+                                onClick={() => setSeccionActiva(seccion.nombre)}>
+
+                                    {seccion.nombre}
+                                    {seccionActiva === seccion.nombre && (<div className="w-full h-1 bg-green-500 mt-1"></div>)}
+
                             </button>
                         ))}
                     </div>
