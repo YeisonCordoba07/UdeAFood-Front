@@ -1,6 +1,6 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
-import {useEffect, useState} from "react";
-import {useFetch} from "@/hook/useFetch";
+import { useState } from "react";
+import { useFetch } from "@/hook/useFetch";
 const FormularioCrearProducto = () => {
 
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -8,42 +8,45 @@ const FormularioCrearProducto = () => {
         descripcion: "",
         precio: "",
         disponibilidad: "",
-        categoria:"",
-        Seccion:""
+        categorias: [{ idCategoria: "" }],
+        seccion: { id: "" }
     });
 
 
 
-    const {data:categoria, loading:loadingCategoria, error:errorCategoria} = useFetch("http://localhost:8080/Categoria");
-    const {data:Seccion, loading:loadingSeccion, error:errorSeccion} = useFetch("http://localhost:8080/Seccion/434");
+    // Trae todas las categorias que exiten
+    const { data: categoria } = useFetch("http://localhost:8080/Categoria");
+
+    // Trae las secciones de la tienda 1
+    const { data: Seccion } = useFetch("http://localhost:8080/Seccion/1");
 
 
 
     const crearTienda = (e) => {
         e.preventDefault();
-        fetch("http://localhost:8080/Producto/crearProducto",{
+        fetch("http://localhost:8080/Producto/crearProducto", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(nuevoProducto), 
+            body: JSON.stringify(nuevoProducto),
         })
-        .then((res) => {
-            // Verificamos si el contenido es JSON
-            const contentType = res.headers.get("Content-Type");
-            if (contentType && contentType.includes("application/json")) {
-                return res.json(); // Si es JSON, lo procesamos
-            } else {
-                return res.text(); // Si es texto, lo procesamos como texto
-            }
-        })
-        .then((response) => {
-            console.log("Respuesta del servidor:", response);
-        })
-        .catch((error) => console.error("Error al crear Producto:", error));
+            .then((res) => {
+                // Verificamos si el contenido es JSON
+                const contentType = res.headers.get("Content-Type");
+                if (contentType && contentType.includes("application/json")) {
+                    return res.json(); // Si es JSON, lo procesamos
+                } else {
+                    return res.text(); // Si es texto, lo procesamos como texto
+                }
+            })
+            .then((response) => {
+                console.log("Respuesta del servidor:", response);
+            })
+            .catch((error) => console.error("Error al crear Producto:", error));
     }
 
-    
+
 
 
     return (
@@ -101,18 +104,24 @@ const FormularioCrearProducto = () => {
 
                     <span className="text-xl font-semibold">Categoria</span>
 
-                    <select name="Categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
+                    <select name="categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
+                        onChange={(e) => setNuevoProducto({
+                            ...nuevoProducto,
+                            categorias: [{ idCategoria: e.target.value }]
+                        })}>
 
                         <option value="default" selected>Seleccionar</option>
-                        {categoria.map(categoria =>{
+                        {categoria.map(categoria => {
                             return (
                                 <option
                                     value={categoria.idCategoria}
-                                    key={categoria.idCategoria}>
+                                    key={categoria.idCategoria}
+
+                                >
                                     {categoria.nombreCategoria}
                                 </option>
                             );
-                            
+
                         })}
 
                     </select>
@@ -126,9 +135,13 @@ const FormularioCrearProducto = () => {
 
                     <span className="text-xl font-semibold">Sección</span>
 
-                    <select name="Seccion" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96">
+                    <select name="seccion" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
+                        onChange={(e) => setNuevoProducto({
+                            ...nuevoProducto,
+                            seccion: { id: e.target.value }
+                        })}>
                         <option value="default" selected>Seleccionar</option>
-                        {Seccion.map(Seccion =>{
+                        {Seccion.map(Seccion => {
                             return (
                                 <option
                                     value={Seccion.id}
@@ -137,9 +150,9 @@ const FormularioCrearProducto = () => {
                                 </option>
                             );
                         })}
-                        
+
                     </select>
-                    
+
 
                 </label>
 
@@ -156,4 +169,4 @@ const FormularioCrearProducto = () => {
     );
 }
 
-export {FormularioCrearProducto};
+export { FormularioCrearProducto };
