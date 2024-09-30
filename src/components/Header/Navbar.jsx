@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import {useBusquedaContext} from "@/atoms/busquedaContext";
+import { useBusquedaContext } from "@/atoms/busquedaContext";
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Navbar = () => {
 
@@ -10,7 +11,7 @@ const Navbar = () => {
 
     const router = useRouter();
 
-    const {setData} = useBusquedaContext();
+    const { setData } = useBusquedaContext();
 
 
     const buscarProducto = (e) => {
@@ -50,7 +51,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Search Input */}
-                <form onSubmit={buscarProducto} className = "flex items-center">
+                <form onSubmit={buscarProducto} className="flex items-center">
 
                     <InputBase
                         placeholder="Search…"
@@ -62,17 +63,18 @@ const Navbar = () => {
 
                 </form>
             </div>
-
-            <button
-                type="submit"
-                className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-600 hover:scale-95 duration-300">
-                Registrarse</button>
-
-            <button
-                type="submit"
-                className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-600 hover:scale-95 duration-300">
-                Iniciar sesión </button>
-
+            <Link href="/registro">
+                <button
+                    type="submit"
+                    className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-600 hover:scale-95 duration-300">
+                    Registrarse</button>
+            </Link>
+            <Link href="/inicioSesion">
+                <button
+                    type="submit"
+                    className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-600 hover:scale-95 duration-300">
+                    Iniciar sesión </button>
+            </Link>
         </nav>
 
     )
