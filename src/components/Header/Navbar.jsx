@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import {useBusquedaContext} from "@/atoms/busquedaContext";
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
 
-    const [palabra, setpalabra] = useState("");
+    const [palabra, setPalabra] = useState("");
+
+    const router = useRouter();
+
+    const {setData} = useBusquedaContext();
+
+
     const buscarProducto = (e) => {
         e.preventDefault();
-        //setpalabra(e.target.value)
         fetch(`http://localhost:8080/Producto/consultar/${palabra}`, {
             method: "GET",
             headers: {
@@ -21,6 +28,8 @@ const Navbar = () => {
             .then((response) => {
                 console.log(response)
                 setData(response);
+                router.push("/busquedaProducto");
+
             })
             .catch((error) => {
                 //   setError(error);
@@ -29,6 +38,9 @@ const Navbar = () => {
             });
 
     }
+
+
+
     return (
 
         <nav className='flex flex-[1] justify-between w-full'>
@@ -45,7 +57,7 @@ const Navbar = () => {
                         inputProps={{ 'aria-label': 'search' }}
                         className="pr-2 bg-transparent text-gray-700 focus:outline-none pl-2"
                         value={palabra}
-                        onChange={(e) => setpalabra(e.target.value)}
+                        onChange={(e) => setPalabra(e.target.value)}
                     />
 
                 </form>
