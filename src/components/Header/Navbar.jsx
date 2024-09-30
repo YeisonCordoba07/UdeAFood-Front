@@ -41,11 +41,10 @@ const Navbar = () => {
     }
 
 
-
     return (
 
-        <nav className='flex flex-[1] justify-between w-full'>
-            <div className="flex bg-gray-200 rounded-full  w-full max-w-xl mx-auto py-0">
+        <nav className='flex flex-[1] justify-between w-full items-center'>
+            <div className="flex bg-gray-200 rounded-full  w-full max-w-xl mx-auto py-3 ">
                 <div className="pointer-events-none flex items-center justify-center px-2">
                     <SearchIcon className="text-gray-500" />
                 </div>
@@ -63,6 +62,26 @@ const Navbar = () => {
 
                 </form>
             </div>
+                <select
+                        id="ID"
+                        name="tipoTienda"
+                        //onChange={onChange}
+                        className="bg-green-500 mr-60 px-5 py-2 h-10 rounded-lg text-xl outline-brack w-72" >
+                        <option disabled value="" selected>
+                            Seleccione
+                        </option>
+                            <option key="FORMAL" value="FORMAL">
+                                FORMAL
+                            </option>
+                            <option key="INFORMAL" value="INFORMAL">
+                            INFORMAL
+                        </option>
+                        <option key="TODAS" value="TODAS">
+                                TODAS
+                            </option>
+                    
+                    </select>
+        
             <Link href="/registro">
                 <button
                     type="submit"

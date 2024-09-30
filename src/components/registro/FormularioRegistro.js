@@ -83,7 +83,7 @@ const FormularioRegistro = () => {
                 defaultValue={nuevaTienda.tipoTienda}
                 onChange={(e) => setNuevaTienda({ ...nuevaTienda, tipoTienda: e.target.value })}
                 type="select"
-                options={["Tienda Formal", "Tienda Informal"]}
+                options={["FORMAL", "INFORMAL"]}
             />
 
             <ElementoFormulario
