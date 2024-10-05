@@ -1,7 +1,11 @@
 import { ElementoFormulario } from "./ElementoFormulario";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const FormularioRegistro = () => {
+
+    const [mensaje, setMensaje] = useState("");
+    const router = useRouter();
 
     const crearTienda = (e) => {
         e.preventDefault();
@@ -23,6 +27,8 @@ const FormularioRegistro = () => {
             })
             .then((response) => {
                 console.log("Respuesta del servidor:", response);
+                setMensaje("Tienda creada exitosamente");
+                router.push("/PerfilTienda"); // Redirigir a PerfilTienda
             })
             .catch((error) => console.error("Error al crear tienda:", error));
     }
@@ -38,6 +44,7 @@ const FormularioRegistro = () => {
         domicilio: "",
         contacto: "",
     });
+    
 
     return (
         <form className="flex gap-3 flex-col w-[650px]" onSubmit={crearTienda}>
@@ -144,7 +151,11 @@ const FormularioRegistro = () => {
             <button
                 type="submit"
                 className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">Registrarse</button>
-
+            {mensaje && (
+                <p className={`mt-4 ${mensaje.includes("exitoso") ? "text-green-600" : "text-red-600"}`}>
+                    {mensaje}
+                </p>
+            )}
         </form>
     );
 }
