@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { mostrarTiendasDialog } from '../mostrarTiendaDialog/mostrarTiendasDialog';
 
 const Tienda = () => {
+
+    const[openTiendaDialog, setOpenTiendaDialog] = useState(false);
+
 return (
     <div className="h-screen flex items-center justify-center">
         <div className="w-full h-3/5 flex items-center justify-center">
@@ -27,7 +32,7 @@ return (
             </button>
             <button
             className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200"
-            onClick={() => console.log('Ver todas')}
+            onClick={() => setOpenTiendaDialog(true)}
             >
             <img src="all.jpg" alt="Ver todas" className="w-full h-3/4 object-cover" />
             <div className="absolute bottom-0 w-full text-center bg-gradient-to-t from-gray-900 to-transparent text-white p-2">
@@ -36,8 +41,12 @@ return (
             </div>
             </button>
         </div>
+        <mostrarTiendasDialog open={openTiendaDialog} setOpen={setOpenTiendaDialog} />
+
         </div>
+
     </div>
+    
     );
 };
 

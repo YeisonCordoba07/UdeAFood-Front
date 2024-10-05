@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 const InformacionTienda = () => {
 
+
   const [isopen, setIsopen]=useState(false);
   return (
     <>
