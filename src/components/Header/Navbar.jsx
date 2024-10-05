@@ -51,18 +51,18 @@ const Navbar = () => {
 
 
     return (
-        <nav className='flex flex-[1] justify-between w-full items-center'>
+        <nav className='flex flex-[1] justify-between w-full items-center gap-2'>
             <div className="flex bg-gray-200 rounded-full  w-full max-w-xl mx-auto py-3 ">
                 <div className="pointer-events-none flex items-center justify-center px-2">
                     <SearchIcon className="text-gray-500" />
                 </div>
 
                 {/* Search Input */}
-                <form onSubmit={buscarProducto} className="flex items-center">
+                <form onSubmit={buscarProducto} className="flex items-center w-11/12">
                     <InputBase
                         placeholder="Search…"
                         inputProps={{ 'aria-label': 'search' }}
-                        className="pr-2 bg-transparent text-gray-700 focus:outline-none pl-2"
+                        className="pr-2 bg-transparent text-gray-700 focus:outline-none pl-2 w-full"
                         value={palabra}
                         onChange={(e) => setPalabra(e.target.value)}
                     />
