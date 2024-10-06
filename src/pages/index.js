@@ -1,5 +1,5 @@
 import { Categorias } from "@/components/categorias/Categorias";
-import { Tienda } from "@/components/B-tiendas/tienda";
+import { Tienda } from "@/components/B-tiendas/Tienda";
 import { Header } from "@/components/Header/Header";
 
 

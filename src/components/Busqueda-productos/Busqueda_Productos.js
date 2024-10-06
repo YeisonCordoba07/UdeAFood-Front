@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import {Header} from '../Header/Header';
-import {Categorias} from '../categorias/Categorias';
-import {Producto} from '../producto/Producto';
-import {useBusquedaContext} from "@/atoms/busquedaContext";
+import React, { useState } from 'react'
+import { Header } from '../Header/Header';
+import { Categorias } from '../categorias/Categorias';
+import { Producto } from '../producto/Producto';
+import { useBusquedaContext } from "@/atoms/busquedaContext";
 
 const imagenes = [
     "/burrito.jpg",
@@ -38,31 +38,32 @@ const Busqueda_Productos = () => {
     };
 
 
-    const {data} = useBusquedaContext();
+    const { data } = useBusquedaContext();
 
     console.log("DATA DE BUSQUEDA: ", data);
 
 
     return (
         <div>
-            <Header/>
-            <Categorias/>
+            <Header />
+            <Categorias />
+
 
             {/* Carga los productos de la data obtenida de la busqueda en el nav */}
             {data.length > 0 ? (
                 <section className="flex gap-4 p-5 flex-wrap">
-                    {data.map((producto) => (
-                        <Producto
-                            key={producto.id}
-                            imagen={obtenerImagenAleatoria()}
-                            nombre={producto.nombre}
-                            precio={producto.precio}
-                        />
+                    {data.map((seccion) => (
+                        seccion.productos.map((producto) => (
+                            <Producto
+                                key={producto.id}
+                                imagen={obtenerImagenAleatoria()}
+                                nombre={producto.nombre}
+                                precio={producto.precio}
+                            />
+                        ))
                     ))}
                 </section>
-            )
-            :
-            (
+            ) : (
                 <p className="p-5 text-center">No se encontraron productos</p>
             )}
 
@@ -72,27 +73,27 @@ const Busqueda_Productos = () => {
                 <Producto
                     imagen="/udeafood.jpg"
                     nombre="Hamburguesa de Pollo"
-                    precio="5800"/>
+                    precio="5800" />
 
                 <Producto
                     imagen="/informal.jpg"
                     nombre="Patel de carne hojaldrada horno"
-                    precio="4200"/>
+                    precio="4200" />
 
                 <Producto
                     imagen="/formal.jpg"
                     nombre="Patel de carne"
-                    precio="4200"/>
+                    precio="4200" />
 
                 <Producto
                     imagen="/formal.jpg"
                     nombre="Patel de carne"
-                    precio="4200"/>
+                    precio="4200" />
 
                 <Producto
                     imagen="/formal.jpg"
                     nombre="Patel de carne"
-                    precio="4200"/>
+                    precio="4200" />
 
 
             </section>
@@ -101,4 +102,4 @@ const Busqueda_Productos = () => {
     )
 }
 
-export {Busqueda_Productos};
+export { Busqueda_Productos };

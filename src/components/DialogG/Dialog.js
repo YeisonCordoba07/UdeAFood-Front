@@ -5,9 +5,9 @@ import { Dialog as Dialogmiu, DialogContent,DialogTitle } from '@mui/material';
 
 const Dialog = ({open, onClose, title,children}) => {
   return (
-    <Dialogmiu open={true} onClose={onclose}>
+    <Dialogmiu open={open} onClose={onClose}>
         <DialogTitle>{title}</DialogTitle>
-        <DialogContent>{Children}</DialogContent>
+        <DialogContent>{children}</DialogContent>
     </Dialogmiu>
   )
 }
