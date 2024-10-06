@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { Header } from '../Header/Header';
 import { Categorias } from '../categorias/Categorias';
 import { Producto } from '../producto/Producto';
 import { useBusquedaContext } from "@/atoms/busquedaContext";
+import { useCategoriaContext } from '@/atoms/useCategoriaContext';
 
 const imagenes = [
     "/burrito.jpg",
@@ -39,6 +40,7 @@ const Busqueda_Productos = () => {
 
 
     const { data } = useBusquedaContext();
+    const { categoriaData } = useCategoriaContext();
 
     console.log("DATA DE BUSQUEDA: ", data);
 
@@ -64,8 +66,23 @@ const Busqueda_Productos = () => {
                     ))}
                 </section>
             ) : (
-                <p className="p-5 text-center">No se encontraron productos</p>
+                <section className="flex gap-4 p-5 flex-wrap">
+                {categoriaData.map((producto) => (
+
+                        <Producto
+                            key={producto.id}
+                            imagen={obtenerImagenAleatoria()}
+                            nombre={producto.nombre}
+                            precio={producto.precio}
+                        />
+
+                ))}
+            </section>
             )}
+
+
+
+
 
 
             {/*Productos preterminados o quemados*/}
