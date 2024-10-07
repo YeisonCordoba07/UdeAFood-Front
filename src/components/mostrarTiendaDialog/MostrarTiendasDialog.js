@@ -5,13 +5,19 @@ import React from 'react'
 const MostrarTiendasDialog = ({open, setOpen}) => {
   return (
     <>
-    <Dialog open={open}
+    <Dialog open={open} 
     onClose={()=>{
         setOpen(false);
     }} 
-    title='tiendas formales'
+    title='Tiendas nueva'
     >
-        <div>Tiendas formales</div>
+        <div>
+            <h1>lista de tiendas</h1>
+
+            <button onClick={()=>setOpen(false)}>
+            Cerrar
+            </button>
+        </div>
     </Dialog>
  
 
