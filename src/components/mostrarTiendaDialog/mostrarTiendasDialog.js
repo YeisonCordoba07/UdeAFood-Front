@@ -2,16 +2,22 @@ import { Dialog } from '../DialogG/Dialog'
 
 import React from 'react'
 
-const mostrarTiendasDialog = ({open, setOpen}) => {
+const MostrarTiendasDialog = ({open, setOpen}) => {
   return (
     <>
-    <Dialog open={true} 
+    <Dialog open={open} 
     onClose={()=>{
         setOpen(false);
     }} 
-    title='tiendas formales'
+    title='Tiendas nueva'
     >
-        <div>Tiendas formales</div>
+        <div>
+            <h1>lista de tiendas</h1>
+
+            <button onClick={()=>setOpen(false)}>
+            Cerrar
+            </button>
+        </div>
     </Dialog>
  
 
@@ -19,6 +25,6 @@ const mostrarTiendasDialog = ({open, setOpen}) => {
   )
 }
 
-export {mostrarTiendasDialog} ;
+export {MostrarTiendasDialog} ;
 
 
