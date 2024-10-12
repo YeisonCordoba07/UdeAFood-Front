@@ -9,10 +9,13 @@ const FormularioCrearProducto = () => {
         precio: "",
         disponibilidad: "",
         categorias: [{ idCategoria: "" }],
-        seccion: { id: "" }
+        seccion: { id: "" },
+        imagen: null
     });
 
-
+    const handleImageChange = (e) => {
+        setNuevoProducto({ ...nuevoProducto, imagen: e.target.files[0] });
+    };
 
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
@@ -94,8 +97,10 @@ const FormularioCrearProducto = () => {
 
                 <ElementoFormulario
                     identificador={"imagen"}
-                    textoLabel={"Imagen"}
-                    placeholderLabel={"https://www.imagen.com"}
+                    textoLabel={"Imagen *"}
+                    type="file"  // Cambiar el campo a tipo file
+                    esRequerido={true}
+                    onChange={handleImageChange}
                 />
 
                 <label
