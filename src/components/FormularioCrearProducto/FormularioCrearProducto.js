@@ -10,13 +10,25 @@ const FormularioCrearProducto = () => {
         disponibilidad: "",
         categorias: [{ idCategoria: "" }],
         seccion: { id: "" },
-        imagen: null
+        foto: ""
     });
 
+
     const handleImageChange = (e) => {
-        setNuevoProducto({ ...nuevoProducto, imagen: e.target.files[0] });
+        const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setNuevoProducto({ ...nuevoProducto, foto: reader.result.split(",")[1] }); // Convierte a base64 y actualiza el estado
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Lee la imagen como una URL de datos (base64)
+        }
     };
 
+
+    
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
@@ -95,13 +107,15 @@ const FormularioCrearProducto = () => {
                     onChange={(e) => setNuevoProducto({ ...nuevoProducto, disponibilidad: e.target.value })}
                 />
 
-                <ElementoFormulario
-                    identificador={"imagen"}
-                    textoLabel={"Imagen *"}
-                    type="file"  // Cambiar el campo a tipo file
-                    esRequerido={true}
-                    onChange={handleImageChange}
-                />
+                <div>
+                    <label htmlFor="foto">Foto</label>
+                    <input
+                        type="file"
+                        accept="image/*" // Acepta solo imágenes
+                        onChange={handleImageChange} // Maneja la subida de archivos
+                        className="border p-2 rounded"
+                    />
+                </div>
 
                 <label
                     htmlFor="Categoria"
