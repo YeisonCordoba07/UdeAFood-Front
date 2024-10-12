@@ -7,6 +7,19 @@ const FormularioRegistro = () => {
     const [mensaje, setMensaje] = useState("");
     const router = useRouter();
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setNuevaTienda({ ...nuevaTienda, foto: reader.result.split(",")[1] }); // Convierte a base64 y actualiza el estado
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Lee la imagen como una URL de datos (base64)
+        }
+    };
+
     const crearTienda = (e) => {
         e.preventDefault();
         fetch("http://localhost:8080/Tienda/crearTienda", {
@@ -44,7 +57,7 @@ const FormularioRegistro = () => {
         domicilio: "",
         contacto: "",
     });
-    
+
 
     return (
         <form className="flex gap-3 flex-col w-[650px]" onSubmit={crearTienda}>
@@ -74,13 +87,15 @@ const FormularioRegistro = () => {
                 onChange={(e) => setNuevaTienda({ ...nuevaTienda, ubicacion: e.target.value })}
             />
 
-            <ElementoFormulario
-                identificador={"foto"}
-                textoLabel={"Foto"}
-                placeholderLabel={"foto"}
-                defaultValue={nuevaTienda.foto}
-                onChange={(e) => setNuevaTienda({ ...nuevaTienda, foto: e.target.value })}
-            />
+            <div>
+                <label htmlFor="foto">Foto</label>
+                <input
+                    type="file"
+                    accept="image/*" // Acepta solo imágenes
+                    onChange={handleFileChange} // Maneja la subida de archivos
+                    className="border p-2 rounded"
+                />
+            </div>
 
             <ElementoFormulario
                 identificador="tipoTienda"
