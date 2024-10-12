@@ -17,10 +17,11 @@ return (
             <img src="formal.jpg" alt="Ver tiendas formales" className="w-full h-full object-cover" />
             <div className="absolute bottom-0 w-full text-center bg-gradient-to-t from-gray-900 to-transparent text-white p-2">
             <p className="mb-1">Ver</p>
-            <p>tiendas formales</p>
+            <p>Tiendas formales</p>
             </div>
             </button>
             </Link>
+            <Link href='/BusquedaTInformales'>
             <button
             className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200"
             onClick={() => console.log('Ver tiendas informales')}
@@ -28,9 +29,11 @@ return (
             <img src="informal.jpg" alt="Ver tiendas informales" className="w-full h-full object-cover" />
             <div className="absolute bottom-0 w-full text-center bg-gradient-to-t from-gray-900 to-transparent text-white p-2">
                 <p className="mb-1">Ver</p>
-                <p>tiendas informales</p>
+                <p>Tiendas informales</p>
             </div>
             </button>
+            </Link>
+            <Link href='BusquedaTodasTiendas'>
             <button
             className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200"
             onClick={() => console.log('Ver todas')}
@@ -38,9 +41,10 @@ return (
             <img src="all.jpg" alt="Ver todas" className="w-full h-full object-cover" />
             <div className="absolute bottom-0 w-full text-center bg-gradient-to-t from-gray-900 to-transparent text-white p-2">
                 <p className="mb-1">Ver</p>
-                <p>todas</p>
+                <p>Todas</p>
             </div>
             </button>
+            </Link>
         </div>
 
         </div>
