@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 const Tienda = () => {
 
-    const[openTiendaDialog, setOpenTiendaDialog] = useState(false);
+    const [openTiendaDialog, setOpenTiendaDialog] = useState(false);
 
-return (
-    <div className="h-96 flex items-center justify-center">
-        <div className="w-full  flex items-center justify-center">
-        <div className="grid grid-cols-3 gap-4 w-1/2">
+    return (
+        <div className="h-96 flex items-center justify-center">
+            <div className="w-full  flex items-center justify-center">
+                <div className="grid grid-cols-3 gap-4 w-1/2">
 
         <Link href='/BusquedaTiendaF'>
             <button
@@ -47,10 +47,9 @@ return (
             </Link>
         </div>
 
+
         </div>
 
-    </div>
-    
     );
 };
 
