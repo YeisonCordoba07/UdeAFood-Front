@@ -49,8 +49,6 @@ const Busqueda_Productos = () => {
         <div>
             <Header />
             <Categorias />
-
-
             {/* Carga los productos de la data obtenida de la busqueda en el nav */}
             {data.length > 0 ? (
                 <section className="flex gap-4 p-5 flex-wrap">
@@ -66,8 +64,14 @@ const Busqueda_Productos = () => {
                     ))}
                 </section>
             ) : (
+                <p className="p-5 text-center">No se encontraron productos por el buscador</p>
+            )}
+
+
+            {/* Carga los productos de la data obtenida de la busqueda en el nav */}
+            {categoriaData.length > 0 ? (
                 <section className="flex gap-4 p-5 flex-wrap">
-                {categoriaData.map((producto) => (
+                    {categoriaData.map((producto) => (
 
                         <Producto
                             key={producto.id}
@@ -76,9 +80,13 @@ const Busqueda_Productos = () => {
                             precio={producto.precio}
                         />
 
-                ))}
-            </section>
+                    ))}
+                </section>
+            ) : (
+                <p className="p-5 text-center">No se encontraron productos por categorias</p>
             )}
+
+
 
 
 

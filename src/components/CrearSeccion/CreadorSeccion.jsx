@@ -48,7 +48,7 @@ const CreadorSeccion = () => {
                 placeholderLabel={"1,2"}
                 esRequerido={true}
                 defaultValue={nuevaSeccion.idTienda}
-                    onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, idTienda: 434 })}
+                    onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, idTienda: e.target.value })}
             />
 
             <button
