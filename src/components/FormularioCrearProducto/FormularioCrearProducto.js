@@ -8,7 +8,7 @@ const FormularioCrearProducto = () => {
         descripcion: "",
         precio: "",
         disponibilidad: "",
-        categorias: [{ idCategoria: "" }],
+        categoria: [{ idCategoria: "" }],
         seccion: { id: "" },
         foto: ""
     });
@@ -125,7 +125,7 @@ const FormularioCrearProducto = () => {
                     <select name="categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
                         onChange={(e) => setNuevoProducto({
                             ...nuevoProducto,
-                            categorias: [{ idCategoria: e.target.value }]
+                            categoria: [{ idCategoria: e.target.value }]
                         })}>
 
                         <option value="default" selected>Seleccionar</option>
