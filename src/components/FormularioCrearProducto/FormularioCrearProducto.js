@@ -13,7 +13,6 @@ const FormularioCrearProducto = () => {
         foto: ""
     });
 
-
     const handleImageChange = (e) => {
         const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
         const reader = new FileReader();
@@ -28,7 +27,7 @@ const FormularioCrearProducto = () => {
     };
 
 
-    
+
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
@@ -112,7 +111,7 @@ const FormularioCrearProducto = () => {
                     <input
                         type="file"
                         accept="image/*" // Acepta solo imágenes
-                        onChange={handleImageChange} // Maneja la subida de archivos
+                        onChange={handleImageChange} 
                         className="border p-2 rounded"
                     />
                 </div>
