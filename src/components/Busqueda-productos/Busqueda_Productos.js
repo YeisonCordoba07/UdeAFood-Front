@@ -56,7 +56,7 @@ const Busqueda_Productos = () => {
                         seccion.productos.map((producto) => (
                             <Producto
                                 key={producto.id}
-                                imagen={producto.foto ? `data:image/png;base64,${producto.foto}` : obtenerImagenAleatoria()}
+                                imagen={producto.foto ? `data:image/jpeg;base64,${producto.foto}` : obtenerImagenAleatoria()}
                                 nombre={producto.nombre}
                                 precio={producto.precio}
                             />
