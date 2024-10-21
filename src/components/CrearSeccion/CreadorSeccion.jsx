@@ -5,7 +5,7 @@ const CreadorSeccion = () => {
 
     const [nuevaSeccion, setNuevaSeccion] = useState({
         nombre: "",
-        idTienda:434
+        idTienda:1
     })
 
     const crearSeccion = (e) => {
