@@ -42,48 +42,61 @@ const Navbar = () => {
     };
 
     return (
-        <nav className='flex flex-[1] justify-between w-full items-center gap-2'>
-            <div className="flex bg-gray-200 rounded-full w-full max-w-xl mx-auto py-3">
-                <div className="pointer-events-none flex items-center justify-center px-2">
-                    <SearchIcon className="text-gray-500" />
+        <nav className='flex flex-[1] justify-between w-screen items-center gap-2'>
+
+            <div className="flex gap-8 items-center w-full">
+
+                <div className="flex bg-gray-200 rounded-full w-full max-w-xl p-3 max-h-12">
+
+                    {/* Logo input */}
+                    <div className="pointer-events-none flex items-center justify-center px-2">
+                        <SearchIcon className="text-gray-500" />
+                    </div>
+
+                    {/* Input de Búsqueda */}
+                    <form onSubmit={buscarProducto} className="flex items-center w-11/12 max-h-10 p-3">
+                        <InputBase
+                            placeholder="Buscar productos..."
+                            inputProps={{ 'aria-label': 'search' }}
+                            className="pr-2 bg-transparent text-gray-700 focus:outline-none pl-2 w-full text-xl"
+                            value={palabra}
+                            onChange={(e) => setPalabra(e.target.value)}
+                        />
+                    </form>
                 </div>
 
-                {/* Input de Búsqueda */}
-                <form onSubmit={buscarProducto} className="flex items-center w-11/12">
-                    <InputBase
-                        placeholder="Buscar productos..."
-                        inputProps={{ 'aria-label': 'search' }}
-                        className="pr-2 bg-transparent text-gray-700 focus:outline-none pl-2 w-full"
-                        value={palabra}
-                        onChange={(e) => setPalabra(e.target.value)}
-                    />
-                </form>
+
+                {/* Selector de Tipo de Tienda */}
+                <select
+                    id="tipoTienda"
+                    name="tipoTienda"
+                    value={tipoTienda}
+                    onChange={(e) => setTipoTienda(e.target.value)}
+                    className="bg-green-500 px-5 h-10 rounded-lg text-xl outline-none w-48 flex align-center"
+                >
+                    <option value="TODAS">TODAS</option>
+                    <option value="FORMAL">FORMAL</option>
+                    <option value="INFORMAL">INFORMAL</option>
+                </select>
             </div>
 
-            {/* Selector de Tipo de Tienda */}
-            <select
-                id="tipoTienda"
-                name="tipoTienda"
-                value={tipoTienda}
-                onChange={(e) => setTipoTienda(e.target.value)}
-                className="bg-green-500 mr-60 px-5 py-2 h-10 rounded-lg text-xl outline-none w-72"
-            >
-                <option value="TODAS">TODAS</option>
-                <option value="FORMAL">FORMAL</option>
-                <option value="INFORMAL">INFORMAL</option>
-            </select>
 
             {/* Botones de Registro e Inicio de Sesión */}
-            <Link href="/registro">
-                <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300">
-                    Registrarse
-                </button>
-            </Link>
-            <Link href="/inicioSesion">
-                <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300">
-                    Iniciar sesión
-                </button>
-            </Link>
+
+            <div className="flex items-center gap-5">
+                <Link href="/registro">
+                    <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                        Registrarse
+                    </button>
+                </Link>
+                <Link href="/inicioSesion">
+                    <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                        Iniciar sesión
+                    </button>
+                </Link>
+            </div>
+
+
         </nav>
     );
 };

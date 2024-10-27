@@ -2,15 +2,15 @@ import React from 'react'
 import Link from "next/link";
 const Logo = () => {
   return (
-    <div>
-      <Link href="/">
+
+      <Link href="/" className="flex justify-start w-28 h-14 mr-10 min-w-10">
         <img
           src='LogoUdeAFood.png'
-          className='flex justify-items-start mx-auto w-35 h-20'
+          className='object-contain w-full h-full'
           alt='logo'
         />
       </Link>
-    </div>
+
   )
 }
 

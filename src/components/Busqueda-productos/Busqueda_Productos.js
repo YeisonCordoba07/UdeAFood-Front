@@ -128,7 +128,7 @@ const Busqueda_Productos = () => {
 
 
             {/* Productos preterminados o quemados */}
-            <section className="flex gap-4 p-5 flex-wrap">
+            <section className="flex gap-4 p-5 flex-wrap border-t-2 border-gray-200">
                 <Producto imagen="/udeafood.jpg" nombre="Hamburguesa de Pollo" precio="5800" />
                 <Producto imagen="/informal.jpg" nombre="Patel de carne hojaldrada horno" precio="4200" />
                 <Producto imagen="/formal.jpg" nombre="Patel de carne" precio="4200" />
