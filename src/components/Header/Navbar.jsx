@@ -4,6 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import { useBusquedaContext } from "@/atoms/busquedaContext";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { Logo } from './Logo';
 
 const Navbar = () => {
     const [palabra, setPalabra] = useState("");
@@ -42,11 +43,15 @@ const Navbar = () => {
     };
 
     return (
-        <nav className='flex flex-[1] justify-between w-screen items-center gap-2'>
+        <nav className='flex justify-between w-screen items-center gap-5'>
+            
+            <Logo/>
+                        
 
-            <div className="flex gap-8 items-center w-full">
+            <div className="flex gap-8 items-center w-3/5 m-auto">
 
-                <div className="flex bg-gray-200 rounded-full w-full max-w-xl p-3 max-h-12">
+                {/* Buscador */}
+                <div className="flex bg-gray-100 rounded-full w-full max-w-2xl p-3 max-h-12">
 
                     {/* Logo input */}
                     <div className="pointer-events-none flex items-center justify-center px-2">
@@ -83,14 +88,14 @@ const Navbar = () => {
 
             {/* Botones de Registro e Inicio de Sesión */}
 
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 h-full">
                 <Link href="/registro">
                     <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
                         Registrarse
                     </button>
                 </Link>
                 <Link href="/inicioSesion">
-                    <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                    <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap border-2 border-white">
                         Iniciar sesión
                     </button>
                 </Link>

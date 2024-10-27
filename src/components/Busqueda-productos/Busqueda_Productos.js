@@ -53,7 +53,7 @@ const Busqueda_Productos = () => {
         if (productos.length > 0) {
             return (
 
-                <section className="flex gap-4 p-5 flex-wrap">
+                <section className="flex justify-start w-full max-w-[1270px] gap-4 py-5 flex-wrap m-auto">
                     {productos.map((producto) => (
                         <Producto
                             key={producto.id}
@@ -67,7 +67,7 @@ const Busqueda_Productos = () => {
         } else {
             return (
 
-                <p className="p-5 text-center">No se encontraron productos ||</p>
+                <p className="p-5 text-center">No se encontraron productos</p>
             )
         }
     }
@@ -93,7 +93,7 @@ const Busqueda_Productos = () => {
 
 
     return (
-        <div>
+        <>
             <Header />
             <Categorias />
 
@@ -120,6 +120,7 @@ const Busqueda_Productos = () => {
 
 
 
+
             {/* Carga los productos de la data obtenida de la búsqueda */}
             {crearTarjetaProductos(sortedData)}
 
@@ -128,12 +129,16 @@ const Busqueda_Productos = () => {
 
 
             {/* Productos preterminados o quemados */}
-            <section className="flex gap-4 p-5 flex-wrap border-t-2 border-gray-200">
+            <section className="flex justify-start w-full max-w-[1270px] gap-4 py-5 m-auto flex-wrap border-t-2 border-gray-300">
                 <Producto imagen="/udeafood.jpg" nombre="Hamburguesa de Pollo" precio="5800" />
                 <Producto imagen="/informal.jpg" nombre="Patel de carne hojaldrada horno" precio="4200" />
                 <Producto imagen="/formal.jpg" nombre="Patel de carne" precio="4200" />
             </section>
-        </div>
+
+
+
+
+        </>
     );
 };
 
