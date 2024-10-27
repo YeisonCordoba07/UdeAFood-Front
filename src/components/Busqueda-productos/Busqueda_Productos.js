@@ -3,7 +3,7 @@ import { Header } from '../Header/Header';
 import { Categorias } from '../categorias/Categorias';
 import { Producto } from '../producto/Producto';
 import { useBusquedaContext } from "@/atoms/busquedaContext";
-import { useCategoriaContext } from '@/atoms/useCategoriaContext';
+
 
 const imagenes = [
     "/burrito.jpg",
@@ -32,8 +32,13 @@ const imagenes = [
 
 
 const Busqueda_Productos = () => {
+
+    const { data } = useBusquedaContext();
+
     const [sortField, setSortField] = useState('nombre'); // 'nombre' o 'precio'
     const [ascending, setAscending] = useState(true); // Ascendente o descendente
+
+
 
 
     // Función para obtener una imagen aleatoria
@@ -41,31 +46,6 @@ const Busqueda_Productos = () => {
         const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
         return imagenes[indiceAleatorio];
     };
-
-
-
-
-    const { data } = useBusquedaContext();
-    const { categoriaData } = useCategoriaContext();
-
-
-
-    // Función para ordenar los productos
-    const sortProducts = (products) => {
-        if (!Array.isArray(products) || products.length === 0) {
-            return [];
-        }
-
-        return [...products].sort((a, b) => {
-            if (a[sortField] < b[sortField]) return ascending ? -1 : 1;
-            if (a[sortField] > b[sortField]) return ascending ? 1 : -1;
-            return 0;
-        });
-    };
-
-    const sortedData = sortProducts(data);
-
-    const sortedCategoriaData = sortProducts(categoriaData);
 
 
     const crearTarjetaProductos = (productos) => {
@@ -91,6 +71,24 @@ const Busqueda_Productos = () => {
             )
         }
     }
+
+
+    // Función para ordenar los productos
+    const sortProducts = (products) => {
+        if (!Array.isArray(products) || products.length === 0) {
+            return [];
+        }
+
+        return [...products].sort((a, b) => {
+            if (a[sortField] < b[sortField]) return ascending ? -1 : 1;
+            if (a[sortField] > b[sortField]) return ascending ? 1 : -1;
+            return 0;
+        });
+    };
+
+
+    const sortedData = sortProducts(data);
+
 
 
 
@@ -125,7 +123,7 @@ const Busqueda_Productos = () => {
             {/* Carga los productos de la data obtenida de la búsqueda */}
             {crearTarjetaProductos(sortedData)}
 
-            {crearTarjetaProductos(sortedCategoriaData)}
+
 
 
 

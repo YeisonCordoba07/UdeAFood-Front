@@ -1,45 +1,43 @@
 import React from 'react';
-import { useCategoriaContext } from '@/atoms/useCategoriaContext';
 import { useRouter } from 'next/router';
+import { useBusquedaContext } from '@/atoms/busquedaContext';
 
 
 const ElementoCategoria = ({textoCategoria}) => {
 
 
-    const { setCategoriaData } = useCategoriaContext();
+    const { setData } = useBusquedaContext();
     const router = useRouter();
 
 
-    const buscarProducto = (e) => {
+    const buscarProducto = async (e) => {
         e.preventDefault();
-
         console.log("CATEGORIA: ", textoCategoria);
-        /* Consultar todos los productos
-        "http://localhost:8080/Producto/consultar/"*/
-        fetch(`http://localhost:8080/Producto/obtenerTodos/${textoCategoria}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
 
-        })
-            .then((res) => {
-                return res.json();
-            })
-            .then((response) => {
-                //console.log(response)
-                setCategoriaData(response);
-                console.log("DATA", response);
-                router.push("/busquedaProducto");
-
-            })
-            .catch((error) => {
-                //   setError(error);
-            }).finally(() => {
-                // setLoading(false);
+        try {
+            const response = await fetch(`http://localhost:8080/Producto/obtenerTodos/${textoCategoria}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
 
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            setData(data);
+            
+            console.log("DATA", data);
+            router.push("/busquedaProducto");
+
+        } catch (error) {
+            console.error("Error al buscar productos:", error);
+
+        }
     }
+
 
 
 
