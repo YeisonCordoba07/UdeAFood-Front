@@ -28,7 +28,7 @@ const Categorias = () => {
 
     return (
 
-        <div className="py-3 flex items-center border-neutral-400 border-b justify-center w-full">
+        <div className="py-3 flex items-center border-neutral-200 border-b justify-center w-full">
             <BotonFlechaCategoria onClick={scrollLeft} icono={<MdArrowBackIosNew/>} />
 
             <div
