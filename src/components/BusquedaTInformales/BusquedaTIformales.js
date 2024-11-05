@@ -19,7 +19,7 @@ const BusquedaTIformales = ({nombre}) => {
               
               {/* Imagen de la tienda */}
               <Image 
-                src={tienda.imagen || "/all.jpg"} // Puedes ajustar para usar tienda.imagen si está disponible
+                src={tienda.foto ? `data:image/jpeg;base64,${tienda.foto}` : "/all.jpg"}
                 alt={tienda.nombre}
                 width={300} 
                 height={300} 
