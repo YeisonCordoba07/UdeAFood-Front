@@ -32,7 +32,7 @@ const FormularioCrearProducto = () => {
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
     // Trae las secciones de la tienda 1
-    const { data: Seccion } = useFetch("http://localhost:8080/Seccion/1");
+    const { data: Seccion } = useFetch("http://localhost:8080/Seccion/15");
 
 
 

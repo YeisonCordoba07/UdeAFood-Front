@@ -1,11 +1,12 @@
 import { Header } from "@/components/Header/Header";
-
 import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
-
-import { PerfilT} from "@/components/PerfilTienda/PerfilT";
-import {useFetch} from "@/hook/useFetch";
-
+import { PerfilT } from "@/components/PerfilTienda/PerfilT";
+import { useFetch } from "@/hook/useFetch";
 import { Producto } from "@/components/producto/Producto";
+import { useAuth } from "@/context/AuthContext"; 
+import { InformacionTienda } from "@/components/PerfilTienda/InformacionTienda";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 
@@ -37,8 +38,28 @@ const imagenes = [
 
 const PerfilTienda = () => {
 
+    const { user } = useAuth(); // Obtiene la información del usuario autenticado
+    const router = useRouter();
 
-    const {data, loading, error} = useFetch("http://localhost:8080/Seccion/1");
+    useEffect(() => {
+        if (!user) {
+            router.push('/inicioSesion');
+        }
+    }, [user, router]);
+
+
+    const url = user ? `http://localhost:8080/Tienda/${user.id}` : null;
+
+    // Reemplaza esta URL con la URL que te devuelva la tienda correspondiente al usuario
+    const { data: tiendaData, loading: tiendaLoading, error: tiendaError } = useFetch(url);
+
+    if (!user) {
+        return <div>Redirigiendo...</div>;
+    }
+
+    // Si la tienda está cargando o hay un error, puedes manejarlo aquí
+    if (tiendaLoading) return <div>Cargando tienda...</div>;
+    if (tiendaError) return <div>Error al cargar la tienda: {tiendaError.message}</div>;
 
 
     // Función para obtener una imagen aleatoria
@@ -53,15 +74,16 @@ const PerfilTienda = () => {
         <div className="relative">
             <Header />
 
-            <SeccionTiendas secciones={data}/>
+            <SeccionTiendas secciones={tiendaData?.secciones || []} />
 
-            <PerfilT/>
+            <PerfilT tienda={tiendaData}/>
             
+            <InformacionTienda />
 
             <section className="flex flex-col p-5">
 
                 {
-                    data.map((secciones) => {
+                    tiendaData?.secciones?.map((secciones) => {
                         return (
                             <section
                                 id={secciones.nombre}
@@ -70,16 +92,16 @@ const PerfilTienda = () => {
 
                                 <h2 className={"text-2xl font-bold"}>{secciones.nombre}</h2>
                                 <div className="flex gap-4 mt-2 flex-wrap">
-                                {secciones.productos.map((elementoProducto) => {
-                                    return (
-                                        <Producto
-                                            key={elementoProducto.id}
-                                            imagen={obtenerImagenAleatoria()}
-                                            nombre={elementoProducto.nombre}
-                                            precio={elementoProducto.precio}
-                                        />
-                                    );
-                                })}
+                                    {secciones.productos.map((elementoProducto) => {
+                                        return (
+                                            <Producto
+                                                key={elementoProducto.id}
+                                                imagen={obtenerImagenAleatoria()}
+                                                nombre={elementoProducto.nombre}
+                                                precio={elementoProducto.precio}
+                                            />
+                                        );
+                                    })}
                                 </div>
                             </section>
                         );
@@ -88,11 +110,8 @@ const PerfilTienda = () => {
                 }
 
 
-              
-                 <Producto
-                    imagen="/informal.jpg"
-                    nombre="Patel de carne hojaldrada horno"
-                    precio="4200" />
+
+                
 
 
             </section>

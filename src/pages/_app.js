@@ -1,12 +1,12 @@
 import "@/styles/globals.css";
 
-import {Provider} from "jotai";
+import { AuthProvider } from '@/context/AuthContext';
 
 export default function App({ Component, pageProps }) {
   return (
-      <Provider>
-        <Component {...pageProps} />
-      </Provider>
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
   );
 
 }
