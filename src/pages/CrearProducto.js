@@ -13,6 +13,7 @@ const CrearProducto = () => {
     useEffect(() => {
         // Si el usuario no está autenticado, redirigirlo a la página de inicio de sesión
         if (!user) { // Cambia isAuthenticated por user
+    
             router.push(InicioSesion); // Ajusta la ruta según la ubicación de tu página de inicio de sesión
         }
     }, [user, router]);

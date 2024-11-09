@@ -41,8 +41,10 @@ const PerfilTienda = () => {
     const { user } = useAuth(); // Obtiene la información del usuario autenticado
     const router = useRouter();
 
+    console.log("USER PERFIL TIENDA: ", user);
     useEffect(() => {
         if (!user) {
+            console.log("USUARIO NULLO / ¿NO HA INICIADO SESION?");
             router.push('/inicioSesion');
         }
     }, [user, router]);

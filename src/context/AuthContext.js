@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -7,6 +7,17 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+
+
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            const parsedUserData = JSON.parse(storedUserData);
+            setUser(parsedUserData); // Actualiza el estado `user`
+        }
+    }, []);
+
+
 
     const login = async (correo, clave) => {
         try {
@@ -23,15 +34,22 @@ export const AuthProvider = ({ children }) => {
             }
 
             const userData = await response.json();
+
+            localStorage.setItem('userData', JSON.stringify(userData));
+
             setUser(userData); // Guarda el usuario en el contexto
         } catch (error) {
             throw new Error(error.message); // Manejo de errores
         }
     };
 
+
     const logout = () => {
         setUser(null);
+        localStorage.removeItem('userData');
     };
+
+
 
     return (
         <AuthContext.Provider value={{ user, login, logout }}>
