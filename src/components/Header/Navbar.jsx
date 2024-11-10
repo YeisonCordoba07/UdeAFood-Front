@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+
+// Iconos
 import SearchIcon from '@mui/icons-material/Search';
+import StoreIcon from '@mui/icons-material/Store';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 import InputBase from '@mui/material/InputBase';
+
 import { useBusquedaContext } from "@/atoms/busquedaContext";
 import { useAuth } from "@/context/AuthContext"; // Importamos el contexto de autenticación
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Logo } from './Logo';
+
+
 
 const Navbar = () => {
     const [palabra, setPalabra] = useState("");
@@ -79,12 +88,21 @@ const Navbar = () => {
                 {user ? (
                     <>
                         <Link href="/CrearProducto">
-                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
-                                Agregar producto
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                                <AddCircleIcon fontSize="large" />
+  
                             </button>
                         </Link>
-                        <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
-                            Cerrar sesión
+                        <Link href="/PerfilTienda">
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                                <StoreIcon fontSize='large' />
+
+                            </button>
+                        </Link>
+
+                        <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                            <LogoutIcon fontSize="large" />
+
                         </button>
                     </>
                 ) : (
