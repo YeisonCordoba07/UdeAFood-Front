@@ -28,13 +28,15 @@ const Categorias = () => {
 
     return (
 
-        <div className="py-3 flex items-center border-neutral-200 border-b justify-center w-full">
+        <div className="py-2 flex items-center border-neutral-200 border-b justify-center w-full">
+
             <BotonFlechaCategoria onClick={scrollLeft} icono={<MdArrowBackIosNew/>} />
 
             <div
-                className="flex px-3 overflow-x-auto whitespace-nowrap gap-x-2 w-[1200px] categorias-container items-center"
+                className="flex px-3 overflow-x-auto whitespace-nowrap gap-x-2 w-[1200px] categorias-container items-center border-l-2 border-r-2 py-1"
                 ref={carouselRef}>
-                {!error ?
+
+                {!loading && !error?
                     (data.map(categoria => {
                             return (
                                 <ElementoCategoria key={categoria.idCategoria} textoCategoria={categoria.nombreCategoria}/>
@@ -42,28 +44,17 @@ const Categorias = () => {
                         })
                     )
                     :
-                    (<>
-                        <ElementoCategoria textoCategoria={"Pizza"}/>
-                        <ElementoCategoria textoCategoria={"Asiatica"}/>
-                        <ElementoCategoria textoCategoria={"Poke"}/>
-                        <ElementoCategoria textoCategoria={"Empanazas"}/>
-                        <ElementoCategoria textoCategoria={"Sushi"}/>
-                        <ElementoCategoria textoCategoria={"Sanduches"}/>
-                        <ElementoCategoria textoCategoria={"Tipica"}/>
-                        <ElementoCategoria textoCategoria={"Vegana"}/>
-                        <ElementoCategoria textoCategoria={"Pollo"}/>
-                        <ElementoCategoria textoCategoria={"Jugos"}/>
-                        <ElementoCategoria textoCategoria={"Desayuno"}/>
-                        <ElementoCategoria textoCategoria={"Hamburguesas"}/>
-                        <ElementoCategoria textoCategoria={"Perros"}/>
-                        <ElementoCategoria textoCategoria={"Mexicana"}/>
-                        <ElementoCategoria textoCategoria={"Cafe"}/>
-                        <ElementoCategoria textoCategoria={"Panadería"}/>
-                        <ElementoCategoria textoCategoria={"Japonesa"}/>
-                        <ElementoCategoria textoCategoria={"China"}/>
-                        <ElementoCategoria textoCategoria={"Alcohol"}/>
-                        <ElementoCategoria textoCategoria={"Ensaladas"}/>
-                    </>)
+                    (
+                    
+                        // Array de elementos para mostrar un esqueleto de carga
+                        [...Array(30)].map((_, index) => {
+                            return (
+                                <ElementoCategoria key={index} textoCategoria=""
+                                />
+                            )
+                        })
+                        
+                    )
                 }
 
             </div>

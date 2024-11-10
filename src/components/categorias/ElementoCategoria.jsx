@@ -44,7 +44,7 @@ const ElementoCategoria = ({textoCategoria}) => {
     return (
             <button 
             onClick={buscarProducto}
-            className="bg-zinc-200 hover:bg-lime-300 py-2 px-4 text-zinc-700 hover:text-zinc-800 rounded-full duration-300">
+            className="bg-zinc-200 hover:bg-lime-300 py-2 px-4 text-zinc-700 hover:text-zinc-800 rounded-full duration-200 hover:scale-105">
                 {textoCategoria}
             </button>
     );
