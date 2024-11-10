@@ -13,7 +13,7 @@ const PerfilT = ({ tienda }) => {
             </div>
         );
     }
-
+    console.log("antes de todo: ",tienda);
   return (
     <div className='flex flex-[1] p-5 w-full justify-between gap-5'>
       <img src={tienda.foto || 'udeafood.jpg'} className='w-14 h-14' alt='logo'/>
@@ -23,7 +23,7 @@ const PerfilT = ({ tienda }) => {
           {tienda.descripcion || 'Descripción de la tienda no disponible.'}
         </p>
       </div>
-      <InformacionTienda tienda={InformacionTienda} />
+      <InformacionTienda tienda={tienda} />
     </div>
   )
 }
