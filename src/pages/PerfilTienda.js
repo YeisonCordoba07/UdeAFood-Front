@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 
-
 // Ruta de imagenes para elegirlas al azar
 const imagenes = [
     "/burrito.jpg",
@@ -78,7 +77,7 @@ const PerfilTienda = () => {
 
             <PerfilT tienda={tiendaData}/>
             
-            <InformacionTienda />
+            <InformacionTienda tienda={tiendaData}/>
 
             <section className="flex flex-col p-5">
 

@@ -17,7 +17,7 @@ const FormularioInicioSesion = () => {
         setError(null);
         try {
             await login(correo, clave); // Intentamos iniciar sesión
-            router.push('/'); // Redirige a la página principal o a donde quieras después del inicio de sesión
+            router.push('PerfilTienda'); // Redirige a la página principal o a donde quieras después del inicio de sesión
         } catch (err) {
             setError("Error al iniciar sesión. Verifica tus credenciales.");
             console.error(err);
