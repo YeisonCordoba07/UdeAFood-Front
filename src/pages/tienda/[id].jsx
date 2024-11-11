@@ -8,54 +8,61 @@ import { useFetch } from "@/hook/useFetch";
 
 
 const imagenes = [
-    "/burrito.jpg",
-    "/empanada1.jpg",
-    "/hamburguesa.jpg",
-    "/pizza2.jpeg",
-    "/pizza3.jpeg",
-    "/pizza4.jpeg",
-    "/pizza5.jpeg",
-    "/polloasado.jpeg",
-    "/sanduche.jpg",
-    "/pasta1.jpeg",
-    "/pasta2.jpeg",
-    "/bandejapaisa.jpeg",
-    "/sopa.jpeg",
-    "/arepa.jpeg",
-    "/pasaboca1.jpeg",
-    "/pasaboca2.jpeg",
-    "/cafe1.jpeg",
-    "/cafe2.jpeg",
-    "/arroz1.jpeg",
-    "/arroz2.jpeg",
+  "/burrito.jpg",
+  "/empanada1.jpg",
+  "/hamburguesa.jpg",
+  "/pizza2.jpeg",
+  "/pizza3.jpeg",
+  "/pizza4.jpeg",
+  "/pizza5.jpeg",
+  "/polloasado.jpeg",
+  "/sanduche.jpg",
+  "/pasta1.jpeg",
+  "/pasta2.jpeg",
+  "/bandejapaisa.jpeg",
+  "/sopa.jpeg",
+  "/arepa.jpeg",
+  "/pasaboca1.jpeg",
+  "/pasaboca2.jpeg",
+  "/cafe1.jpeg",
+  "/cafe2.jpeg",
+  "/arroz1.jpeg",
+  "/arroz2.jpeg",
 ];
+
+
+
+// Función para obtener una imagen aleatoria
+const obtenerImagenAleatoria = () => {
+const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+return imagenes[indiceAleatorio];
+};
+
 
 
 
 const TiendaParticular = ({}) => {
   const router = useRouter();
 
-  const id = router.query.id;
-
-  console.log(router.query);
+  const { id } = router.query;
 
 
-    // Función para obtener una imagen aleatoria
-    const obtenerImagenAleatoria = () => {
-        const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-        return imagenes[indiceAleatorio];
-    };
 
-    const {data: tienda, loading, error} = useFetch(`http://localhost:8080/Tienda/${id}`);
 
-    if(loading) {
-        return <div>Cargando...</div>
-    }
+  const {
+    data: tienda,
+    loading,
+    error,
+  } = useFetch(`http://localhost:8080/Tienda/${id}`);
 
+
+
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
-
-
     <div className="relative">
       <Header />
 
@@ -65,8 +72,9 @@ const TiendaParticular = ({}) => {
 
       <InformacionTienda tienda={tienda} />
 
-      {loading && <p>Cargando tiendas...</p>}
+      {/*loading && <p>Cargando tiendas...</p>*/}
       {error && <p>Error al cargar las tiendas</p>}
+
       <section className="flex flex-col p-5">
         {tienda?.secciones?.map((secciones) => {
           return (
@@ -93,6 +101,8 @@ const TiendaParticular = ({}) => {
           );
         })}
       </section>
+
+      
     </div>
   );
 };
