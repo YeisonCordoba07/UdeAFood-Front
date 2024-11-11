@@ -6,6 +6,7 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!url) return;
         setLoading(true);
         fetch(url,{
             method: "GET",
@@ -15,7 +16,7 @@ const useFetch = (url) => {
                 return res.json();
             })
             .then((response) =>{
-                console.log(response)
+                //console.log(response)
                 setData(response);
             })
             .catch((error) =>{

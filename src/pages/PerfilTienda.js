@@ -1,12 +1,11 @@
 import { Header } from "@/components/Header/Header";
-
 import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
-
-import { PerfilT} from "@/components/PerfilTienda/PerfilT";
-import {useFetch} from "@/hook/useFetch";
-
+import { PerfilT } from "@/components/PerfilTienda/PerfilT";
 import { Producto } from "@/components/producto/Producto";
-
+import { useAuth } from "@/context/AuthContext"; 
+import { InformacionTienda } from "@/components/PerfilTienda/InformacionTienda";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 
 // Ruta de imagenes para elegirlas al azar
@@ -37,8 +36,32 @@ const imagenes = [
 
 const PerfilTienda = () => {
 
+    const { user } = useAuth(); // Obtiene la información del usuario autenticado
+    const router = useRouter();
 
-    const {data, loading, error} = useFetch("http://localhost:8080/Seccion/1");
+    const [loadingUser, setLoadingUser] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoadingUser(false);
+        }, 1000); // Espera de 1 segundo antes de verificar el valor de user
+
+        return () => clearTimeout(timer); // Limpia el temporizador cuando se termine
+    }, []);
+
+    useEffect(() => {
+        if (!loadingUser && !user) {
+            router.push("/inicioSesion");
+        }
+    }, [loadingUser, user, router]);
+
+
+    //const url = user ? localStorage.getItem("user") : null;
+
+
+    if (!user) {
+        return <div>Redirigiendo...</div>;
+    }
 
 
     // Función para obtener una imagen aleatoria
@@ -53,47 +76,41 @@ const PerfilTienda = () => {
         <div className="relative">
             <Header />
 
-            <SeccionTiendas secciones={data}/>
+            <SeccionTiendas secciones={user?.secciones || []} />
 
-            <PerfilT/>
+            <PerfilT tienda={user}/>
             
+            <InformacionTienda tienda={user}/>
 
             <section className="flex flex-col p-5">
 
                 {
-                    data.map((secciones) => {
+                    user?.secciones?.map((secciones) => {
                         return (
                             <section
-                                id={secciones.nombre}
-                                key={secciones.nombre}
-                                className="flex flex-col gap-2 pt-5 pb-7 border-b border-gray-200">
+                                id={secciones.nombre} // Id para identificar la sección en la barra de navegación
+                                key={secciones.id} // Key para identificar la sección y desplazarse a ella
+                                className="flex flex-col gap-2 pt-5 pb-7 border-b border-gray-200"
+                                style={{ scrollMarginTop: '70px' }}>
 
                                 <h2 className={"text-2xl font-bold"}>{secciones.nombre}</h2>
                                 <div className="flex gap-4 mt-2 flex-wrap">
-                                {secciones.productos.map((elementoProducto) => {
-                                    return (
-                                        <Producto
-                                            key={elementoProducto.id}
-                                            imagen={obtenerImagenAleatoria()}
-                                            nombre={elementoProducto.nombre}
-                                            precio={elementoProducto.precio}
-                                        />
-                                    );
-                                })}
+                                    {secciones.productos.map((elementoProducto) => {
+                                        return (
+                                            <Producto
+                                                key={elementoProducto.id}
+                                                imagen={obtenerImagenAleatoria()}
+                                                nombre={elementoProducto.nombre}
+                                                precio={elementoProducto.precio}
+                                            />
+                                        );
+                                    })}
                                 </div>
                             </section>
                         );
                     })
 
                 }
-
-
-              
-                 <Producto
-                    imagen="/informal.jpg"
-                    nombre="Patel de carne hojaldrada horno"
-                    precio="4200" />
-
 
             </section>
 
