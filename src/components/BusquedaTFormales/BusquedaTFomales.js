@@ -3,6 +3,8 @@ import { useFetch } from "@/hook/useFetch";
 
 import BusquedaTiendas from "@/BusquedaTiendas/BusquedaTiendas";
 
+
+{/* Borrar */}
 const BusquedaTFomales = () => {
   const {
     data: tiendas,

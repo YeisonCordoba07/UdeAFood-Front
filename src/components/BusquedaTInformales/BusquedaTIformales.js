@@ -3,6 +3,8 @@ import { Header } from "../Header/Header";
 import { useFetch } from "@/hook/useFetch";
 import BusquedaTiendas from "@/BusquedaTiendas/BusquedaTiendas";
 
+
+{/* Borrar */}
 const BusquedaTIformales = () => {
   const {
     data: tiendas,

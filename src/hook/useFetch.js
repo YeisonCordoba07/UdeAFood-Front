@@ -16,7 +16,7 @@ const useFetch = (url) => {
                 return res.json();
             })
             .then((response) =>{
-                console.log(response)
+                //console.log(response)
                 setData(response);
             })
             .catch((error) =>{

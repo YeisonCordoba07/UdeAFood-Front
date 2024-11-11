@@ -9,7 +9,7 @@ const BusquedaTiendas = ({ tiendas }) => {
 
         <div className="flex gap-5 flex-wrap p-5">
 
-            {tiendas && tiendas.length > 0 ? (
+            {
                 tiendas.map((tienda) => (
                     <div key={tienda.id} className="flex flex-col w-[290px] h-[380px] p-4 border border-gray-100 rounded-lg font-bold gap-4 items-start shadow-lg">
 
@@ -32,9 +32,7 @@ const BusquedaTiendas = ({ tiendas }) => {
 
                     </div>
                 ))
-            ) : (
-                <p>No se encontraron tiendas</p>
-            )}
+            }
         </div>
     );
 

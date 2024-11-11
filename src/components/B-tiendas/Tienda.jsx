@@ -1,16 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-const Tienda = () => {
+import { useBusquedaContext } from "@/atoms/busquedaContext";
 
+
+const Tienda = () => {
+    const { setData } = useBusquedaContext();
 
     return (
         <div className="w-full h-3/5 flex items-center justify-center p-5">
             <div className="grid grid-cols-3 gap-4 w-[1200px] h-60">
 
-                <Link href='/BusquedaTiendaF'>
+                {/* Reemplaza a BusquedaTFormales */}
+                <Link href='/BuscarTienda'>
                     <button
                         className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200 rounded-lg hover:brightness-110"
+                        onClick={()=>{
+                            setData('FORMAL');
+                            localStorage.setItem("tipo-tienda", "FORMAL");
+                        }}
                     >
                         <Image src="/Formales.png" alt="Ver tiendas formales"
                             fill={true} />
@@ -27,9 +35,15 @@ const Tienda = () => {
 
                     </button>
                 </Link>
-                <Link href='/BusquedaTInformales'>
+
+                {/* Reemplaza a BusquedaTInformales */}
+                <Link href='/BuscarTienda'>
                     <button
                         className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200 hover:brightness-110"
+                        onClick={()=>{
+                            setData('INFORMAL');
+                            localStorage.setItem("tipo-tienda", "INFORMAL");
+                        }}
                     >
 
                         <Image src="/Informales.png" alt="Ver tiendas formales"
@@ -46,9 +60,15 @@ const Tienda = () => {
                         </div>
                     </button>
                 </Link>
-                <Link href='BusquedaTodasTiendas'>
+
+                {/* Reemplaza a BusquedaTodasTiendas */}
+                <Link href='/BuscarTienda'>
                     <button
                         className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100 shadow-lg transition-colors duration-300 ease-in-out hover:bg-gray-200 hover:brightness-110"
+                        onClick={()=>{
+                            setData('TODAS');
+                            localStorage.setItem("tipo-tienda", "TODAS");
+                        }}
                     >
 
                         <Image src="/Todas.png" alt="Ver tiendas formales"
