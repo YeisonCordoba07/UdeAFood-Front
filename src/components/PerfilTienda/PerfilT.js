@@ -16,7 +16,7 @@ const PerfilT = ({ tienda }) => {
 
   return (
     <div className='flex flex-[1] p-5 w-full justify-between gap-5'>
-      <img src={tienda.foto || 'udeafood.jpg'} className='w-14 h-14' alt='logo'/>
+      <img src={tienda.foto || '/udeafood.jpg'} className='w-14 h-14' alt='logo'/>
       <div className='flex flex-col w-full'>
         <h1 className="text-4xl font-bold">{tienda.nombre || 'Nombre de la Tienda'} </h1>
         <p className='justify-center'>
