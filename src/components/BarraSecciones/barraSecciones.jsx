@@ -37,7 +37,7 @@ const SeccionTiendas = ({secciones}) => {
                     <h2 className="text-lg font-bold mr-4">Secciones</h2>
 
 
-                    <div className="flex space-x-4 overflow-x-hidden border-l-2 border-r-2 bg-white" ref={seccionScrollRef}>
+                    <div className="flex space-x-4 overflow-x-hidden border-l-2 border-r-2 bg-white rounded-md items-center" ref={seccionScrollRef}>
                         {secciones.map((seccion) => (
                             <Link href={`#${seccion.nombre}`}
                                 key={seccion.nombre}
