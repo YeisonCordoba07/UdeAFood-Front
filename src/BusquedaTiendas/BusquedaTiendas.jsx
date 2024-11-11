@@ -33,7 +33,7 @@ const BusquedaTiendas = ({ tiendas }) => {
                     </div>
                 ))
             ) : (
-                <p>No se encontraron tiendas formales</p>
+                <p>No se encontraron tiendas</p>
             )}
         </div>
     );
