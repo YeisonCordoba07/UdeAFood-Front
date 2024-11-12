@@ -90,7 +90,7 @@ const TiendaParticular = ({}) => {
                   return (
                     <Producto
                       key={elementoProducto.id}
-                      imagen={obtenerImagenAleatoria()}
+                      imagen={elementoProducto.imagen ? `data:image/jpeg;base64,${elementoProducto.imagen.imagen}` : "/all.jpg"}
                       nombre={elementoProducto.nombre}
                       precio={elementoProducto.precio}
                     />

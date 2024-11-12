@@ -34,7 +34,7 @@ const FormularioCrearProducto = () => {
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
-    // Trae las secciones de la tienda 1
+    // Trae las secciones de la tienda que ha iniciado sesión
     const { data: Seccion } = useFetch(`http://localhost:8080/Seccion/${user.id}`);
 
 
