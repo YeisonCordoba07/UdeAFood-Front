@@ -1,7 +1,10 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
 import { useState } from "react";
 import { useFetch } from "@/hook/useFetch";
+import { useAuth } from "@/context/AuthContext";
 const FormularioCrearProducto = () => {
+
+    const { user } = useAuth();
 
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: "",
@@ -10,7 +13,7 @@ const FormularioCrearProducto = () => {
         disponibilidad: "",
         categoria: [{ idCategoria: "" }],
         seccion: { id: "" },
-        foto: ""
+        foto: "",
     });
 
     const handleImageChange = (e) => {
@@ -32,7 +35,7 @@ const FormularioCrearProducto = () => {
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
     // Trae las secciones de la tienda 1
-    const { data: Seccion } = useFetch("http://localhost:8080/Seccion/15");
+    const { data: Seccion } = useFetch(`http://localhost:8080/Seccion/${user.id}`);
 
 
 
@@ -115,6 +118,14 @@ const FormularioCrearProducto = () => {
                         className="border p-2 rounded"
                     />
                 </div>
+
+                <ElementoFormulario
+                    identificador={"imagen"}
+                    textoLabel={"Imagen"}
+                    esRequerido={false}
+                    type="file"
+                    onChange={handleImageChange} 
+                />
 
                 <label
                     htmlFor="Categoria"
