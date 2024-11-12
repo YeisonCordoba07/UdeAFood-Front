@@ -87,8 +87,10 @@ const FormularioRegistro = () => {
                 onChange={(e) => setNuevaTienda({ ...nuevaTienda, ubicacion: e.target.value })}
             />
 
-            <div>
-                <label htmlFor="foto">Foto</label>
+            <div className="flex gap-5 items-center justify-between ">
+                <label 
+                    htmlFor="foto"
+                    className="text-xl font-semibold">Foto</label>
                 <input
                     type="file"
                     accept="image/*" // Acepta solo imágenes
