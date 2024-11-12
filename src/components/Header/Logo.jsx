@@ -5,7 +5,7 @@ const Logo = () => {
 
       <Link href="/" className="flex justify-start w-28 h-12 min-w-10">
         <img
-          src='LogoUdeAFood.png'
+          src='/LogoUdeAFood.png'
           className='object-contain w-full h-full'
           alt='logo'
         />
