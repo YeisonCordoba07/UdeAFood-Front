@@ -12,7 +12,6 @@ const ElementoCategoria = ({textoCategoria}) => {
 
     const buscarProducto = async (e) => {
         e.preventDefault();
-        console.log("CATEGORIA: ", textoCategoria);
 
         try {
             const response = await fetch(`http://localhost:8080/Producto/obtenerTodos/${textoCategoria}`, {
@@ -29,7 +28,6 @@ const ElementoCategoria = ({textoCategoria}) => {
             const data = await response.json();
             setData(data);
             
-            console.log("DATA", data);
             router.push("/busquedaProducto");
 
         } catch (error) {

@@ -2,9 +2,12 @@ import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
 import { useState } from "react";
 import { useFetch } from "@/hook/useFetch";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 const FormularioCrearProducto = () => {
 
     const { user } = useAuth();
+
+    const router = useRouter();
 
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: "",
@@ -59,6 +62,9 @@ const FormularioCrearProducto = () => {
             })
             .then((response) => {
                 console.log("Respuesta del servidor:", response);
+                if(response.includes("Producto creado")){
+                    router.push(`/tienda/${user.id}`);
+                }
             })
             .catch((error) => console.error("Error al crear Producto:", error));
     }
@@ -109,15 +115,6 @@ const FormularioCrearProducto = () => {
                     onChange={(e) => setNuevoProducto({ ...nuevoProducto, disponibilidad: e.target.value })}
                 />
 
-                <div>
-                    <label htmlFor="foto">Foto</label>
-                    <input
-                        type="file"
-                        accept="image/*" // Acepta solo imágenes
-                        onChange={handleImageChange} 
-                        className="border p-2 rounded"
-                    />
-                </div>
 
                 <ElementoFormulario
                     identificador={"imagen"}

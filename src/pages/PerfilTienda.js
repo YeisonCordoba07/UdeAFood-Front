@@ -80,7 +80,6 @@ const PerfilTienda = () => {
 
             <PerfilT tienda={user}/>
             
-            <InformacionTienda tienda={user}/>
 
             <section className="flex flex-col p-5">
 

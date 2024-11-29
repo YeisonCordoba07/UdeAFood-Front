@@ -41,7 +41,7 @@ const FormularioRegistro = () => {
             .then((response) => {
                 console.log("Respuesta del servidor:", response);
                 setMensaje("Tienda creada exitosamente");
-                router.push("/PerfilTienda"); // Redirigir a PerfilTienda
+                router.push("/inicioSesion"); // Redirigir a PerfilTienda
             })
             .catch((error) => console.error("Error al crear tienda:", error));
     }
@@ -87,7 +87,7 @@ const FormularioRegistro = () => {
                 onChange={(e) => setNuevaTienda({ ...nuevaTienda, ubicacion: e.target.value })}
             />
 
-            <div>
+            {/*<div>
                 <label htmlFor="foto">Foto</label>
                 <input
                     type="file"
@@ -95,7 +95,15 @@ const FormularioRegistro = () => {
                     onChange={handleFileChange} // Maneja la subida de archivos
                     className="border p-2 rounded"
                 />
-            </div>
+            </div>*/}
+
+            <ElementoFormulario
+                    identificador={"imagen"}
+                    textoLabel={"Imagen"}
+                    esRequerido={false}
+                    type="file"
+                    onChange={handleFileChange} 
+                />
 
             <ElementoFormulario
                 identificador="tipoTienda"

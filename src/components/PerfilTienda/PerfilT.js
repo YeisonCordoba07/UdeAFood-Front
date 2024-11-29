@@ -5,20 +5,11 @@ import { useAuth } from "@/context/AuthContext";
 const PerfilT = ({ tienda }) => {
   const { user, logout } = useAuth(); // Usamos el hook para obtener el usuario y logout
 
-  if (!user) {
-    return (
-      <div>
-        <p>No estás autenticado. Por favor, inicia sesión.</p>
-        {/* Lógica para redirigir al inicio de sesión */}
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-[1] p-5 w-full justify-between gap-5">
+    <div className="flex flex-[1] p-5 w-full justify-between gap-5 border-b-2">
       <img
         src={tienda.foto ? `data:image/jpeg;base64,${tienda.foto}` : "/all.jpg"}
-        className="w-14 h-14"
+        className="size-[80px] rounded-full"
         alt="logo"
       />
       <div className="flex flex-col w-full">
