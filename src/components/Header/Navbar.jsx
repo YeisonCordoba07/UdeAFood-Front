@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import StoreIcon from '@mui/icons-material/Store';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 import InputBase from '@mui/material/InputBase';
 
@@ -87,13 +88,19 @@ const Navbar = () => {
             <div className="flex items-center gap-5 h-full">
                 {user ? (
                     <>
+                        <Link href="/CrearSeccion">
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                                <BookmarkAddIcon fontSize="large" />
+  
+                            </button>
+                        </Link>
                         <Link href="/CrearProducto">
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
                                 <AddCircleIcon fontSize="large" />
   
                             </button>
                         </Link>
-                        <Link href="/PerfilTienda">
+                        <Link href={`/tienda/${user.id}`}>
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
                                 <StoreIcon fontSize='large' />
 

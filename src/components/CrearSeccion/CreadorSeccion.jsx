@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { ElementoFormulario } from '../registro/ElementoFormulario';
+import { useAuth } from "@/context/AuthContext"; 
+import { useRouter } from 'next/router';
 
 const CreadorSeccion = () => {
 
+    const { user } = useAuth();
+    const router = useRouter();
+
     const [nuevaSeccion, setNuevaSeccion] = useState({
         nombre: "",
-        idTienda:1
+        idTienda: user.id,
     })
 
     const crearSeccion = (e) => {
@@ -27,7 +32,12 @@ const CreadorSeccion = () => {
             }
         })
         .then((response) => {
-            console.log("Respuesta del servidor:", response);
+
+            if(response.includes("Sección creada")){
+
+                router.push(`/tienda/${user.id}`);
+
+            }
         })
         .catch((error) => console.error("Error al crear Seccion:", error));
     }
@@ -42,19 +52,12 @@ const CreadorSeccion = () => {
                 defaultValue={nuevaSeccion.nombre}
                     onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, nombre: e.target.value })}
             />
-              <ElementoFormulario
-                identificador={"idTienda"}
-                textoLabel={"Id de Tienda *"}
-                placeholderLabel={"1,2"}
-                esRequerido={true}
-                defaultValue={nuevaSeccion.idTienda}
-                    onChange={(e) => setNuevaSeccion({ ...nuevaSeccion, idTienda: e.target.value })}
-            />
 
             <button
                 type="submit"
                 className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">
-                Crear Sección</button>
+                Crear Sección
+            </button>
         </form>
     )
 }

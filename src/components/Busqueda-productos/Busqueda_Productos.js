@@ -5,29 +5,6 @@ import { Producto } from '../producto/Producto';
 import { useBusquedaContext } from "@/atoms/busquedaContext";
 
 
-const imagenes = [
-    "/burrito.jpg",
-    "/empanada1.jpg",
-    "/hamburguesa.jpg",
-    "/pizza2.jpeg",
-    "/pizza3.jpeg",
-    "/pizza4.jpeg",
-    "/pizza5.jpeg",
-    "/polloasado.jpeg",
-    "/sanduche.jpg",
-    "/pasta1.jpeg",
-    "/pasta2.jpeg",
-    "/bandejapaisa.jpeg",
-    "/sopa.jpeg",
-    "/arepa.jpeg",
-    "/pasaboca1.jpeg",
-    "/pasaboca2.jpeg",
-    "/cafe1.jpeg",
-    "/cafe2.jpeg",
-    "/arroz1.jpeg",
-    "/arroz2.jpeg",
-];
-
 
 
 
@@ -40,14 +17,6 @@ const Busqueda_Productos = () => {
 
 
 
-
-    // Función para obtener una imagen aleatoria
-    const obtenerImagenAleatoria = () => {
-        const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-        return imagenes[indiceAleatorio];
-    };
-
-
     const crearTarjetaProductos = (productos) => {
 
         if (productos.length > 0) {
@@ -57,7 +26,7 @@ const Busqueda_Productos = () => {
                     {productos.map((producto) => (
                         <Producto
                             key={producto.id}
-                            imagen={producto.foto ? `data:image/png;base64,${producto.foto}` : obtenerImagenAleatoria()}
+                            imagen={elegirImagen(producto)}
                             nombre={producto.nombre}
                             precio={producto.precio}
                         />
@@ -69,6 +38,17 @@ const Busqueda_Productos = () => {
 
                 <p className="p-5 text-center">No se encontraron productos</p>
             )
+        }
+    }
+
+    const elegirImagen = (producto) => {
+        if (producto.imagen) {
+            return `data:image/png;base64,${producto.imagen.imagen}`;
+        }else if(producto.foto) {
+            return `data:image/png;base64,${producto.foto}`;
+        }
+        else{
+            return "/all.jpg";
         }
     }
 
@@ -90,8 +70,6 @@ const Busqueda_Productos = () => {
     const sortedData = sortProducts(data);
 
 
-
-
     return (
         <>
             <Header />
@@ -101,7 +79,7 @@ const Busqueda_Productos = () => {
             <div className="p-3 text-center space-x-4 flex items-center justify-center border-b border-neutral-200">
                 <label className="text-gray-700 font-semibold mr-2">Ordenar por:</label>
                 <select
-                    onChange={(e) => { setSortField(e.target.value); console.log("datos", data); }}
+                    onChange={(e) => { setSortField(e.target.value); }}
                     className="bg-white border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="nombre">Nombre</option>

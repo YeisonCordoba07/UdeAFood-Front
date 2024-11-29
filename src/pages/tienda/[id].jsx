@@ -66,11 +66,11 @@ const TiendaParticular = ({}) => {
     <div className="relative">
       <Header />
 
+      <PerfilT tienda={tienda} />
       <SeccionTiendas secciones={tienda?.secciones || []} />
 
-      <PerfilT tienda={tienda} />
 
-      <InformacionTienda tienda={tienda} />
+
 
       {/*loading && <p>Cargando tiendas...</p>*/}
       {error && <p>Error al cargar las tiendas</p>}
