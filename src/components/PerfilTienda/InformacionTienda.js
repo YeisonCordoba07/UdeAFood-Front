@@ -3,18 +3,18 @@ import React, { useState } from 'react'
 const InformacionTienda = (tienda) => {
 
 
-  const [isopen, setIsopen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   
   if (!tienda) return null;
 
   const infoTienda = tienda.tienda;
   return (
     <>
-      <button className='bg-green-600 py-2 px-5 h-10 rounded-sm text-white font-bold' onClick={() => setIsopen(true)}>
+      <button className='bg-green-600 py-2 px-5 h-10 rounded-sm text-white font-bold' onClick={() => setIsOpen(true)}>
         Información
       </button>
       {
-        isopen && (
+        isOpen && (
           <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm items-center flex justify-center z-20'>
             <div className='bg-white p-5 rounded flex flex-col justify-center items-center gap-5'>
               <div className='flex flex-col'>
@@ -38,7 +38,7 @@ const InformacionTienda = (tienda) => {
                 <span>Nequi</span>
               </div>
               <div>
-                <button className='bg-gray-600 py-2 px-6 rounded-sm text-white font-semibold' onClick={() => setIsopen(false)}>
+                <button className='bg-gray-600 py-2 px-6 rounded-sm text-white font-semibold' onClick={() => setIsOpen(false)}>
                   Cerrar </button>
               </div>
 
