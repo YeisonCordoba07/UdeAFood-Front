@@ -14,6 +14,9 @@ const Busqueda_Productos = () => {
 
     const [sortField, setSortField] = useState('nombre'); // 'nombre' o 'precio'
     const [ascending, setAscending] = useState(true); // Ascendente o descendente
+    const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+
+    console.log(productoSeleccionado);
 
 
 
@@ -29,6 +32,7 @@ const Busqueda_Productos = () => {
                             imagen={elegirImagen(producto)}
                             nombre={producto.nombre}
                             precio={producto.precio}
+                            producto={producto}
                         />
                     ))}
                 </section>
@@ -101,7 +105,6 @@ const Busqueda_Productos = () => {
 
             {/* Carga los productos de la data obtenida de la búsqueda */}
             {crearTarjetaProductos(sortedData)}
-
 
 
 
