@@ -6,38 +6,6 @@ import { Producto } from "@/components/producto/Producto";
 import { useFetch } from "@/hook/useFetch";
 
 
-const imagenes = [
-  "/burrito.jpg",
-  "/empanada1.jpg",
-  "/hamburguesa.jpg",
-  "/pizza2.jpeg",
-  "/pizza3.jpeg",
-  "/pizza4.jpeg",
-  "/pizza5.jpeg",
-  "/polloasado.jpeg",
-  "/sanduche.jpg",
-  "/pasta1.jpeg",
-  "/pasta2.jpeg",
-  "/bandejapaisa.jpeg",
-  "/sopa.jpeg",
-  "/arepa.jpeg",
-  "/pasaboca1.jpeg",
-  "/pasaboca2.jpeg",
-  "/cafe1.jpeg",
-  "/cafe2.jpeg",
-  "/arroz1.jpeg",
-  "/arroz2.jpeg",
-];
-
-
-
-// Función para obtener una imagen aleatoria
-const obtenerImagenAleatoria = () => {
-const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-return imagenes[indiceAleatorio];
-};
-
-
 
 
 const TiendaParticular = ({}) => {
