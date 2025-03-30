@@ -3,7 +3,6 @@ import { Header } from "@/components/Header/Header";
 import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
 import { PerfilT } from "@/components/PerfilTienda/PerfilT";
 import { Producto } from "@/components/producto/Producto";
-import { InformacionTienda } from "@/components/PerfilTienda/InformacionTienda";
 import { useFetch } from "@/hook/useFetch";
 
 
@@ -90,9 +89,7 @@ const TiendaParticular = ({}) => {
                   return (
                     <Producto
                       key={elementoProducto.id}
-                      imagen={elementoProducto.imagen ? `data:image/jpeg;base64,${elementoProducto.imagen.imagen}` : "/all.jpg"}
-                      nombre={elementoProducto.nombre}
-                      precio={elementoProducto.precio}
+                      producto={elementoProducto}
                     />
                   );
                 })}

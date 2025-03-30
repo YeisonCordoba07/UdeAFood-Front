@@ -5,30 +5,44 @@ import {useState} from "react";
 import { ElementoCategoria } from "../categorias/ElementoCategoria";
 
 
-const Producto = ({imagen = "/all.jpg", nombre = "Nombre Producto", precio = "0", producto}) =>{
+const Producto = ({ producto}) =>{
     const [mostrarDetalles, setMostrarDetalles] = useState(false);
 
+    function elegirImagen(producto) {
+        if (producto?.imagen?.imagen) {
+            return `data:image/png;base64,${producto.imagen.imagen}`;
+        }
+        else{
+            return "/all.jpg";
+        }
+    }
 
     function handleMostrarDetalles(e){
         e.stopPropagation();
         setMostrarDetalles((prev)=>{return !prev});
     }
 
-    
+
+
+
     return(
         <div>
 
             <div className="flex flex-col w-[290px] h-[380px] p-4 border border-gray-100 rounded-lg font-bold gap-4 items-start shadow-lg"
             >
 
-                <Image src={imagen} alt={nombre} width={300} height={300} className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto"/>
+                <Image
+                    src={elegirImagen(producto)} alt={""}
+                    width={300}
+                    height={300}
+                    className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto"/>
 
 
                 <div className="flex gap-1 flex-col w-full">
 
-                <span className="text-xl overflow-hidden text-ellipsis whitespace-nowrap w-full">{nombre}</span>
+                <span className="text-xl overflow-hidden text-ellipsis whitespace-nowrap w-full">{producto?.nombre}</span>
 
-                    <span className="text-2xl  overflow-hidden text-ellipsis whitespace-nowrap">$ {precio}</span>
+                    <span className="text-2xl  overflow-hidden text-ellipsis whitespace-nowrap">$ {producto?.precio}</span>
 
                 </div>
 
@@ -50,8 +64,8 @@ const Producto = ({imagen = "/all.jpg", nombre = "Nombre Producto", precio = "0"
 
                         {/* Imagen y categorias */} 
                         <div className="flex flex-col gap-4 w-2/3">
-                            <Image 
-                                src={imagen} alt={nombre} 
+                            <Image
+                                src={elegirImagen(producto)} alt={producto?.nombre}
                                 width={300} 
                                 height={300} 
                                 className="bg-no-repeat w-full h-fit object-cover rounded-md" 
@@ -60,7 +74,7 @@ const Producto = ({imagen = "/all.jpg", nombre = "Nombre Producto", precio = "0"
                             {/* Categorias del producto */} 
                             <div className="flex flex-wrap gap-2 w-full">
 
-                                {producto.categoria && producto.categoria.length > 0 && producto.categoria.map((categoria)=>{
+                                {producto.categorias && producto.categorias.length > 0 && producto.categorias.map((categoria)=>{
            
                                     return(
                                         <div key={categoria.idCategoria} onClick={(e)=>{handleMostrarDetalles(e)}}>
