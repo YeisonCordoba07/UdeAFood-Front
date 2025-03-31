@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const InformacionTienda = (tienda) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ const InformacionTienda = (tienda) => {
   });
   const [editarHorario, setEditarHorario] = useState(false);
   const infoTienda = tienda.tienda;
-  console.log("infotienda:", infoTienda);
+  //console.log("infotienda:", infoTienda);
 
 
 
@@ -25,17 +25,28 @@ const InformacionTienda = (tienda) => {
     if(user?.id === infoTienda?.id){
         setPuedeEditar(true);
     }
-  }, [infoTienda.id, user]);
+  }, [infoTienda, user]);
 
 
 
   useEffect(() => {
     const fetchHorario = async () => {
+
+      if (!infoTienda?.id) return;
+
       try {
         const response = await fetch(
           `http://localhost:8080/horario/${infoTienda.id}`
         );
-        const data = await response.json();
+
+        // Verifica si la respuesta tiene contenido
+        const text = await response.text();
+        if (!text) {
+            return;
+        }
+
+        const data = JSON.parse(text);
+
 
         setHorario({
           horario1: data.horario1 || "",
@@ -48,8 +59,12 @@ const InformacionTienda = (tienda) => {
       }
     };
 
+
     fetchHorario();
+
   }, [infoTienda]);
+
+  console.log("Horario después:", infoTienda.horario);
 
 
 
@@ -188,11 +203,13 @@ const InformacionTienda = (tienda) => {
                     </div>
 
                     <div
-                      className={
-                        "bg-transparent hover:bg-red-300 w-10 h-10 flex justify-center items-center rounded-full duration-100 transition-all cursor-pointer"
-                      }
-                      onClick={() => setBorrarIsOpen(true)}
-                    >
+                      className={`bg-transparent hover:bg-red-300 w-10 h-10 flex justify-center   items-center rounded-full duration-100 transition-all cursor-pointer ${
+                      horario.horario1 === "" || horario.horario2 === "" || horario === null
+                        ? "pointer-events-none opacity-50 text-gray-400 bg-gray-200"
+                        : "text-red-500"
+                  }`}
+                        onClick={() => setBorrarIsOpen(true)}
+>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width={24}
@@ -203,7 +220,7 @@ const InformacionTienda = (tienda) => {
                         strokeWidth={2}
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-red-500"
+                        className=""
                       >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M4 7l16 0" />
