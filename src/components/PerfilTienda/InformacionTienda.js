@@ -4,8 +4,6 @@ import {useAuth} from "@/context/AuthContext";
 const InformacionTienda = (tienda) => {
 
 
-  const {user, login, logout} = useAuth();
-
   const [isOpen, setIsOpen] = useState(false);
   const [sendingHorario, setSendingHorario] = useState(false);
 
@@ -15,15 +13,22 @@ const InformacionTienda = (tienda) => {
     idTienda: 0
   });
   const [editarHorario, setEditarHorario] = useState(false);
+  const infoTienda = tienda.tienda;
+  console.log("infotienda:", infoTienda);
 
 
   useEffect(() => {
     const fetchHorario = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/horario/${user.id}`);
+        const response = await fetch(`http://localhost:8080/horario/${infoTienda.id}`);
         const data = await response.json();
         console.log("data: ", data);
-        setHorario(data); // Store the schedule in state
+        setHorario({
+          horario1: data.horario1 || "",
+          horario2: data.horario2 || "",
+          idTienda: data.idTienda || 0
+        });
+        // Store the schedule in state
       } catch (error) {
         console.error("Error fetching horario:", error);
       }
@@ -35,7 +40,6 @@ const InformacionTienda = (tienda) => {
 
   if (!tienda) return null;
 
-  const infoTienda = tienda.tienda;
 
 
   function handleTimeChange(e) {
@@ -56,7 +60,7 @@ const InformacionTienda = (tienda) => {
   // Cancelar los cambios hechos en el horario
   function handleCancelEdit() {
     setEditarHorario(false);
-    setHorario(user.horario);
+    setHorario(infoTienda.horario);
   }
 
 
@@ -72,18 +76,16 @@ const InformacionTienda = (tienda) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({...horario, idTienda: user.id})
+        body: JSON.stringify({...horario, idTienda: infoTienda.id})
       });
 
-      if (response.ok) {
-        setEditarHorario(false);
-      }
-
     } catch (error) {
-
+      console.log("Error: ", error);
     } finally {
       setSendingHorario(false);
-      await login(user.correo, user.clave);
+
+      //CUANDO SE ACTUALIZA EL VALOR, INFOTIENDA NO CAMBIA, ENTONCES CARGA EL VALOR VIEJO
+      //await login(user.correo, user.clave);
     }
   }
 
@@ -160,7 +162,8 @@ const InformacionTienda = (tienda) => {
                 {!editarHorario && <span className={"flex gap-1"}>
                   Lunes a viernes:
                   <span className={"font-medium text-green-700"}>
-                    {horario.horario1} - {horario.horario2}
+                    {infoTienda.horario ? `${infoTienda.horario.horario1} - ${infoTienda.horario.horario2}` : "Sin horario"}
+
                   </span>
                 </span>}
 
