@@ -20,12 +20,12 @@ const InformacionTienda = (tienda) => {
 
 
 
-  {/* Verificar que solo el usuario pueda editar*/}
+  {/* Verificar que solo el usuario pueda editar */}
   useEffect(()=>{
-    if(user.id === infoTienda.id){
+    if(user?.id === infoTienda?.id){
         setPuedeEditar(true);
     }
-  }, [infoTienda.id, user.id]);
+  }, [infoTienda.id, user]);
 
 
 
@@ -36,13 +36,13 @@ const InformacionTienda = (tienda) => {
           `http://localhost:8080/horario/${infoTienda.id}`
         );
         const data = await response.json();
-        console.log("data: ", data);
+
         setHorario({
           horario1: data.horario1 || "",
           horario2: data.horario2 || "",
           idTienda: data.idTienda || 0,
         });
-        // Store the schedule in state
+
       } catch (error) {
         console.error("Error fetching horario:", error);
       }
@@ -85,6 +85,11 @@ const InformacionTienda = (tienda) => {
     e.preventDefault();
     setSendingHorario(true);
 
+    // Verifica que solo el dueño de la tienda pueda editar  
+    if(!puedeEditar){
+        return;
+    }
+
     try {
       const response = await fetch("http://localhost:8080/horario", {
         method: "POST",
@@ -108,8 +113,12 @@ const InformacionTienda = (tienda) => {
 
 
 
-  // HACER QUE SOLO EL USUARIO LOGUEADO PUEDA BORRAR SU PROPIO HORARIO
   async function borrarHorario() {
+
+    // Verifica que solo el dueño de la tienda puede borrar  
+    if(!puedeEditar){
+      return;
+    }
     try {
       const response = await fetch(
         `http://localhost:8080/Tienda/horario/${infoTienda.id}`,
@@ -121,7 +130,7 @@ const InformacionTienda = (tienda) => {
         }
       );
 
-      if (respone.ok) {
+      if (response.ok) {
         console.log("Horario borrado con exito");
       }
     } catch (error) {
@@ -152,7 +161,7 @@ const InformacionTienda = (tienda) => {
                 <h3 className="text-xl font-bold mr-10">Horarios</h3>
 
                 {/* Botón para editar los horarios */}
-                {!editarHorario && (
+                {!editarHorario && puedeEditar && (
                   <div className="absolute top-[-5px] right-[-60px] flex gap-1">
                     <div
                       className={
@@ -223,7 +232,7 @@ const InformacionTienda = (tienda) => {
 
 
               {/* Input para seleccionar los horarios */}
-              {editarHorario && (
+              {editarHorario && puedeEditar && (
                 <div className={"relative w-fit flex gap-3"}>
                   <label htmlFor="horario1" className={"font-medium"}>
                     Apertura
@@ -254,7 +263,7 @@ const InformacionTienda = (tienda) => {
                   </label>
 
                   {/* Botones para enviar o cancelar la edición del horario */}
-                  {editarHorario && (
+                  {editarHorario && puedeEditar &&(
                     <div className="flex gap-3 h-16  w-fitduration-100 transition-all cursor-pointer justify-center items-end ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -341,7 +350,7 @@ const InformacionTienda = (tienda) => {
 
 
       {/* Ventana de confirmación para borrar un horario */}
-      {borrarIsOpen && (
+      {borrarIsOpen && puedeEditar && (
         <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm items-center flex justify-center z-30">
           <div className="bg-white p-8 rounded-lg flex flex-col justify-center items-center gap-7 w-[500px]">
             <span className="font-bold text-2xl">¿Borrar horario?</span>
