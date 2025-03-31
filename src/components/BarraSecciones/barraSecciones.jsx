@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // Importa el icono de lupa desde react-icons
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import {BotonFlechaCategoria} from "@/components/categorias/BotonFlechaCategoria";
@@ -42,7 +42,14 @@ const SeccionTiendas = ({secciones}) => {
                             <Link href={`#${seccion.nombre}`}
                                 key={seccion.nombre}
                                 className={`px-4 py-2 text-black ${seccionActiva === seccion.nombre ? 'text-green-500 font-bold' : ''} whitespace-nowrap`}
-                                onClick={() => setSeccionActiva(seccion.nombre)}>
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const targetSection = document.getElementById(seccion.nombre);
+                                    if (targetSection) {
+                                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                    setSeccionActiva(seccion.nombre);
+                                }}>
 
                                     {seccion.nombre}
                                     {seccionActiva === seccion.nombre && (<div className="w-full h-1 bg-green-500 mt-1"></div>)}

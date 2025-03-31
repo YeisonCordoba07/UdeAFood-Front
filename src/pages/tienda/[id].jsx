@@ -3,40 +3,7 @@ import { Header } from "@/components/Header/Header";
 import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
 import { PerfilT } from "@/components/PerfilTienda/PerfilT";
 import { Producto } from "@/components/producto/Producto";
-import { InformacionTienda } from "@/components/PerfilTienda/InformacionTienda";
 import { useFetch } from "@/hook/useFetch";
-
-
-const imagenes = [
-  "/burrito.jpg",
-  "/empanada1.jpg",
-  "/hamburguesa.jpg",
-  "/pizza2.jpeg",
-  "/pizza3.jpeg",
-  "/pizza4.jpeg",
-  "/pizza5.jpeg",
-  "/polloasado.jpeg",
-  "/sanduche.jpg",
-  "/pasta1.jpeg",
-  "/pasta2.jpeg",
-  "/bandejapaisa.jpeg",
-  "/sopa.jpeg",
-  "/arepa.jpeg",
-  "/pasaboca1.jpeg",
-  "/pasaboca2.jpeg",
-  "/cafe1.jpeg",
-  "/cafe2.jpeg",
-  "/arroz1.jpeg",
-  "/arroz2.jpeg",
-];
-
-
-
-// Función para obtener una imagen aleatoria
-const obtenerImagenAleatoria = () => {
-const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-return imagenes[indiceAleatorio];
-};
 
 
 
@@ -90,9 +57,7 @@ const TiendaParticular = ({}) => {
                   return (
                     <Producto
                       key={elementoProducto.id}
-                      imagen={elementoProducto.imagen ? `data:image/jpeg;base64,${elementoProducto.imagen.imagen}` : "/all.jpg"}
-                      nombre={elementoProducto.nombre}
-                      precio={elementoProducto.precio}
+                      producto={elementoProducto}
                     />
                   );
                 })}
