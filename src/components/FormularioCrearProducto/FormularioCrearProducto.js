@@ -16,7 +16,7 @@ const FormularioCrearProducto = () => {
         disponibilidad: "",
         categoria: [{ idCategoria: "" }],
         seccion: { id: "" },
-        foto: "",
+        imagen: {id: 0, imagen: ""},
     });
 
     const handleImageChange = (e) => {
@@ -24,7 +24,7 @@ const FormularioCrearProducto = () => {
         const reader = new FileReader();
 
         reader.onloadend = () => {
-            setNuevoProducto({ ...nuevoProducto, foto: reader.result.split(",")[1] }); // Convierte a base64 y actualiza el estado
+            setNuevoProducto({ ...nuevoProducto, imagen: {id: 0, imagen: reader.result.split(",")[1] } }); // Convierte a base64 y actualiza el estado
         };
 
         if (file) {
