@@ -6,6 +6,8 @@ import { useAuth } from "@/context/AuthContext";
 import { InformacionTienda } from "@/components/PerfilTienda/InformacionTienda";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { BotonEliminar }   from "@/components/Botones/BotonEliminar";
+import BotonActualizar from "@/components/Botones/BotonActualizar";
 
 
 // Ruta de imagenes para elegirlas al azar
@@ -80,7 +82,7 @@ const PerfilTienda = () => {
 
             <PerfilT tienda={user}/>
             
-
+            
             <section className="flex flex-col p-5">
 
                 {
@@ -96,22 +98,29 @@ const PerfilTienda = () => {
                                 <div className="flex gap-4 mt-2 flex-wrap">
                                     {secciones.productos.map((elementoProducto) => {
                                         return (
-                                            <Producto
-                                                key={elementoProducto.id}
-                                                imagen={obtenerImagenAleatoria()}
-                                                nombre={elementoProducto.nombre}
-                                                precio={elementoProducto.precio}
-                                            />
+                                            <div key={elementoProducto.id} className="flex flex-col items-center">
+                                                <Producto
+                                                    imagen={obtenerImagenAleatoria()}
+                                                    nombre={elementoProducto.nombre}
+                                                    precio={elementoProducto.precio}
+                                                />
+                                                <div className="flex gap-2 mt-2">
+                                                    <BotonEliminar productoId={elementoProducto.id} />
+                                                    <BotonActualizar producto={elementoProducto} />
+                                               
+                                                </div>
+                                            </div>
                                         );
+                                    
                                     })}
-                                </div>
+                                </div>                                 
                             </section>
                         );
+                    
                     })
 
-                }
-
-            </section>
+                }                
+            </section>                          
 
         </div>
 
