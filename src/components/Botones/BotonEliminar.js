@@ -24,7 +24,7 @@ const BotonEliminar = ({ productoId, onDeleteSuccess }) => {
   };
 
   return (
-    <button onClick={handleDelete} className="text-red-600 hover:underline">
+    <button onClick={handleDelete} className="bg-green-600 text-white font-medium text-xs py-2 px-4 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
       Eliminar
     </button>
   );

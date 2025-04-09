@@ -3,11 +3,14 @@ import { useState } from "react";
 import { useFetch } from "@/hook/useFetch";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+
 const FormularioCrearProducto = () => {
-
     const { user } = useAuth();
-
     const router = useRouter();
+
+    const { id } = router.query;
+    
+
 
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: "",
@@ -51,6 +54,8 @@ const FormularioCrearProducto = () => {
             },
             body: JSON.stringify(nuevoProducto),
         })
+
+        
             .then((res) => {
                 // Verificamos si el contenido es JSON
                 const contentType = res.headers.get("Content-Type");
@@ -67,6 +72,26 @@ const FormularioCrearProducto = () => {
                 }
             })
             .catch((error) => console.error("Error al crear Producto:", error));
+    }
+
+    const actualizaProducto=(e)=>{
+        e.preventDefault();
+        fetch(`http://localhost:8080/Producto/actualizar/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoProducto),
+        })
+
+        .then((response) => {
+            console.log("Respuesta del servidor:", response);
+            if(response.ok){
+                router.push(`/tienda/${user.id}`);
+            }
+        })
+        .catch((error) => console.error("Error al actualizar Producto:", error));
+
     }
 
 
@@ -187,6 +212,12 @@ const FormularioCrearProducto = () => {
                 <button
                     type="submit"
                     className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Crear Producto
+                </button>
+
+                <button
+                    onClick={actualizaProducto}
+                    type="button"
+                    className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Actualizar Producto
                 </button>
 
             </form>

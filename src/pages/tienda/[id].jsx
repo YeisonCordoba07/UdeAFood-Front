@@ -5,6 +5,7 @@ import { PerfilT } from "@/components/PerfilTienda/PerfilT";
 import { Producto } from "@/components/producto/Producto";
 import { useFetch } from "@/hook/useFetch";
 import { BotonEliminar } from "@/components/Botones/BotonEliminar";
+import { BotonActualizar } from "@/components/Botones/BotonActualizar";
 
 
 
@@ -58,7 +59,10 @@ const TiendaParticular = ({}) => {
                   return (
                     <div key={elementoProducto.id} className="relative">
                       <Producto producto={elementoProducto} />
-                      <BotonEliminar productoId={elementoProducto.id} />
+                      <div className="flex flex-col gap-2">
+                        <BotonEliminar productoId={elementoProducto.id} />
+                        <BotonActualizar productoId={elementoProducto.id}/>
+                      </div>
                   </div>
                   
                   );
