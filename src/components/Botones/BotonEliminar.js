@@ -3,7 +3,7 @@ import React from 'react';
 const BotonEliminar = ({ productoId, onDeleteSuccess }) => {
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/eliminar/${productoId}`, {
+      const response = await fetch(`http://localhost:8080/Producto/eliminar/${productoId}`, {
         method: 'DELETE',
       });
 
@@ -24,7 +24,7 @@ const BotonEliminar = ({ productoId, onDeleteSuccess }) => {
   };
 
   return (
-    <button onClick={handleDelete} className="text-red-600 hover:underline">
+    <button onClick={handleDelete} className="bg-green-600 text-white font-medium text-xs py-2 px-4 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
       Eliminar
     </button>
   );
