@@ -4,6 +4,7 @@ import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
 import { PerfilT } from "@/components/PerfilTienda/PerfilT";
 import { Producto } from "@/components/producto/Producto";
 import { useFetch } from "@/hook/useFetch";
+import { BotonEliminar } from "@/components/Botones/BotonEliminar";
 
 
 
@@ -55,10 +56,11 @@ const TiendaParticular = ({}) => {
               <div className="flex gap-4 mt-2 flex-wrap">
                 {secciones.productos.map((elementoProducto) => {
                   return (
-                    <Producto
-                      key={elementoProducto.id}
-                      producto={elementoProducto}
-                    />
+                    <div key={elementoProducto.id} className="relative">
+                      <Producto producto={elementoProducto} />
+                      <BotonEliminar productoId={elementoProducto.id} />
+                  </div>
+                  
                   );
                 })}
               </div>
