@@ -6,7 +6,7 @@ const InformacionTienda = (tienda) => {
   const [sendingHorario, setSendingHorario] = useState(false);
   const [borrarIsOpen, setBorrarIsOpen] = useState(false);
   const [puedeEditar, setPuedeEditar] = useState(false);
-  const {user} = useAuth();
+  const { user } = useAuth();
 
 
   const [horario, setHorario] = useState({
@@ -18,12 +18,19 @@ const InformacionTienda = (tienda) => {
   const infoTienda = tienda.tienda;
   //console.log("infotienda:", infoTienda);
 
+  //Metodo de pago
+  const [mostrarFormMetodo, setMostrarFormMetodo] = useState(false);
+  const [metodosPago, setMetodosPago] = useState([]);
+  const [nuevoMetodo, setNuevoMetodo] = useState({
+    tipo: '',
+    detalles: ''
+  });
 
 
-  {/* Verificar que solo el usuario pueda editar */}
-  useEffect(()=>{
-    if(user?.id === infoTienda?.id){
-        setPuedeEditar(true);
+  {/* Verificar que solo el usuario pueda editar */ }
+  useEffect(() => {
+    if (user?.id === infoTienda?.id) {
+      setPuedeEditar(true);
     }
   }, [infoTienda, user]);
 
@@ -42,7 +49,7 @@ const InformacionTienda = (tienda) => {
         // Verifica si la respuesta tiene contenido
         const text = await response.text();
         if (!text) {
-            return;
+          return;
         }
 
         const data = JSON.parse(text);
@@ -101,8 +108,8 @@ const InformacionTienda = (tienda) => {
     setSendingHorario(true);
 
     // Verifica que solo el dueño de la tienda pueda editar  
-    if(!puedeEditar){
-        return;
+    if (!puedeEditar) {
+      return;
     }
 
     try {
@@ -131,7 +138,7 @@ const InformacionTienda = (tienda) => {
   async function borrarHorario() {
 
     // Verifica que solo el dueño de la tienda puede borrar  
-    if(!puedeEditar){
+    if (!puedeEditar) {
       return;
     }
     try {
@@ -153,7 +160,61 @@ const InformacionTienda = (tienda) => {
     }
   }
 
+// Cargar métodos al inicio (en el useEffect principal)
+useEffect(() => {
+  const fetchMetodosPago = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/tiendas/${infoTienda.id}/metodos-pago`);
+      const data = await response.json();
+      setMetodosPago(data);
+    } catch (error) {
+      console.error("Error cargando métodos de pago:", error);
+    }
+  };
+  
+  if (infoTienda?.id) {
+    fetchMetodosPago();
+  }
+}, [infoTienda]);
 
+// Agregar nuevo método de pago
+const agregarMetodoPago = async () => {
+  if (!nuevoMetodo.tipo || !nuevoMetodo.detalles) return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/tiendas/${infoTienda.id}/metodos-pago`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(nuevoMetodo)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setMetodosPago([...metodosPago, data]);
+      setNuevoMetodo({ tipo: '', detalles: '' });
+      setMostrarFormMetodo(false);
+    }
+  } catch (error) {
+    console.error("Error agregando método de pago:", error);
+  }
+};
+
+// Eliminar método de pago
+const eliminarMetodoPago = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:8080/tiendas/${infoTienda.id}/metodos-pago/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      setMetodosPago(metodosPago.filter(m => m.id !== id));
+    }
+  } catch (error) {
+    console.error("Error eliminando método de pago:", error);
+  }
+};
 
 
 
@@ -203,13 +264,12 @@ const InformacionTienda = (tienda) => {
                     </div>
 
                     <div
-                      className={`bg-transparent hover:bg-red-300 w-10 h-10 flex justify-center   items-center rounded-full duration-100 transition-all cursor-pointer ${
-                      horario.horario1 === "" || horario.horario2 === "" || horario === null
+                      className={`bg-transparent hover:bg-red-300 w-10 h-10 flex justify-center   items-center rounded-full duration-100 transition-all cursor-pointer ${horario.horario1 === "" || horario.horario2 === "" || horario === null
                         ? "pointer-events-none opacity-50 text-gray-400 bg-gray-200"
                         : "text-red-500"
-                  }`}
-                        onClick={() => setBorrarIsOpen(true)}
->
+                        }`}
+                      onClick={() => setBorrarIsOpen(true)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width={24}
@@ -280,7 +340,7 @@ const InformacionTienda = (tienda) => {
                   </label>
 
                   {/* Botones para enviar o cancelar la edición del horario */}
-                  {editarHorario && puedeEditar &&(
+                  {editarHorario && puedeEditar && (
                     <div className="flex gap-3 h-16  w-fitduration-100 transition-all cursor-pointer justify-center items-end ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -339,10 +399,115 @@ const InformacionTienda = (tienda) => {
               <span>{infoTienda.domicilio}</span>
             </div>
 
+
+            {/*Metodos de Pago*/}
             <div className="flex flex-col w-full">
-              <h3 className="text-xl font-bold">Formas de pago</h3>
-              <span>Ahorro a la mano</span>
-              <span>Nequi</span>
+              <div className="flex w-fit relative justify-center items-center">
+                <h3 className="text-xl font-bold mr-10">Métodos de Pago</h3>
+
+                {/* Botón para agregar métodos */}
+                {puedeEditar && (
+                  <div className="absolute top-[-5px] right-[-60px]">
+                    <div
+                      className="bg-transparent hover:bg-blue-300 w-10 h-10 flex justify-center items-center rounded-full duration-100 transition-all cursor-pointer"
+                      onClick={() => setMostrarFormMetodo(!mostrarFormMetodo)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={24}
+                        height={24}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-blue-600"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 5l0 14" />
+                        <path d="M5 12l14 0" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Lista de métodos existentes */}
+              <div className="mt-2 space-y-2">
+                {metodosPago.length > 0 ? (
+                  metodosPago.map((metodo) => (
+                    <div key={metodo.id} className="flex justify-between items-center bg-gray-50 p-2 rounded">
+                      <span>
+                        <strong>{metodo.tipo}:</strong> {metodo.detalles}
+                      </span>
+                      {puedeEditar && (
+                        <button
+                          onClick={() => eliminarMetodoPago(metodo.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={18}
+                            height={18}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 7l16 0" />
+                            <path d="M10 11l0 6" />
+                            <path d="M14 11l0 6" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <span className="text-gray-500">No hay métodos registrados</span>
+                )}
+              </div>
+
+              {/* Formulario para agregar nuevo método */}
+              {mostrarFormMetodo && puedeEditar && (
+                <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      placeholder="Tipo (ej: Tarjeta)"
+                      className="flex-1 p-2 border rounded"
+                      value={nuevoMetodo.tipo}
+                      onChange={(e) => setNuevoMetodo({ ...nuevoMetodo, tipo: e.target.value })}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Detalles (ej: Visa ****1234)"
+                      className="flex-1 p-2 border rounded"
+                      value={nuevoMetodo.detalles}
+                      onChange={(e) => setNuevoMetodo({ ...nuevoMetodo, detalles: e.target.value })}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                      onClick={agregarMetodoPago}
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+                      onClick={() => setMostrarFormMetodo(false)}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
 
