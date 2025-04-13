@@ -1,6 +1,8 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
+
+
 const InformacionTienda = (tienda) => {
   const [isOpen, setIsOpen] = useState(false);
   const [sendingHorario, setSendingHorario] = useState(false);
@@ -16,7 +18,7 @@ const InformacionTienda = (tienda) => {
   });
   const [editarHorario, setEditarHorario] = useState(false);
   const infoTienda = tienda.tienda;
-  //console.log("infotienda:", infoTienda);
+
 
   //Metodo de pago
   const [mostrarFormMetodo, setMostrarFormMetodo] = useState(false);
@@ -70,8 +72,6 @@ const InformacionTienda = (tienda) => {
     fetchHorario();
 
   }, [infoTienda]);
-
-  console.log("Horario después:", infoTienda.horario);
 
 
 

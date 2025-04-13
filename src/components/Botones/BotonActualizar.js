@@ -9,7 +9,7 @@ const BotonActualizar = ({ productoId }) => {
     <Link href={`/CrearProducto?id=${productoId}`}>
     
         <button 
-                className="bg-green-600 text-white font-medium text-xs py-2 px-4 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                className="bg-green-200 text-green-700 font-medium text-xs py-2 px-4 rounded-lg hover:bg-green-400 duration-200 transition-colors whitespace-nowrap flex flex-col items-center">
             Actualizar
         </button>
     </Link>
