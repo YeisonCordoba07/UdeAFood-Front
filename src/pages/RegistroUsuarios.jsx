@@ -1,7 +1,8 @@
 import {HeaderRegistro} from "@/components/registro/HeaderRegistro";
-import {useState} from "react";
+import React, {useState} from "react";
 import {ElementoFormulario} from "@/components/registro/ElementoFormulario";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function RegistroUsuarios() {
 
@@ -16,10 +17,9 @@ export default function RegistroUsuarios() {
   });
 
 
-
-  async function crearUsuario(e){
+  async function crearUsuario(e) {
     e.preventDefault();
-    try{
+    try {
       const response = await fetch("http://localhost:8080/usuario/crearUsuario", {
         method: "POST",
         headers: {
@@ -38,15 +38,12 @@ export default function RegistroUsuarios() {
       setMensaje("Usuario creado exitosamente");
       router.push("/inicioSesion");
 
-    }catch (error){
+    } catch (error) {
       console.error("Error al crear el usuario:", error);
-    }finally {
+    } finally {
 
     }
   }
-
-
-
 
 
   return (
@@ -64,7 +61,7 @@ export default function RegistroUsuarios() {
             placeholderLabel={"Ejm: Juan"}
             esRequerido={true}
             defaultValue={nuevoUsuario.nombre}
-            onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: e.target.value })}
+            onChange={(e) => setNuevoUsuario({...nuevoUsuario, nombre: e.target.value})}
           />
 
           <ElementoFormulario
@@ -73,7 +70,7 @@ export default function RegistroUsuarios() {
             placeholderLabel={"Ejm: Valdez"}
             esRequerido={true}
             defaultValue={nuevoUsuario.apellido}
-            onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido: e.target.value })}
+            onChange={(e) => setNuevoUsuario({...nuevoUsuario, apellido: e.target.value})}
           />
 
           <ElementoFormulario
@@ -82,7 +79,7 @@ export default function RegistroUsuarios() {
             placeholderLabel={"Ejm: JuanValdez@gmail.com"}
             esRequerido={true}
             defaultValue={nuevoUsuario.correo}
-            onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: e.target.value })}
+            onChange={(e) => setNuevoUsuario({...nuevoUsuario, correo: e.target.value})}
           />
 
           <ElementoFormulario
@@ -91,8 +88,9 @@ export default function RegistroUsuarios() {
             placeholderLabel={"*********"}
             esRequerido={true}
             defaultValue={nuevoUsuario.clave}
-            onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, clave: e.target.value })}
+            onChange={(e) => setNuevoUsuario({...nuevoUsuario, clave: e.target.value})}
           />
+
 
           <button
             type="submit"
@@ -105,8 +103,22 @@ export default function RegistroUsuarios() {
               {mensaje}
             </p>
           )}
-        </form>
 
+
+
+          <div className={"flex flex-col gap-2"}>
+
+            <Link href={"/registro"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Registrarse como tienda</span>
+            </Link>
+
+            <Link href={"/inicioSesion"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Iniciar sesión</span>
+            </Link>
+
+          </div>
+
+        </form>
 
 
       </div>

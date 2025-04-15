@@ -1,6 +1,7 @@
 import { ElementoFormulario } from "./ElementoFormulario";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const FormularioRegistro = () => {
 
@@ -178,14 +179,30 @@ const FormularioRegistro = () => {
             />
 
 
+
+
             <button
                 type="submit"
                 className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">Registrarse</button>
+
             {mensaje && (
                 <p className={`mt-4 ${mensaje.includes("exitoso") ? "text-green-600" : "text-red-600"}`}>
                     {mensaje}
                 </p>
             )}
+
+
+          <div className={"flex flex-col gap-2"}>
+
+            <Link href={"/RegistroUsuarios"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Registrarse como usuario</span>
+            </Link>
+
+            <Link href={"/inicioSesion"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Iniciar sesión</span>
+            </Link>
+
+          </div>
         </form>
     );
 }
