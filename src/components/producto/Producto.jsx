@@ -1,5 +1,5 @@
 import {MdInfoOutline} from "react-icons/md";
-import {BotonConIcono} from "../BotonConIcono";
+import {BotonConIcono} from "../Botones/BotonConIcono";
 import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import {ElementoCategoria} from "../categorias/ElementoCategoria";

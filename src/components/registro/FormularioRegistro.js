@@ -6,6 +6,20 @@ const FormularioRegistro = () => {
 
     const [mensaje, setMensaje] = useState("");
     const router = useRouter();
+    const [nuevaTienda, setNuevaTienda] = useState({
+      nombre: "",
+      descripcion: "",
+      ubicacion: "",
+      foto: "",
+      tipoTienda: "",
+      correo: "",
+      usuario: "",
+      clave: "",
+      domicilio: "",
+      contacto: "",
+    });
+
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
@@ -19,6 +33,8 @@ const FormularioRegistro = () => {
             reader.readAsDataURL(file); // Lee la imagen como una URL de datos (base64)
         }
     };
+
+
 
     const crearTienda = (e) => {
         e.preventDefault();
@@ -45,22 +61,13 @@ const FormularioRegistro = () => {
             })
             .catch((error) => console.error("Error al crear tienda:", error));
     }
-    const [nuevaTienda, setNuevaTienda] = useState({
-        nombre: "",
-        descripcion: "",
-        ubicacion: "",
-        foto: "",
-        tipoTienda: "",
-        correo: "",
-        usuario: "",
-        clave: "",
-        domicilio: "",
-        contacto: "",
-    });
+
+
+
 
 
     return (
-        <form className="flex gap-3 flex-col w-[650px]" onSubmit={crearTienda}>
+        <form className="flex gap-3 flex-col w-[650px] mb-20" onSubmit={crearTienda}>
 
             <ElementoFormulario
                 identificador={"nombre"}

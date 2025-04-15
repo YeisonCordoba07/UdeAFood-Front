@@ -1,7 +1,7 @@
 import { MdInfoOutline } from "react-icons/md";
 
 import Image from "next/image";
-import { BotonConIcono } from "@/components/BotonConIcono";
+import { BotonConIcono } from "@/components/Botones/BotonConIcono";
 import Link from "next/link";
 
 const BusquedaTiendas = ({ tiendas }) => {
