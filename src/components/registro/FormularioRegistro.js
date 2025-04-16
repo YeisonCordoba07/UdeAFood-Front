@@ -1,11 +1,26 @@
 import { ElementoFormulario } from "./ElementoFormulario";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const FormularioRegistro = () => {
 
     const [mensaje, setMensaje] = useState("");
     const router = useRouter();
+    const [nuevaTienda, setNuevaTienda] = useState({
+      nombre: "",
+      descripcion: "",
+      ubicacion: "",
+      foto: "",
+      tipoTienda: "",
+      correo: "",
+      usuario: "",
+      clave: "",
+      domicilio: "",
+      contacto: "",
+    });
+
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
@@ -19,6 +34,8 @@ const FormularioRegistro = () => {
             reader.readAsDataURL(file); // Lee la imagen como una URL de datos (base64)
         }
     };
+
+
 
     const crearTienda = (e) => {
         e.preventDefault();
@@ -45,22 +62,13 @@ const FormularioRegistro = () => {
             })
             .catch((error) => console.error("Error al crear tienda:", error));
     }
-    const [nuevaTienda, setNuevaTienda] = useState({
-        nombre: "",
-        descripcion: "",
-        ubicacion: "",
-        foto: "",
-        tipoTienda: "",
-        correo: "",
-        usuario: "",
-        clave: "",
-        domicilio: "",
-        contacto: "",
-    });
+
+
+
 
 
     return (
-        <form className="flex gap-3 flex-col w-[650px]" onSubmit={crearTienda}>
+        <form className="flex gap-3 flex-col w-[650px] mb-20" onSubmit={crearTienda}>
 
             <ElementoFormulario
                 identificador={"nombre"}
@@ -171,14 +179,30 @@ const FormularioRegistro = () => {
             />
 
 
+
+
             <button
                 type="submit"
                 className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">Registrarse</button>
+
             {mensaje && (
                 <p className={`mt-4 ${mensaje.includes("exitoso") ? "text-green-600" : "text-red-600"}`}>
                     {mensaje}
                 </p>
             )}
+
+
+          <div className={"flex flex-col gap-2"}>
+
+            <Link href={"/RegistroUsuarios"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Registrarse como usuario</span>
+            </Link>
+
+            <Link href={"/inicioSesion"} className={"w-fit"}>
+              <span className="text-blue-600 underline">Iniciar sesión</span>
+            </Link>
+
+          </div>
         </form>
     );
 }

@@ -1,21 +1,17 @@
-import { useRouter } from "next/router";
-import { Header } from "@/components/Header/Header";
-import { SeccionTiendas } from "@/components/BarraSecciones/barraSecciones";
-import { PerfilT } from "@/components/PerfilTienda/PerfilT";
-import { Producto } from "@/components/producto/Producto";
-import { useFetch } from "@/hook/useFetch";
-import { BotonEliminar } from "@/components/Botones/BotonEliminar";
-import { BotonActualizar } from "@/components/Botones/BotonActualizar";
-
-
+import {useRouter} from "next/router";
+import {Header} from "@/components/Header/Header";
+import {SeccionTiendas} from "@/components/BarraSecciones/barraSecciones";
+import {PerfilT} from "@/components/PerfilTienda/PerfilT";
+import {Producto} from "@/components/producto/Producto";
+import {useFetch} from "@/hook/useFetch";
+import {BotonEliminar} from "@/components/Botones/BotonEliminar";
+import {BotonActualizar} from "@/components/Botones/BotonActualizar";
 
 
 const TiendaParticular = ({}) => {
   const router = useRouter();
 
-  const { id } = router.query;
-
-
+  const {id} = router.query;
 
 
   const {
@@ -25,20 +21,16 @@ const TiendaParticular = ({}) => {
   } = useFetch(`http://localhost:8080/Tienda/${id}`);
 
 
-
-
   if (loading) {
     return <div>Cargando...</div>;
   }
 
   return (
     <div className="relative">
-      <Header />
+      <Header/>
 
-      <PerfilT tienda={tienda} />
-      <SeccionTiendas secciones={tienda?.secciones || []} />
-
-
+      <PerfilT tienda={tienda}/>
+      <SeccionTiendas secciones={tienda?.secciones || []}/>
 
 
       {/*loading && <p>Cargando tiendas...</p>*/}
@@ -51,20 +43,17 @@ const TiendaParticular = ({}) => {
               id={secciones.nombre} // Id para identificar la sección en la barra de navegación
               key={secciones.id} // Key para identificar la sección y desplazarse a ella
               className="flex flex-col gap-2 pt-5 pb-7 border-b border-gray-200"
-              style={{ scrollMarginTop: "70px" }}
+              style={{scrollMarginTop: "70px"}}
             >
               <h2 className={"text-2xl font-bold"}>{secciones.nombre}</h2>
               <div className="flex gap-4 mt-2 flex-wrap">
                 {secciones.productos.map((elementoProducto) => {
                   return (
-                    <div key={elementoProducto.id} className="relative">
-                      <Producto producto={elementoProducto} />
-                      <div className="flex flex-col gap-2">
-                        <BotonEliminar productoId={elementoProducto.id} />
-                        <BotonActualizar productoId={elementoProducto.id}/>
-                      </div>
-                  </div>
-                  
+                    <div key={elementoProducto.id} >
+                      <Producto producto={elementoProducto} idTienda={id}/>
+
+                    </div>
+
                   );
                 })}
               </div>
@@ -73,7 +62,7 @@ const TiendaParticular = ({}) => {
         })}
       </section>
 
-      
+
     </div>
   );
 };

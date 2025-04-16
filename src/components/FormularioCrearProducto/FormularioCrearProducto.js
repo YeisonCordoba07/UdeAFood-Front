@@ -1,5 +1,5 @@
 import { ElementoFormulario } from "@/components/registro/ElementoFormulario";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useFetch } from "@/hook/useFetch";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
@@ -9,7 +9,8 @@ const FormularioCrearProducto = () => {
     const router = useRouter();
 
     const { id } = router.query;
-    
+
+    console.log("id query ", id);
 
 
     const [nuevoProducto, setNuevoProducto] = useState({
@@ -17,7 +18,7 @@ const FormularioCrearProducto = () => {
         descripcion: "",
         precio: "",
         disponibilidad: "",
-        categoria: [{ idCategoria: "" }],
+        categorias: [{ idCategoria: "" }],
         seccion: { id: "" },
         imagen: {id: 0, imagen: ""},
     });
@@ -37,11 +38,45 @@ const FormularioCrearProducto = () => {
 
 
 
+
+
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
     // Trae las secciones de la tienda que ha iniciado sesión
     const { data: Seccion } = useFetch(`http://localhost:8080/Seccion/${user.id}`);
+
+
+
+    // Trae el producto que se va a editar
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchProducto = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/Producto/obtener/${id}`);
+        if (!res.ok) throw new Error("Error al obtener el producto");
+
+        const data = await res.json();
+
+          setNuevoProducto({
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            precio: data.precio,
+            disponibilidad: data.disponibilidad,
+            categorias: [],
+            seccion: {  },
+            imagen: { },
+          });
+
+      } catch (error) {
+        console.error("Error al obtener el producto:", error);
+      }
+    };
+
+    fetchProducto();
+
+  }, [id]);
 
 
 
@@ -209,16 +244,16 @@ const FormularioCrearProducto = () => {
 
 
 
-                <button
+              {!id && <button
                     type="submit"
                     className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Crear Producto
-                </button>
+                </button>}
 
-                <button
+              {id && <button
                     onClick={actualizaProducto}
                     type="button"
                     className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Actualizar Producto
-                </button>
+                </button>}
 
             </form>
 
