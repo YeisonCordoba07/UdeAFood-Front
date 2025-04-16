@@ -119,7 +119,7 @@ const Producto = ({producto, idTienda}) => {
                 className={"flex flex-col gap-2 bg-white p-3 rounded-md shadow-lg border border-gray-200"}>
 
                 <BotonEliminar productoId={producto.id}/>
-                <BotonActualizar productoId={producto.id}/>
+                <BotonActualizar enlace={`/CrearProducto?id=${producto.id}`}/>
 
               </div>
             }

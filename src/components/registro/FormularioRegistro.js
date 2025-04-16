@@ -1,5 +1,5 @@
 import { ElementoFormulario } from "./ElementoFormulario";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -19,8 +19,48 @@ const FormularioRegistro = () => {
       domicilio: "",
       contacto: "",
     });
+    const { id } = router.query;
 
 
+
+    // Trae la información de la tienda que se va a actualizar
+    useEffect(() => {
+        if (!id) return;
+
+        const fetchTienda = async () => {
+        try {
+            const res = await fetch(`http://localhost:8080/Tienda/${id}`);
+            if (!res.ok) throw new Error("Error al obtener la información de la tienda");
+
+            const data = await res.json();
+
+            setNuevaTienda({
+                nombre: data.nombre,
+                descripcion: data.descripcion,
+                ubicacion: data.ubicacion,
+                correo: data.correo,
+                usuario: data.usuario,
+                foto: "",
+                tipoTienda: data.tipoTienda,
+                clave: data.clave,
+                domicilio: data.domicilio,
+                contacto: data.contacto,
+            });
+
+        } catch (error) {
+            console.error("Error al obtener la tienda:", error);
+        }
+        };
+
+        fetchTienda();
+
+    }, [id]);
+
+
+
+
+
+    
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]; // Obtiene el primer archivo seleccionado
@@ -61,6 +101,24 @@ const FormularioRegistro = () => {
                 router.push("/inicioSesion"); // Redirigir a PerfilTienda
             })
             .catch((error) => console.error("Error al crear tienda:", error));
+    }
+
+    const actualizarTienda = (e) => {
+        e.preventDefault();
+        fetch(`http://localhost:8080/Tienda/actualizar/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaTienda),
+        })
+            .then((res) => {
+                console.log("Respuesta del servidor:", res);
+                if(res.ok){
+                    router.push(`/tienda/${id}`);
+                }
+            })
+            .catch((error) => console.error("Error al actualizar tienda:", error));
     }
 
 
@@ -181,9 +239,16 @@ const FormularioRegistro = () => {
 
 
 
-            <button
-                type="submit"
-                className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-700 hover:scale-105 duration-300">Registrarse</button>
+{!id && <button
+                    type="submit"
+                    className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Registrarse
+                </button>}
+
+              {id && <button
+                    onClick={actualizarTienda}
+                    type="button"
+                    className="bg-green-600 text-white font-bold text-xl py-2 rounded-lg hover:bg-green-600 hover:scale-105 duration-300">Actualizar tienda
+                </button>}
 
             {mensaje && (
                 <p className={`mt-4 ${mensaje.includes("exitoso") ? "text-green-600" : "text-red-600"}`}>
