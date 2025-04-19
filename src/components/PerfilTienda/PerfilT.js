@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { InformacionTienda } from "./InformacionTienda";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
@@ -6,6 +6,15 @@ import { useRouter } from "next/router";
 const PerfilT = ({ tienda }) => {
   const { user, logout } = useAuth(); // Usamos el hook para obtener el usuario y logout
   const router = useRouter();
+
+  const [puedeEditar, setPuedeEditar] = useState(false); // Estado para controlar si se puede editar
+
+  {/* Verificar que solo el usuario pueda editar */ }
+  useEffect(() => {
+    if (user?.id === tienda?.id) {
+      setPuedeEditar(true);
+    }
+  }, [tienda, user]);
 
 
   function handleEditarInformación(){
@@ -24,7 +33,7 @@ const PerfilT = ({ tienda }) => {
           {tienda.nombre || "Nombre de la Tienda"}{" "}
         </h1>
 
-        <div
+        {puedeEditar && <div
           className={
             "absolute right-0 top-0 bg-transparent hover:bg-green-300 w-10 h-10 flex justify-center items-center rounded-full duration-100 transition-all cursor-pointer"
           }
@@ -46,7 +55,7 @@ const PerfilT = ({ tienda }) => {
             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
             <path d="M13.5 6.5l4 4" />
           </svg>
-        </div>
+        </div>}
 
         <p className="justify-center">
           {tienda.descripcion || "Descripción de la tienda no disponible."}
