@@ -109,6 +109,7 @@ const FormularioCrearProducto = () => {
             .catch((error) => console.error("Error al crear Producto:", error));
     }
 
+    
     const actualizaProducto=(e)=>{
         e.preventDefault();
         fetch(`http://localhost:8080/Producto/actualizar/${id}`, {
