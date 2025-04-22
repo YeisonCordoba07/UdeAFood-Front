@@ -43,8 +43,11 @@ const FormularioCrearProducto = () => {
     // Trae todas las categorias que exiten
     const { data: categoria } = useFetch("http://localhost:8080/Categoria");
 
-    // Trae las secciones de la tienda que ha iniciado sesión
-    const { data: Seccion } = useFetch(`http://localhost:8080/Seccion/${user.id}`);
+    /* 
+      Trae las secciones de la tienda que ha iniciado sesión
+        y verifica si user está definido antes de usarlo
+    */
+    const { data: Seccion } = useFetch(user ? `http://localhost:8080/Seccion/${user.id}` : null);
 
 
 
@@ -186,15 +189,15 @@ const FormularioCrearProducto = () => {
                 />
 
                 <label
-                    htmlFor="Categoria"
+                    htmlFor="categorias"
                     className="flex gap-5 items-center justify-between ">
 
                     <span className="text-xl font-semibold">Categoria</span>
 
-                    <select name="categoria" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
+                    <select name="categorias" className="bg-neutral-200 px-5 py-2 rounded-lg text-xl outline-brack placeholder:text-neutral-500 w-96"
                         onChange={(e) => setNuevoProducto({
                             ...nuevoProducto,
-                            categoria: [{ idCategoria: e.target.value }]
+                            categorias: [{idCategoria: e.target.value }]
                         })}>
 
                         <option value="default" selected>Seleccionar</option>
