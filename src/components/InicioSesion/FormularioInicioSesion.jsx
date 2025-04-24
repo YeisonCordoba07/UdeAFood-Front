@@ -9,6 +9,7 @@ const FormularioInicioSesion = () => {
   const [correo, setCorreo] = useState('');
   const [clave, setClave] = useState('');
   const [error, setError] = useState(null);
+  const [tipoUsuario, setTipoUsuario] = useState('usuario');
   const {login} = useAuth(); // Usamos el método login del contexto de autenticación
   const router = useRouter();
 
@@ -16,7 +17,7 @@ const FormularioInicioSesion = () => {
     e.preventDefault();
     setError(null);
     try {
-      await login(correo, clave); // Intentamos iniciar sesión
+      await login(correo, clave, tipoUsuario); // Intentamos iniciar sesión
       router.push('/'); // Redirige a la página principal o a donde quieras después del inicio de sesión
     } catch (err) {
       setError("Error al iniciar sesión. Verifica tus credenciales.");
@@ -45,6 +46,18 @@ const FormularioInicioSesion = () => {
         onChange={(e) => setClave(e.target.value)}
       />
 
+      <div className="flex gap-4 items-center">
+        <label htmlFor="tipoUsuario">Tipo de usuario:</label>
+        <select
+          id="tipoUsuario"
+          value={tipoUsuario}
+          onChange={(e) => setTipoUsuario(e.target.value)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="usuario">Usuario</option>
+          <option value="tienda">Tienda</option>
+        </select>
+      </div>
 
       <button
         type="submit"
@@ -53,10 +66,6 @@ const FormularioInicioSesion = () => {
       </button>
 
       <div className={"flex flex-col gap-2"}>
-
-        <Link href={"#"} className={"w-fit"}>
-          <span className="text-blue-600 underline">Iniciar sesión como usuario</span>
-        </Link>
 
         <Link href={"/registro"} className={"w-fit"}>
           <span className="text-blue-600 underline">Registrarse</span>
