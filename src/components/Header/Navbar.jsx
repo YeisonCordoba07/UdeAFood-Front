@@ -22,7 +22,7 @@ const Navbar = () => {
     const [tipoTienda, setTipoTienda] = useState("TODAS");
     const router = useRouter();
     const { setData } = useBusquedaContext();
-    const { user, logout } = useAuth(); // Obtenemos el usuario y la función de logout
+    const { user, logout, cliente } = useAuth(); // Obtenemos el usuario y la función de logout
 
     const buscarProducto = async (e) => {
         e.preventDefault();
@@ -86,7 +86,7 @@ const Navbar = () => {
 
             {/* Botones de sesión */}
             <div className="flex items-center gap-5 h-full">
-                {user ? (
+                {user && (
                     <>
                         <Link href="/CrearSeccion">
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
@@ -112,21 +112,32 @@ const Navbar = () => {
 
                         </button>
                     </>
-                ) : (
-                    <>
-                        <Link href="/registro">
-                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
-                                Registrarse
-                            </button>
-                        </Link>
-                        <Link href="/inicioSesion">
-                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap border-2 border-white">
-                                Iniciar sesión
-                            </button>
-                        </Link>
-                    </>
+                ) }
+                {cliente && (
+
+                    <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                    <LogoutIcon fontSize="large" />
+
+                    </button>
                 )}
+                {!user && !cliente && (
+                    <>
+                    <Link href="/registro">
+                        <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                            Registrarse
+                        </button>
+                    </Link>
+                    <Link href="/inicioSesion">
+                        <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap border-2 border-white">
+                            Iniciar sesión
+                        </button>
+                    </Link>
+                </>
+                )
+
+                }
             </div>
+  
         </nav>
     );
 };
