@@ -8,7 +8,7 @@ import {BotonActualizar} from "@/components/Botones/BotonActualizar";
 import {useAuth} from "@/context/AuthContext";
 
 
-const Producto = ({producto, idTienda}) => {
+const Producto = ({producto, idTienda, onDeleteProducto}) => {
   const {user} = useAuth();
   const [puedeEditar, setPuedeEditar] = useState(false);
   const menuRef = useRef(null);
@@ -118,7 +118,9 @@ const Producto = ({producto, idTienda}) => {
 
                 className={"flex flex-col gap-2 bg-white p-3 rounded-md shadow-lg border border-gray-200"}>
 
-                <BotonEliminar productoId={producto.id}/>
+                <BotonEliminar 
+                  productoId={producto.id}
+                  onDeleteSuccess={onDeleteProducto}/>
                 <BotonActualizar enlace={`/CrearProducto?id=${producto.id}`}/>
 
               </div>

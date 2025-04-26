@@ -15,7 +15,7 @@ const BotonEliminar = ({productoId, onDeleteSuccess}) => {
         throw new Error(errorMessage || 'Error al eliminar el producto');
       }
 
-      alert('Producto eliminado exitosamente');
+      //alert('Producto eliminado exitosamente');
 
       if (onDeleteSuccess) {
         onDeleteSuccess(productoId); // Puedes eliminarlo del estado del padre
