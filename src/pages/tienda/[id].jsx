@@ -4,26 +4,47 @@ import {SeccionTiendas} from "@/components/BarraSecciones/barraSecciones";
 import {PerfilT} from "@/components/PerfilTienda/PerfilT";
 import {Producto} from "@/components/producto/Producto";
 import {useFetch} from "@/hook/useFetch";
-import {BotonEliminar} from "@/components/Botones/BotonEliminar";
-import {BotonActualizar} from "@/components/Botones/BotonActualizar";
-
+import { useEffect, useState } from "react";
 
 const TiendaParticular = ({}) => {
   const router = useRouter();
 
   const {id} = router.query;
 
-
-  const {
-    data: tienda,
-    loading,
-    error,
-  } = useFetch(`http://localhost:8080/Tienda/${id}`);
+  const [tienda, setTienda]=useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
 
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  const  fetchTienda = async()=>{
+    try{
+      const response = await fetch(`http://localhost:8080/Tienda/${id}`);
+      const data = await response.json();
+      setTienda(data);
+    }catch(err){
+      console.error("Error al cargar tiienda: ",err);
+      setError(true);
+    }finally{
+      setLoading(false);
+    }
+    
+  };
+  useEffect(()=>{
+    if (id){
+      fetchTienda();
+    }
+  },[id]);
+  const handleEliminarProducto=(productoId)=>{
+    const nuevasSecciones = tienda.secciones.map((seccion) =>({
+      ...seccion,
+      productos: seccion.productos.filter(p=>p.id !== productoId),
+    }));
+    setTienda({...tienda, secciones: nuevasSecciones});
+    
+  };
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>Error al cargar la tienda</div>;
+
 
   return (
     <div className="relative">
@@ -50,7 +71,10 @@ const TiendaParticular = ({}) => {
                 {secciones.productos.map((elementoProducto) => {
                   return (
                     <div key={elementoProducto.id} >
-                      <Producto producto={elementoProducto} idTienda={id}/>
+                      <Producto producto={elementoProducto} 
+                      idTienda={id}
+                      onDeleteProducto={handleEliminarProducto}
+                      />
 
                     </div>
 
