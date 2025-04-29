@@ -8,6 +8,7 @@ import {BotonActualizar} from "@/components/Botones/BotonActualizar";
 import {useAuth} from "@/context/AuthContext";
 import { useCarrito } from "@/hook/useCarrito";
 import { elegirImagen } from "@/lib/elegirImagen";
+import { IconoCarrito } from "../iconos/IconoCarrito";
 
 
 const Producto = ({producto, idTienda, onDeleteProducto}) => {
@@ -71,7 +72,8 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
           src={elegirImagen(producto)} alt={""}
           width={300}
           height={300}
-          className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto"/>
+          onClick={(e)=>handleMostrarDetalles(e)}
+          className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto cursor-pointer"/>
 
 
         <div className="flex gap-1 flex-col w-full">
@@ -82,7 +84,7 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 
         </div>
 
-        <BotonConIcono icono={<MdInfoOutline/>} textoBoton="Agregar al carrito" onClick={e => agregarAlCarrito(producto)}/>
+        <BotonConIcono icono={<IconoCarrito/>} textoBoton="Agregar" onClick={e => agregarAlCarrito(producto)}/>
 
 
         {/* Menu de opciones (eliminar, actualizar) */}
@@ -133,67 +135,85 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 
       {/* Detalles del producto */}
       {mostrarDetalles &&
-        <div
-          className="fixed w-screen h-screen bg-black bg-opacity-60 z-50 flex justify-center items-center top-0 right-0"
-          onClick={(e) => handleMostrarDetalles(e)}>
+              <div
+                  className="fixed w-screen h-screen bg-black bg-opacity-60 z-50 flex justify-center items-center top-0 right-0"
+                  onClick={(e) => handleMostrarDetalles(e)}>
 
-          <div
-            className="w-[800px] bg-white rounded-md h-fit] flex gap-7 p-7 "
-            onClick={(e) => e.stopPropagation()}>
 
-            {/* Imagen y categorias */}
-            <div className="flex flex-col gap-4 w-2/3">
-              <Image
-                src={elegirImagen(producto)} alt={producto?.nombre}
-                width={300}
-                height={300}
-                className="bg-no-repeat w-full h-fit object-cover rounded-md"
-              />
+                  <div
+                      onClick={(e) => {
+                          e.stopPropagation(); // Evita que el clic cierre el diálogo
+                      }}
+                      className="bg-white relative rounded-lg w-fit h-fit flex flex-col items-center justify-center"
+                  >
 
-              {/* Categorias del producto */}
-              <div className="flex flex-wrap gap-2 w-full">
 
-                {producto.categorias && producto.categorias.length > 0 && producto.categorias.map((categoria) => {
 
-                  return (
-                    <div key={categoria.idCategoria} onClick={(e) => {
-                      handleMostrarDetalles(e)
-                    }}>
+                      <div
+                          className="w-[800px] bg-white rounded-md h-fit] flex gap-5 p-7 "
 
-                      <ElementoCategoria
-                        key={categoria.idCategoria}
-                        textoCategoria={categoria.nombreCategoria}
-                      />
-                    </div>
+                      >
 
-                  );
-                })}
+                          {/* Imagen y categorias */}
+                          <div className="flex flex-col gap-4 w-7/12">
+                              <Image
+                                  src={elegirImagen(producto)} alt={producto.nombre}
+                                  width={300}
+                                  height={300}
+                                  className="bg-no-repeat w-full h-fit object-cover rounded-md"
+                              />
+
+                          </div>
+
+
+                          {/* Information of the product */}
+                          <div className="flex flex-col gap-2 w-5/12">
+                              <div>
+                                  <span className="font-bold text-2xl">{producto.nombre}</span>
+                                  <div>
+
+                                      <p className="text-gray-400 text-lg font-bold">${producto.precio}</p>
+                                  </div>
+                              </div>
+                              <div>
+                                  <p className="text-gray-500">{producto.descripcion}</p>
+                              </div>
+
+                          </div>
+                      </div>
+
+
+                      {/* Buttons */}
+                      <div className="w-full flex justify-end p-5 border-t border-t-gray-300 items-center rounded-b-md">
+                          <div className="flex gap-5">
+
+                              <BotonConIcono textoBoton="Agregar a carrito"  icono={<IconoCarrito/>}/>
+
+
+                          </div>
+                      </div>
+
+                      {/* Icono para cerrar */}
+                      <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={30}
+          height={30}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-700 transition duration-1
+          500 ease-in-out hover:bg-gray-200 rounded-full p-1 hover:scale-110"
+          onClick={(e) => handleMostrarDetalles(e)}
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M18 6l-12 12" />
+          <path d="M6 6l12 12" />
+        </svg>
+                  </div>
               </div>
-
-            </div>
-
-
-            {/* Información del producto */}
-            <div className="flex flex-col gap-5 w-1/3 ">
-              <div>
-                <span className="font-bold">Nombre</span>
-                <p>{producto.nombre}</p>
-              </div>
-              <div>
-                <span className="font-bold">Descripción</span>
-                <p>{producto.descripcion}</p>
-              </div>
-              <div>
-                <span className="font-bold">Precio</span>
-                <p>{producto.precio}</p>
-              </div>
-              <div>
-                <span className="font-bold">Disponible</span>
-                <p>{producto.descripcion === "S" ? "Sí" : "No"}</p>
-              </div>
-            </div>
-          </div>
-        </div>
       }
 
     </>

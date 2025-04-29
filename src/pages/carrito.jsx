@@ -76,7 +76,7 @@ export default function Carrito() {
 
                                             <div className={"mt-auto w-full"}>
 
-                                                <BotonConIcono textoBoton="Elimiar" onClick={() => quitarDelCarrito(producto.id)} />
+                                                <BotonConIcono  textoBoton="Eliminar" onClick={() => quitarDelCarrito(producto.id)} background={"bg-red-500"} backgroundHover={"bg-red-700"}/>
                                             </div>
 
                                         </div>

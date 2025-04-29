@@ -36,7 +36,7 @@ const Carrito = () => {
 
       {/* Cart item count */}
       {carrito.length > 0 && (
-        <div className="absolute bottom-1 right-2 bg-black rounded-full w-5 h-5 flex justify-center items-center text-xs font-bold text-orange-400">
+        <div className="absolute bottom-1 right-2 bg-black rounded-full w-5 h-5 flex justify-center items-center text-xs font-bold text-orange-400 pointer-events-none">
           {carrito.length}
         </div>
       )}
@@ -100,7 +100,7 @@ const Carrito = () => {
             {/* Button to open cart page */}
             <li className="flex gap-4 p-4 text-green-600 border-neutral-200 hover:bg-green-100 transition duration-150 hover:text-green-500 font-bold">
               <Link
-                href="/cart"
+                href="/carrito"
                 className="flex  justify-center items-center w-full"
               >
                 Ver carrito / Ir a pagar
