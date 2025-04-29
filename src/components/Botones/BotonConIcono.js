@@ -6,10 +6,10 @@ const BotonConIcono = ({ textoBoton = "Ver mas", icono = null, onClick }) => {
         onClick={onClick}
         >
 
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap">{textoBoton}</span>
-            <div className="text-3xl">
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap flex justify-center w-full">{textoBoton}</span>
+            {icono && <div className="text-3xl">
                 {icono}
-            </div>
+            </div>}
 
         </button>
     );

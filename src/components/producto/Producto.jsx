@@ -7,6 +7,7 @@ import {BotonEliminar} from "@/components/Botones/BotonEliminar";
 import {BotonActualizar} from "@/components/Botones/BotonActualizar";
 import {useAuth} from "@/context/AuthContext";
 import { useCarrito } from "@/hook/useCarrito";
+import { elegirImagen } from "@/lib/elegirImagen";
 
 
 const Producto = ({producto, idTienda, onDeleteProducto}) => {
@@ -49,13 +50,7 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
   }, []);
 
 
-  function elegirImagen(producto) {
-    if (producto?.imagen?.imagen) {
-      return `data:image/png;base64,${producto.imagen.imagen}`;
-    } else {
-      return "/all.jpg";
-    }
-  }
+
 
 
   function handleMostrarDetalles(e) {

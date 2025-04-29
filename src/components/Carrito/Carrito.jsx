@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { IconoCarrito } from "../iconos/IconoCarrito";
+import { elegirImagen } from "@/lib/elegirImagen";
 
 
 
@@ -16,13 +17,7 @@ const Carrito = () => {
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
 
 
-  function elegirImagen(producto) {
-    if (producto?.imagen?.imagen) {
-      return `data:image/png;base64,${producto.imagen.imagen}`;
-    } else {
-      return "/all.jpg";
-    }
-  }
+
 
   return (
     <div className="relative" ref={carritoRef}>
