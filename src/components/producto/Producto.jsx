@@ -6,12 +6,14 @@ import {ElementoCategoria} from "../categorias/ElementoCategoria";
 import {BotonEliminar} from "@/components/Botones/BotonEliminar";
 import {BotonActualizar} from "@/components/Botones/BotonActualizar";
 import {useAuth} from "@/context/AuthContext";
+import { useCarrito } from "@/hook/useCarrito";
 
 
 const Producto = ({producto, idTienda, onDeleteProducto}) => {
   const {user} = useAuth();
   const [puedeEditar, setPuedeEditar] = useState(false);
   const menuRef = useRef(null);
+  const {agregarAlCarrito} = useCarrito();
 
 
   {/* detalles y opciones ocultas del producto */
@@ -85,7 +87,7 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 
         </div>
 
-        <BotonConIcono icono={<MdInfoOutline/>} onClick={e => handleMostrarDetalles(e)}/>
+        <BotonConIcono icono={<MdInfoOutline/>} textoBoton="Agregar al carrito" onClick={e => agregarAlCarrito(producto)}/>
 
 
         {/* Menu de opciones (eliminar, actualizar) */}
