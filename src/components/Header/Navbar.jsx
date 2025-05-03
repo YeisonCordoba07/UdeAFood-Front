@@ -92,13 +92,13 @@ const Navbar = () => {
                         <Link href="/CrearSeccion">
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
                                 <BookmarkAddIcon fontSize="large" />
-  
+
                             </button>
                         </Link>
                         <Link href="/CrearProducto">
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
                                 <AddCircleIcon fontSize="large" />
-  
+
                             </button>
                         </Link>
                         <Link href={`/tienda/${user.id}`}>
@@ -113,35 +113,48 @@ const Navbar = () => {
 
                         </button>
                     </>
-                ) }
+                )}
                 {cliente && (
                     <>
+
                     <Carrito/>
 
                         <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
                             <LogoutIcon fontSize="large" />
 
                         </button>
+
+
+                        <Link href={`/RegistroUsuarios?id=${cliente.id}`}>
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                                Editar mi perfil
+                            </button>
+                        </Link>
+                        <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                            <LogoutIcon fontSize="large" />
+
+                        </button>
                     </>
+
                 )}
                 {!user && !cliente && (
                     <>
-                    <Link href="/registro">
-                        <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
-                            Registrarse
-                        </button>
-                    </Link>
-                    <Link href="/inicioSesion">
-                        <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap border-2 border-white">
-                            Iniciar sesión
-                        </button>
-                    </Link>
-                </>
+                        <Link href="/registro">
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
+                                Registrarse
+                            </button>
+                        </Link>
+                        <Link href="/inicioSesion">
+                            <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap border-2 border-white">
+                                Iniciar sesión
+                            </button>
+                        </Link>
+                    </>
                 )
 
                 }
             </div>
-  
+
         </nav>
     );
 };
