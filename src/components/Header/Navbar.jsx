@@ -14,6 +14,7 @@ import { useAuth } from "@/context/AuthContext"; // Importamos el contexto de au
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Logo } from './Logo';
+import { Carrito } from '../Carrito/Carrito';
 
 
 
@@ -50,7 +51,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className='flex justify-between w-screen items-center gap-5'>
+        <nav className='flex justify-between w-screen items-center gap-5 z-40'>
             <Logo />
 
             <div className="flex gap-8 items-center w-3/5 m-auto">
@@ -115,6 +116,15 @@ const Navbar = () => {
                 )}
                 {cliente && (
                     <>
+
+                    <Carrito/>
+
+                        <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
+                            <LogoutIcon fontSize="large" />
+
+                        </button>
+
+
                         <Link href={`/RegistroUsuarios?id=${cliente.id}`}>
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
                                 Editar mi perfil
