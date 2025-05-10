@@ -1,18 +1,21 @@
-import {MdInfoOutline} from "react-icons/md";
-import {BotonConIcono} from "../Botones/BotonConIcono";
+import { MdInfoOutline } from "react-icons/md";
+import { BotonConIcono } from "../Botones/BotonConIcono";
 import Image from "next/image";
-import {useEffect, useRef, useState} from "react";
-import {ElementoCategoria} from "../categorias/ElementoCategoria";
-import {BotonEliminar} from "@/components/Botones/BotonEliminar";
-import {BotonActualizar} from "@/components/Botones/BotonActualizar";
-import {useAuth} from "@/context/AuthContext";
+import { useEffect, useRef, useState } from "react";
+import { ElementoCategoria } from "../categorias/ElementoCategoria";
+import { BotonEliminar } from "@/components/Botones/BotonEliminar";
+import { BotonActualizar } from "@/components/Botones/BotonActualizar";
+import AllReviews from "@/components/ratings/AllReviews";
+import { useAuth } from "@/context/AuthContext";
 
 
-const Producto = ({producto, idTienda, onDeleteProducto}) => {
-  const {user} = useAuth();
+const Producto = ({ producto, idTienda, onDeleteProducto }) => {
+  const { user } = useAuth();
   const [puedeEditar, setPuedeEditar] = useState(false);
   const menuRef = useRef(null);
 
+  {/* ver todas las reviews */ }
+  const [verTodasLasResenas, setVerTodasLasResenas] = useState(false);
 
   {/* detalles y opciones ocultas del producto */
   }
@@ -63,6 +66,15 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
     });
   }
 
+  {/* reseñas simuladas */ }
+  const reseñas = [
+    { userName: "Laura", rating: 4, comment: "Muy buena, aunque un poco fría." },
+    { userName: "Carlos", rating: 5, comment: "Perfecta, la recomiendo mucho." },
+    { userName: "María", rating: 4, comment: "Buen sabor, pero poca cantidad." },
+    { userName: "Luis", rating: 3, comment: "Regular, estaba un poco salada." },
+    { userName: "Ana", rating: 5, comment: "Excelente sabor y porción." },
+  ];
+
 
   return (
     <>
@@ -74,7 +86,7 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
           src={elegirImagen(producto)} alt={""}
           width={300}
           height={300}
-          className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto"/>
+          className="bg-no-repeat max-w-[250px] min-h-[200px] max-h-64 object-cover rounded-md mx-auto" />
 
 
         <div className="flex gap-1 flex-col w-full">
@@ -85,7 +97,7 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 
         </div>
 
-        <BotonConIcono icono={<MdInfoOutline/>} onClick={e => handleMostrarDetalles(e)}/>
+        <BotonConIcono icono={<MdInfoOutline />} onClick={e => handleMostrarDetalles(e)} />
 
 
         {/* Menu de opciones (eliminar, actualizar) */}
@@ -103,12 +115,12 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
             >
               {/* Icono de 3 puntos */}
               <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" stroke="currentColor"
-                   strokeWidth={2}
-                   strokeLinecap="round" strokeLinejoin="round" className="icon-tabler icon-tabler-dots-vertical">
-                <path stroke="none" d="M0 0h24v24H0z"/>
-                <circle cx="12" cy="5" r="1"/>
-                <circle cx="12" cy="12" r="1"/>
-                <circle cx="12" cy="19" r="1"/>
+                strokeWidth={2}
+                strokeLinecap="round" strokeLinejoin="round" className="icon-tabler icon-tabler-dots-vertical">
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="19" r="1" />
               </svg>
             </button>
 
@@ -118,10 +130,10 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 
                 className={"flex flex-col gap-2 bg-white p-3 rounded-md shadow-lg border border-gray-200"}>
 
-                <BotonEliminar 
+                <BotonEliminar
                   productoId={producto.id}
-                  onDeleteSuccess={onDeleteProducto}/>
-                <BotonActualizar enlace={`/CrearProducto?id=${producto.id}`}/>
+                  onDeleteSuccess={onDeleteProducto} />
+                <BotonActualizar enlace={`/CrearProducto?id=${producto.id}`} />
 
               </div>
             }
@@ -152,6 +164,45 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
                 height={300}
                 className="bg-no-repeat w-full h-fit object-cover rounded-md"
               />
+              {/* calificacion promedio de las estrellas */}
+              <div className="text-sm text-yellow-500 mt-1">★ 4.6 · 7.498 calificaciones</div>
+
+              {/* Comentarios en el frontent estaticos de los 3 ultimos comentarios */}
+              <div className="mt-4">
+                <h4 className="text-lg font-semibold mb-2">Últimas reseñas</h4>
+                <div className="space-y-2">
+                  <div className="border-t pt-2">
+                    <p className="text-sm font-medium text-gray-700">Laura</p>
+                    <p className="text-yellow-500">★★★★☆</p>
+                    <p className="text-gray-600">Muy buena, aunque un poco fría.</p>
+                  </div>
+                  <div className="border-t pt-2">
+                    <p className="text-sm font-medium text-gray-700">Carlos</p>
+                    <p className="text-yellow-500">★★★★★</p>
+                    <p className="text-gray-600">Perfecta, la recomiendo mucho.</p>
+                  </div>
+                  <div className="border-t pt-2">
+                    <p className="text-sm font-medium text-gray-700">María</p>
+                    <p className="text-yellow-500">★★★★☆</p>
+                    <p className="text-gray-600">Buen sabor, pero poca cantidad.</p>
+                  </div>
+                </div>
+                <button
+                  className="mt-4 px-4 py-1 bg-gray-200 rounded hover:bg-gray-300 text-sm"
+                  onClick={() => setVerTodasLasResenas(true)}
+                >
+                  Ver más comentarios
+                </button>
+              </div>
+
+              <AllReviews
+                isOpen={verTodasLasResenas}
+                onClose={() => setVerTodasLasResenas(false)}
+                reviews={reseñas}
+                productId={producto.id}
+              />
+
+
 
               {/* Categorias del producto */}
               <div className="flex flex-wrap gap-2 w-full">
@@ -205,4 +256,4 @@ const Producto = ({producto, idTienda, onDeleteProducto}) => {
 }
 
 
-export {Producto};
+export { Producto };
