@@ -22,6 +22,7 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
     const [puedeEditar, setPuedeEditar] = useState(false);
     const menuRef = useRef(null);
     const { agregarAlCarrito } = useCarrito();
+    const [calificaciones, setCalificaciones] = useState([]);
 
     {/* ver todas las reviews */ }
     const [verTodasLasResenas, setVerTodasLasResenas] = useState(false);
@@ -41,6 +42,26 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
         }
 
     }, [idTienda, user]);
+
+    useEffect(()=>{
+        const fetchCalificaciones = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/calificacion/${producto.id}`);
+                if (!response.ok) throw new Error("Error al obtener las calificaciones");
+                const data = await response.json();
+                setCalificaciones(data);
+                console.log("Calificaciones obtenidas:", data);
+            } catch (error) {
+                console.error("Error al obtener las calificaciones:", error);
+            }
+        };
+        if(verTodasLasResenas){
+
+            fetchCalificaciones();
+        }
+
+
+    }, [producto, verTodasLasResenas]);
 
 
     {/* Cerrar el menu de opciones al hacer click fuera de el */
@@ -71,11 +92,11 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
 
     {/* reseñas simuladas */ }
     const reseñas = [
-        { userName: "Laura", rating: 4, comment: "Muy buena, aunque un poco fría." },
-        { userName: "Carlos", rating: 5, comment: "Perfecta, la recomiendo mucho." },
-        { userName: "María", rating: 4, comment: "Buen sabor, pero poca cantidad." },
-        { userName: "Luis", rating: 3, comment: "Regular, estaba un poco salada." },
-        { userName: "Ana", rating: 5, comment: "Excelente sabor y porción." },
+        { nombreUsuario: "Laura", calificacion: 4, comentario: "Muy buena, aunque un poco fría." },
+        { nombreUsuario: "Carlos", calificacion: 5, comentario: "Perfecta, la recomiendo mucho." },
+        { nombreUsuario: "María", calificacion: 4, comentario: "Buen sabor, pero poca cantidad." },
+        { nombreUsuario: "Luis", calificacion: 3, comentario: "Regular, estaba un poco salada." },
+        { nombreUsuario: "Ana", calificacion: 5, comentario: "Excelente sabor y porción." },
     ];
 
 
@@ -217,7 +238,7 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                 <AllReviews
                                     isOpen={verTodasLasResenas}
                                     onClose={() => setVerTodasLasResenas(false)}
-                                    reviews={reseñas}
+                                    reviews={calificaciones.length > 0 ? calificaciones : reseñas}
                                     productId={producto.id}
                                 />
 

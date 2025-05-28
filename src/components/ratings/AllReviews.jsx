@@ -64,6 +64,10 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
   );
 };
 
+
+
+
+
 const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
   if (!isOpen) return null;
 
@@ -84,7 +88,27 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
   const userReview = cliente ? reviews.find(r => r.userId === cliente.id) : null;
 
   // Simulación de handlers
-  const handleSaveReview = (review) => {
+  const handleSaveReview = async (review) => {
+    try {
+        const nuevaCalificacion = {idUsuario: review.userId, idProducto: review.productId, calificacion: review.rating, comentario: review.comment};
+        const response = await fetch("http://localhost:8080/calificacion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaCalificacion),
+        });
+        if (!response.ok) {
+            throw new Error("Error al enviar la calificación");
+        }
+        const data = await response.json();
+        console.log("Calificación enviada:", data);
+
+        
+    } catch (error) {
+        console.log("error al enviar la calificacion: ", error)
+        
+    }
     console.log("Guardar reseña:", review);
     // Aquí iría un POST o PUT al backend
   };
@@ -139,11 +163,11 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
           {reviews.length > 0 ? (
             reviews.map((r, index) => (
               <div key={index} className="border-b pb-2">
-                <p className="font-medium text-sm text-gray-800">{r.userName}</p>
+                <p className="font-medium text-sm text-gray-800">{r.nombreUsuario}</p>
                 <p className="text-yellow-500 text-sm">
-                  {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                  {'★'.repeat(r.calificacion)}{'☆'.repeat(5 - r.calificacion)}
                 </p>
-                <p className="text-gray-700 text-sm">{r.comment}</p>
+                <p className="text-gray-700 text-sm">{r.comentario}</p>
               </div>
             ))
           ) : (

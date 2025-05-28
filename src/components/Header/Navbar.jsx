@@ -119,12 +119,6 @@ const Navbar = () => {
 
                     <Carrito/>
 
-                        <button onClick={logout} className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap flex flex-col items-center">
-                            <LogoutIcon fontSize="large" />
-
-                        </button>
-
-
                         <Link href={`/RegistroUsuarios?id=${cliente.id}`}>
                             <button className="bg-green-600 text-white font-medium text-xl py-4 px-6 rounded-lg hover:bg-green-500 duration-300 whitespace-nowrap">
                                 Editar mi perfil
