@@ -54,13 +54,14 @@ export default function Carrito() {
             console.error("Error al realizar la compra/pedido:", error);
         }
 
+        // DEJAR COMENTADO POR AHORA PARA HACER EL PROCESO DE COMPRA MAS RÁPIDO
         //vaciarCarrito();
     }
 
     return (
 
         <>
-                    <Header/>
+            <Header/>
             <div className="w-full h-full bg-zinc-300 flex justify-center">
                 <div className="w-[1200px] h-full p-7 bg-zinc-300 flex gap-5">
 

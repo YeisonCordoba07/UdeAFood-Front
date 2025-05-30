@@ -6,6 +6,7 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
   const [rating, setRating] = useState(existingReview?.rating || 0);
   const [comment, setComment] = useState(existingReview?.comment || "");
 
+
   useEffect(() => {
     if (existingReview) {
       setRating(existingReview.rating);
@@ -13,16 +14,20 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
     }
   }, [existingReview]);
 
+
   const handleSave = () => {
     const review = { userId, productId, rating, comment };
     onSave(review);
   };
+
 
   const handleDelete = () => {
     if (window.confirm("¿Estás seguro de eliminar tu calificación?")) {
       onDelete(existingReview.id);
     }
   };
+
+
 
   return (
     <div className="border p-4 rounded bg-gray-50 mt-6">
@@ -123,6 +128,8 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
     // Aquí iría un DELETE al backend
   };
 
+
+  
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
       <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
