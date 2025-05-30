@@ -3,6 +3,7 @@ import { Header } from "@/components/Header/Header";
 import { useCarrito } from "@/hook/useCarrito";
 import { elegirImagen } from "@/lib/elegirImagen";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,8 @@ export default function Carrito() {
 
 
     const { carrito, quitarDelCarrito, vaciarCarrito } = useCarrito();
+    const { cliente } = useAuth();
+
 
     const [precioTotal, setPrecioTotal] = useState(0);
 
@@ -17,6 +20,42 @@ export default function Carrito() {
 
         setPrecioTotal(carrito.reduce((total, item) => item.precio + total, 0));
     }, [carrito])
+
+
+    async function comprarProductos() {
+        if (carrito.length === 0) {
+            return;
+        }
+        const productosCarrito = carrito.map(producto =>{
+            return producto.id;
+        });
+        console.log("Productos en el carrito:", productosCarrito);
+        const nuevoPedido = {
+            idUsuario: cliente.id,
+            total: precioTotal,
+            fecha: new Date().toISOString(),
+            productos: [...productosCarrito]
+        };
+        try{
+            const response = await fetch("http://localhost:8080/pedido/crear-pedido", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(nuevoPedido)
+            });
+            if (!response.ok) {
+                throw new Error("Error al realizar la compra/pedido");
+            }
+            const data = await response.json();
+            console.log("Pedido realizado con éxito:", data);
+
+        }catch (error) {
+            console.error("Error al realizar la compra/pedido:", error);
+        }
+
+        //vaciarCarrito();
+    }
 
     return (
 
@@ -138,7 +177,7 @@ export default function Carrito() {
 
                         <div className="p-5">
 
-                            <BotonConIcono textoBoton="Comprar" />
+                            <BotonConIcono textoBoton="Comprar" onClick={comprarProductos}/>
                         </div>
 
                     </div>

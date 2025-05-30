@@ -69,9 +69,9 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
 
 
 const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
-  if (!isOpen) return null;
-
+    
   const { cliente } = useAuth();
+  if (!isOpen) return null;
   const average = 4.6;
   const total = 7498;
 
@@ -89,8 +89,13 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
 
   // Simulación de handlers
   const handleSaveReview = async (review) => {
+
+    const idProductoPedido = await fetch(`http://localhost:8080/productoPedido/${productId}`);
+    if(!idProductoPedido) {
+        return;
+    }
     try {
-        const nuevaCalificacion = {idUsuario: review.userId, idProducto: review.productId, calificacion: review.rating, comentario: review.comment};
+        const nuevaCalificacion = {idUsuario: review.userId, idProductoPedido: idProductoPedido, calificacion: review.rating, comentario: review.comment};
         const response = await fetch("http://localhost:8080/calificacion", {
             method: "POST",
             headers: {
