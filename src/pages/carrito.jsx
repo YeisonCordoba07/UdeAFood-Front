@@ -1,8 +1,11 @@
 import { BotonConIcono } from "@/components/Botones/BotonConIcono";
 import { Header } from "@/components/Header/Header";
+import { useAuth } from "@/context/AuthContext";
 import { useCarrito } from "@/hook/useCarrito";
 import { elegirImagen } from "@/lib/elegirImagen";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import Link from "next/link"
 
 import { useEffect, useState } from "react";
 
@@ -12,11 +15,56 @@ export default function Carrito() {
     const { carrito, quitarDelCarrito, vaciarCarrito } = useCarrito();
 
     const [precioTotal, setPrecioTotal] = useState(0);
+    const router = useRouter();
+    const {cliente} = useAuth();
 
     useEffect(() => {
 
         setPrecioTotal(carrito.reduce((total, item) => item.precio + total, 0));
     }, [carrito])
+
+    const crearPedido = async () =>{
+        const usuarioId = cliente.id;
+        if(!usuarioId){
+            alert("No se encontro ID de usuario. Por favor inicia sesión.");
+            return;
+        }
+        const pedidoDTO ={
+            usuarioId: Number(usuarioId),
+            total: precioTotal,
+            productos: carrito.map((producto)=>({
+                productoId : producto.id,
+                cantidad: producto.cantidad || 1,
+                precioUnitario: producto.precio,
+            })),
+        };
+        try{
+            const response =await fetch("http://localhost:8080/pedido/crear",{
+                method: "POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body: JSON.stringify(pedidoDTO),
+            });
+            if(response.ok){
+                const data = await response.json();
+                //Redirigir con los productos
+                router.push({
+                    pathname : "/perfilUsuario",
+                    query:{
+                        productos: JSON.stringify(carrito),
+                    },
+                });
+                vaciarCarrito();
+            }else{
+                console.error("Error al crear el pedido:",await response.text());
+                alert("No se pudo crear el pedido.");
+            }
+        }catch (error){
+            console.error("Error de red: ",error)
+            alert("Error al conectarse con el servidor.");
+        }
+    };
 
     return (
 
@@ -125,7 +173,7 @@ export default function Carrito() {
                             <div className="flex justify-between ">
                                 <span className=" text-xl">Envio:</span>
                                 <span className="text-xl">$ 0</span>
-                            </div>
+                            </div> 
 
                             <div className="flex justify-between ">
                                 <span className="font-bold text-xl">Total:</span>
@@ -137,8 +185,7 @@ export default function Carrito() {
                         <hr className="border border-neutral-200 w-full" />
 
                         <div className="p-5">
-
-                            <BotonConIcono textoBoton="Comprar" />
+                            <BotonConIcono textoBoton="Comprar" onClick={crearPedido} />
                         </div>
 
                     </div>
