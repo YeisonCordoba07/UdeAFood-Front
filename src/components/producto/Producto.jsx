@@ -242,7 +242,19 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                 {/* Comentarios en el frontent estaticos de los 3 ultimos comentarios */}
                                 <div className="mt-4">
                                     <h4 className="text-lg font-semibold mb-2">Últimas reseñas</h4>
-                                    <div className="space-y-2">
+                                    {
+                                        calificaciones.map((calificacion, index) => {
+                                            return (
+                                                <div key={index} className="border-t pt-2">
+                                                    <p className="text-sm font-medium text-gray-700">{calificacion.nombreUsuario}</p>
+                                                    <p className="text-yellow-500">{"★".repeat(calificacion.calificacion)}{"☆".repeat(5 - calificacion.calificacion)}</p>
+                                                    <p className="text-gray-600">{calificacion.comentario}</p>
+                                                </div>
+                                            );
+                                        })
+                                    }
+                                    {
+                                        calificaciones.length <=0 && (<div className="space-y-2">
                                         <div className="border-t pt-2">
                                             <p className="text-sm font-medium text-gray-700">Laura</p>
                                             <p className="text-yellow-500">★★★★☆</p>
@@ -258,7 +270,8 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                             <p className="text-yellow-500">★★★★☆</p>
                                             <p className="text-gray-600">Buen sabor, pero poca cantidad.</p>
                                         </div>
-                                    </div>
+                                    </div>)
+                                    }
                                     <button
                                         className="mt-4 mb-10 px-4 py-1 bg-gray-200 rounded hover:bg-gray-300 text-sm"
                                         onClick={() => setVerTodasLasResenas(true)}
