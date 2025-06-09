@@ -30,6 +30,7 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
     }
     const [mostrarDetalles, setMostrarDetalles] = useState(false);
     const [mostrarMenuOpciones, setMostrarMenuOpciones] = useState(false);
+    const [calificaciones, setCalificaciones] = useState([]);
 
 
     {/* Verificar que solo el usuario pueda editar */
@@ -59,6 +60,33 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
     }, []);
 
 
+    useEffect(()=>{
+        const fetchCalificaciones = async () => {
+            try {
+                if (!producto || !producto.id) {
+                    console.error("Producto no válido o sin ID");
+                    return;
+                }
+                const response = await fetch(`http://localhost:8080/calificacion/${producto.id}`);
+                if (!response.ok) {
+                    throw new Error("Error al obtener las calificaciones");
+                }
+                const data = await response.json();
+                setCalificaciones(data);
+                console.log("Calificaciones obtenidas:", data);
+            } catch (error) {
+                console.error("Error al obtener las calificaciones:", error);
+            }
+        };
+        if(verTodasLasResenas){
+
+            fetchCalificaciones();
+        }
+
+
+    }, [producto, verTodasLasResenas]);
+
+
 
 
 
@@ -71,11 +99,36 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
 
     {/* reseñas simuladas */ }
     const reseñas = [
-        { userName: "Laura", rating: 4, comment: "Muy buena, aunque un poco fría." },
-        { userName: "Carlos", rating: 5, comment: "Perfecta, la recomiendo mucho." },
-        { userName: "María", rating: 4, comment: "Buen sabor, pero poca cantidad." },
-        { userName: "Luis", rating: 3, comment: "Regular, estaba un poco salada." },
-        { userName: "Ana", rating: 5, comment: "Excelente sabor y porción." },
+        { 
+            idUsuario: 1, 
+            nombreUsuario: "Laura", 
+            calificacion: 4, 
+            comentario: "Muy buena, aunque un poco fría." 
+        },
+        { 
+            idUsuario: 2, 
+            nombreUsuario: "Carlos", 
+            calificacion: 5, 
+            comentario: "Perfecta, la recomiendo mucho." 
+        },
+        { 
+            idUsuario: 3, 
+            nombreUsuario: "María", 
+            calificacion: 4, 
+            comentario: "Buen sabor, pero poca cantidad." 
+        },
+        { 
+            idUsuario: 4, 
+            nombreUsuario: "Luis", 
+            calificacion: 3, 
+            comentario: "Regular, estaba un poco salada." 
+        },
+        { 
+            idUsuario: 5, 
+            nombreUsuario: "Ana", 
+            calificacion: 5, 
+            comentario: "Excelente sabor y porción." 
+        },
     ];
 
 
@@ -189,7 +242,19 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                 {/* Comentarios en el frontent estaticos de los 3 ultimos comentarios */}
                                 <div className="mt-4">
                                     <h4 className="text-lg font-semibold mb-2">Últimas reseñas</h4>
-                                    <div className="space-y-2">
+                                    {
+                                        calificaciones.map((calificacion, index) => {
+                                            return (
+                                                <div key={index} className="border-t pt-2">
+                                                    <p className="text-sm font-medium text-gray-700">{calificacion.nombreUsuario}</p>
+                                                    <p className="text-yellow-500">{"★".repeat(calificacion.calificacion)}{"☆".repeat(5 - calificacion.calificacion)}</p>
+                                                    <p className="text-gray-600">{calificacion.comentario}</p>
+                                                </div>
+                                            );
+                                        })
+                                    }
+                                    {
+                                        calificaciones.length <=0 && (<div className="space-y-2">
                                         <div className="border-t pt-2">
                                             <p className="text-sm font-medium text-gray-700">Laura</p>
                                             <p className="text-yellow-500">★★★★☆</p>
@@ -205,7 +270,8 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                             <p className="text-yellow-500">★★★★☆</p>
                                             <p className="text-gray-600">Buen sabor, pero poca cantidad.</p>
                                         </div>
-                                    </div>
+                                    </div>)
+                                    }
                                     <button
                                         className="mt-4 mb-10 px-4 py-1 bg-gray-200 rounded hover:bg-gray-300 text-sm"
                                         onClick={() => setVerTodasLasResenas(true)}
@@ -217,7 +283,7 @@ const Producto = ({ producto, idTienda, onDeleteProducto }) => {
                                 <AllReviews
                                     isOpen={verTodasLasResenas}
                                     onClose={() => setVerTodasLasResenas(false)}
-                                    reviews={reseñas}
+                                    reviews={calificaciones.length > 0 ? calificaciones : reseñas}
                                     productId={producto.id}
                                 />
 

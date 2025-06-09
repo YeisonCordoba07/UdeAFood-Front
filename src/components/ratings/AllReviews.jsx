@@ -2,27 +2,34 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 // Componente para crear/editar/eliminar reseña del usuario actual
-const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete }) => {
-  const [rating, setRating] = useState(existingReview?.rating || 0);
-  const [comment, setComment] = useState(existingReview?.comment || "");
+const UserReviewForm = ({ userId: idUsuario, productId: idProducto, existingReview, onSave, onDelete }) => {
+
+  const [calificacion, setCalificacion] = useState(existingReview?.calificacion || 0);
+  const [comentario, setComentario] = useState(existingReview?.comentario || "");
+
+
 
   useEffect(() => {
     if (existingReview) {
-      setRating(existingReview.rating);
-      setComment(existingReview.comment);
+      setCalificacion(existingReview.calificacion);
+      setComentario(existingReview.comentario);
     }
   }, [existingReview]);
 
+
   const handleSave = () => {
-    const review = { userId, productId, rating, comment };
+    const review = { idUsuario, idProducto, calificacion, comentario };
     onSave(review);
   };
+
 
   const handleDelete = () => {
     if (window.confirm("¿Estás seguro de eliminar tu calificación?")) {
       onDelete(existingReview.id);
     }
   };
+
+
 
   return (
     <div className="border p-4 rounded bg-gray-50 mt-6">
@@ -31,16 +38,16 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
-            className={`text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
-            onClick={() => setRating(star)}
+            className={`text-2xl ${star <= calificacion ? "text-yellow-500" : "text-gray-300"}`}
+            onClick={() => setCalificacion(star)}
           >
             ★
           </button>
         ))}
       </div>
       <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={comentario}
+        onChange={(e) => setComentario(e.target.value)}
         placeholder="Escribe un comentario..."
         className="w-full border rounded p-2 mb-2"
       />
@@ -64,10 +71,17 @@ const UserReviewForm = ({ userId, productId, existingReview, onSave, onDelete })
   );
 };
 
+
+
+
+
 const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
-  if (!isOpen) return null;
 
   const { cliente } = useAuth();
+  const [userReview, setUserReview] = useState(null);
+  const [puedeHacerReview, setPuedeHacerReview] = useState(false);
+
+
   const average = 4.6;
   const total = 7498;
 
@@ -81,13 +95,78 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
   };
 
   // Reseña actual del cliente
-  const userReview = cliente ? reviews.find(r => r.userId === cliente.id) : null;
+  useEffect(() => {
+    const fetchUserReview = async () => {
+      if (cliente && productId) {
+        try {
+          const response = await fetch(`http://localhost:8080/calificacion/${cliente.id}/${productId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setUserReview(data);
+            console.log("Reseña del usuario:", data);
+          } else {
+            setUserReview(null);
+          }
+        } catch (error) {
+          setUserReview(null);
+        }
+      }
+    };
+    fetchUserReview();
+  }, [cliente, productId]);
 
+
+
+  
+  if (!isOpen) return null;
+
+  
   // Simulación de handlers
-  const handleSaveReview = (review) => {
+  const handleSaveReview = async (review) => {
+
+    const res = await fetch(`http://localhost:8080/pedido/${cliente.id}/${productId}`);
+    
+    if (!res.ok) {return;}
+    const idPedido = await res.text();
+    console.log("ID del pedido:", idPedido);
+
+    if(!idPedido || idPedido <= 0) {
+        return;
+    }
+
+
+    try {
+        const nuevaCalificacion = {
+            idUsuario: review.idUsuario, 
+            idProducto: productId, 
+            idPedido: idPedido,
+            calificacion: review.calificacion, 
+            comentario: review.comentario
+        };
+
+        const response = await fetch("http://localhost:8080/calificacion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevaCalificacion),
+        });
+        if (!response.ok) {
+            throw new Error("Error al enviar la calificación");
+        }
+        const data = await response.json();
+        console.log("Calificación enviada:", data);
+
+        
+    } catch (error) {
+        console.log("error al enviar la calificacion: ", error)
+        
+    }
     console.log("Guardar reseña:", review);
     // Aquí iría un POST o PUT al backend
   };
+
+
 
   const handleDeleteReview = (reviewId) => {
     console.log("Eliminar reseña con ID:", reviewId);
@@ -139,11 +218,11 @@ const AllReviews = ({ isOpen, onClose, reviews = [], productId }) => {
           {reviews.length > 0 ? (
             reviews.map((r, index) => (
               <div key={index} className="border-b pb-2">
-                <p className="font-medium text-sm text-gray-800">{r.userName}</p>
+                <p className="font-medium text-sm text-gray-800">{r.nombreUsuario}</p>
                 <p className="text-yellow-500 text-sm">
-                  {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                  {'★'.repeat(r.calificacion)}{'☆'.repeat(5 - r.calificacion)}
                 </p>
-                <p className="text-gray-700 text-sm">{r.comment}</p>
+                <p className="text-gray-700 text-sm">{r.comentario}</p>
               </div>
             ))
           ) : (

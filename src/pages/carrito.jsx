@@ -30,7 +30,7 @@ export default function Carrito() {
             return;
         }
         const pedidoDTO ={
-            usuarioId: Number(usuarioId),
+            idUsuario: Number(usuarioId),
             total: precioTotal,
             productos: carrito.map((producto)=>({
                 productoId : producto.id,
@@ -55,7 +55,7 @@ export default function Carrito() {
                         productos: JSON.stringify(carrito),
                     },
                 });
-                vaciarCarrito();
+                //vaciarCarrito();
             }else{
                 console.error("Error al crear el pedido:",await response.text());
                 alert("No se pudo crear el pedido.");
