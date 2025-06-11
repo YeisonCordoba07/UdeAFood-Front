@@ -230,7 +230,7 @@ const eliminarMetodoPago = async (id) => {
 
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm items-center flex justify-center z-20">
+        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm items-center flex justify-center z-40">
           <div className="bg-white p-8 rounded-lg flex flex-col justify-center items-center gap-7 w-[500px]">
             <div className="flex flex-col w-full gap-1">
               <div className="flex w-fit relative justify-center items-center">
