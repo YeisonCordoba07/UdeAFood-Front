@@ -24,9 +24,9 @@ const UserReviewForm = ({ userId: idUsuario, productId: idProducto, existingRevi
 
 
   const handleDelete = () => {
-    if (window.confirm("¿Estás seguro de eliminar tu calificación?")) {
+    /*if (window.confirm("¿Estás seguro de eliminar tu calificación?")) {
       onDelete(existingReview.id);
-    }
+    }*/
   };
 
 
@@ -52,20 +52,13 @@ const UserReviewForm = ({ userId: idUsuario, productId: idProducto, existingRevi
         className="w-full border rounded p-2 mb-2"
       />
       <div className="flex gap-2">
-        <button
+        {!existingReview && <button
           onClick={handleSave}
           className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700"
         >
-          {existingReview ? "Actualizar" : "Enviar"}
-        </button>
-        {existingReview && (
-          <button
-            onClick={handleDelete}
-            className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Eliminar
-          </button>
-        )}
+            Enviar
+        </button>}
+
       </div>
     </div>
   );
